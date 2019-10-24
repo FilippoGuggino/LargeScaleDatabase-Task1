@@ -13,11 +13,12 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    private static Scene scene;
+    public static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"));
+        scene = new Scene(loadFXML("initialScreen"));
+        stage.setWidth(500);
         stage.setScene(scene);
         stage.show();
     }
@@ -32,7 +33,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        //launch();
+        launch();
         Manager a = new Manager();
         a.createDoctor("giuseepe", "sada");
         a.exit();

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="385.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.DoctorScheduleScreenController">
+    <children>
+        <Label text="TODAY SCHEDULE:" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin></Label>
+      <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="324.0">
+        <columns>
+          <TableColumn prefWidth="171.0" text="Patient's first name" />
+          <TableColumn prefWidth="173.0" text="Patient'last name" />
+        </columns>
+      </TableView>
+      <Label prefHeight="23.0" prefWidth="187.0" text="(Or) see another day's schedule:">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="25.0" prefWidth="284.0">
+         <children>
+            <DatePicker id="selectedDate" promptText="Date (YYYY-MM-DD)" />
+            <Button mnemonicParsing="false" onAction="#updateSchedule" text="GO">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+        <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="81.0" textFill="#ff0303" visible="false" />
+      <HBox prefHeight="21.0" prefWidth="347.0">
+         <children>
+              <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="60.0" text="logout">
+                  <font>
+                      <Font size="11.0" />
+                  </font>
+            </Button>
+         </children>
+      </HBox>
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</VBox>

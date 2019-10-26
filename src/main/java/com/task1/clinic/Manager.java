@@ -88,7 +88,7 @@ public class Manager {
      * Delete the related row of parameter <code>obj</code> from the database.
      * The parameter still stays in cache memory and in Java memory.
      * At the end leaves <code>obj</code> in a detached state.
-     * @param obj the object to be made persistent. It must be an instance of an Entity class.
+     * @param obj the object to be deleted from the database. It must be an instance of an Entity class.
      */
     public void delete(Object obj) {
         em.getTransaction().begin();

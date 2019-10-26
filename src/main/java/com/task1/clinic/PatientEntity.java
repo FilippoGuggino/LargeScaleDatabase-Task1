@@ -5,60 +5,26 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "patient")
-public class PatientEntity {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idCode;
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
+public class PatientEntity extends User{
 
-    @Column(name = "firstName")
-    String firstName;
-
-    @Column(name = "lastName")
-    String lastName;
-
-    @OneToMany(mappedBy = "patMedical")
-    Set<MedicalEntity> patMedicals;
+    @OneToMany(mappedBy = "patient")
+    private Set<MedicalEntity> medicals;
 
     public PatientEntity(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        super(firstName, lastName);
     }
 
     public PatientEntity() {
-
+        super();
     }
 
-    public int getIdCode() {
-        return idCode;
+    public Set<MedicalEntity> getMedicals() {
+        return medicals;
     }
 
-    public void setIdCode(int idCode) {
-        this.idCode = idCode;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Set<MedicalEntity> getPatMedicals() {
-        return patMedicals;
-    }
-
-    public void setPatMedicals(Set<MedicalEntity> patMedicals) {
-        this.patMedicals = patMedicals;
+    public void setMedicals(Set<MedicalEntity> medicals) {
+        this.medicals = medicals;
     }
 
     @Override
@@ -69,11 +35,11 @@ public class PatientEntity {
         return getIdCode() == that.getIdCode() &&
                 getFirstName().equals(that.getFirstName()) &&
                 getLastName().equals(that.getLastName()) &&
-                Objects.equals(getPatMedicals(), that.getPatMedicals());
+                Objects.equals(getMedicals(), that.getMedicals());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdCode(), getFirstName(), getLastName(), getPatMedicals());
+        return Objects.hash(getIdCode(), getFirstName(), getLastName(), getMedicals());
     }
 }

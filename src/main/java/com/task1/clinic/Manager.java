@@ -3,38 +3,112 @@ package com.task1.clinic;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
-public class
-Manager {
+/**
+ * an instance of this class is able to generate an Entity Manager for JPA.
+ * It also provides a set of public methods that make CRUD operations on the database
+ * extremely simple to use.
+ */
+public class Manager {
     private EntityManagerFactory factory;
-    private EntityManager entityManager;
+    private EntityManager em;
 
+    /**
+     * Unique constructor for this class.
+     */
     public Manager() {
         this.factory = Persistence.createEntityManagerFactory("clinic");
+        em = factory.createEntityManager();
     }
 
+    //TODO: Remove this method
     public void exit() {
         System.out.println("sono entrato");
         factory.close();
         System.out.println("sono uscito");
     }
 
+    //TODO: Remove this method
     public void createDoctor(String firstName, String lastName){
         System.out.println("create doctor.");
         DoctorEntity stud = new DoctorEntity("giuseppe", "bellino");
         try{
-            entityManager = factory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(stud);
-            entityManager.getTransaction().commit();
+            em.getTransaction().begin();
+            em.persist(stud);
+            em.getTransaction().commit();
         }catch(Exception e){
             e.printStackTrace();
         }finally {
-            entityManager.close();
+            em.close();
         }
     }
 
+    /**
+     * Insert the parameter <code>obj</code> into the database, making it persistent. At the
+     * end leaves <code>obj</code> in a detached state.
+     * @param obj the object to be made persistent. It must be an instance of an Entity class.
+     */
+    public void create(Object obj) {
+        em.getTransaction().begin();
+        em.persist(obj);
+        em.getTransaction().commit();
+
+        /*
+        this EntityManager method cuts the relationship between the object and cache/database, so that
+        changes to the object doesn't affect cache/database. To attach it back there's the merge()
+        method of EntityManager class.
+        */
+        em.detach(obj);
+    }
+
+    /**
+     * Prepare a query for the database and returns it before being performed.
+     * @param query the string that contains the query to be evaluated.
+     * @return a Query object to be used to perform the interrogation on the database.
+     */
+    public Query read(String query) {
+        Query q = em.createQuery(query);
+        return q;
+    }
+
+    /**
+     * Synchronize the status of the parameter <code>obj</code> with its related row
+     * in the database. At the end leaves <code>obj<code/> in a detached state
+     * @param obj the object to be synchronized with the database. It must be an instance of an Entity class.
+     */
+    public void update(Object obj) {
+        em.getTransaction().begin();
+        em.merge(obj);
+        em.getTransaction().commit();
+        em.detach(obj);
+    }
+
+    /**
+     * Delete the related row of parameter <code>obj</code> from the database.
+     * The parameter still stays in cache memory and in Java memory.
+     * At the end leaves <code>obj</code> in a detached state.
+     * @param obj the object to be made persistent. It must be an instance of an Entity class.
+     */
+    public void delete(Object obj) {
+        em.getTransaction().begin();
+        Object managed = em.merge(obj);
+        em.remove(managed);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Close an application-managed manager.
+     */
+    public void close() {
+        em.close();
+        factory.close();
+    }
+
+
 }
+
+
 
 /*
     public void create() {

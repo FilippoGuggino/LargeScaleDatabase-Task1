@@ -8,11 +8,11 @@ import java.util.Objects;
 public class MoveRequestEntity implements Serializable {
     @Id
     @OneToOne
-    @JoinColumn(name = "fk_medical", referencedColumnName = "id")
-    MedicalEntity medical;
+    @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
+    public MedicalEntity medical;
 
-    @Column(name = "new_date")
-    String newDate;
+    @Column(name = "newDate")
+    public String newDate;
 
     public MoveRequestEntity(MedicalEntity medical, String newDate) {
         this.medical = medical;

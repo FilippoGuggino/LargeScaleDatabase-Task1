@@ -3,7 +3,8 @@ package com.task1.clinic;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "medical")
+@Entity
+@Table(name = "medical")
 public class MedicalEntity {
     @Id
     @Column(name = "idCode")
@@ -67,4 +68,15 @@ public class MedicalEntity {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public boolean isApproved() { return approved; }
+
+    public void setApproved(boolean approved) { this.approved = approved; }
+
+    @Override
+    public String toString() {
+        return "Doctor: " + doctor.getIdCode() + ", Patient: " + patient.getIdCode() +
+                ", Date: " + date.toString();
+    }
+
 }

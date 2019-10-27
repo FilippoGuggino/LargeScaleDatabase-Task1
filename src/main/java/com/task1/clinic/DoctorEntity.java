@@ -3,8 +3,8 @@ package com.task1.clinic;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "doctor")
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
+@Entity
+@Table(name = "doctor", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
 public class DoctorEntity extends User{
 
     @OneToMany(mappedBy = "doctor")

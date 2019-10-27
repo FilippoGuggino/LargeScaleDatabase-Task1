@@ -5,7 +5,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-@Entity(name = "move_request")
+@Entity
+@Table(name = "move_request")
 public class MoveRequestEntity implements Serializable {
     @Id
     @OneToOne

@@ -89,7 +89,7 @@ public class Manager {
      * @return a TypedQuery object to be used to perform the interrogation on the database.
      */
     public TypedQuery<MedicalEntity> readMedicals(String query) {
-        TypedQuery<MedicalEntity> q = em.createNamedQuery(query, MedicalEntity.class);
+        TypedQuery<MedicalEntity> q = em.createQuery(query, MedicalEntity.class);
         return q;
     }
 

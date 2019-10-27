@@ -3,17 +3,17 @@ package com.task1.clinic;
 import javafx.beans.property.SimpleStringProperty;
 
 public class UserBean {
-    private SimpleStringProperty patName;
-    private SimpleStringProperty patSurname;
+    private SimpleStringProperty firstName;
+    private SimpleStringProperty lastName;
 
-    public UserBean(String patName,String patSurname){
-        this.patName=new SimpleStringProperty(patName);
-        this.patSurname=new SimpleStringProperty(patSurname);
+    public UserBean(String firstName,String lastName){
+        this.firstName=new SimpleStringProperty(firstName);
+        this.lastName=new SimpleStringProperty(lastName);
     }
-    public String getPatName(){
-        return patName.get();
+    public String getFirstName(){
+        return firstName.get();
     }
-    public String getPatSurname(){
-        return patSurname.get();
+    public String getLastName(){
+        return lastName.get();
     }
 }

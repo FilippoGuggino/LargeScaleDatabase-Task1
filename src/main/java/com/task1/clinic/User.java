@@ -49,4 +49,8 @@ public abstract class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public UserBean toBean() {
+        return new UserBean(getFirstName(), getLastName());
+    }
 }

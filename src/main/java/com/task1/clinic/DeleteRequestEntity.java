@@ -8,8 +8,8 @@ import java.util.Objects;
 public class DeleteRequestEntity implements Serializable {
     @Id
     @OneToOne
-    @JoinColumn(name = "fk_medical", referencedColumnName = "id")
-    MedicalEntity medical;
+    @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
+    private MedicalEntity medical;
 
     public DeleteRequestEntity(MedicalEntity medical) {
         this.medical = medical;

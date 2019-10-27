@@ -5,51 +5,25 @@ import java.util.Set;
 
 @Entity(name = "doctor")
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
-public class DoctorEntity {
-        @Id
-        @Column(name = "id")
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        public int idCode;
+public class DoctorEntity extends User{
 
-        @Column(name = "firstName")
-        public String firstName;
+    @OneToMany(mappedBy = "doctor")
+    private Set<MedicalEntity> medicals;
 
-        @Column(name = "lastName")
-        public String lastName;
-
-        @OneToMany(mappedBy = "docMedical")
-        Set<MedicalEntity> docMedicals;
-
-        public DoctorEntity(String firstName, String lastName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
-
-    public DoctorEntity() {
-
+    public DoctorEntity(String firstName, String lastName) {
+        super(firstName, lastName);
     }
 
-        public int getIdCode() {
-            return idCode;
-        }
+    public DoctorEntity() {
+        super();
+     }
 
-        public void setIdCode(int idCode) {
-            this.idCode = idCode;
-        }
+    public Set<MedicalEntity> getMedicals() {
+        return medicals;
+    }
 
-        public String getFirstName() {
-            return firstName;
-        }
+    public void setMedicals(Set<MedicalEntity> medicals) {
+        this.medicals = medicals;
+    }
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
 }

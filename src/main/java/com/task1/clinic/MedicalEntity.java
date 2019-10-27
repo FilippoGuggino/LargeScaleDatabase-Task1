@@ -6,28 +6,30 @@ import java.util.Date;
 @Entity(name = "medical")
 public class MedicalEntity {
     @Id
-    @Column(name = "id")
+    @Column(name = "idCode")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int idCode;
+    private int idCode;
 
     @ManyToOne
-    @JoinColumn(name = "doc_id")
-    DoctorEntity docMedical;
+    @JoinColumn(name = "doctorFK")
+    private DoctorEntity doctor;
 
     @ManyToOne
-    @JoinColumn(name = "pat_id")
-    PatientEntity patMedical;
+    @JoinColumn(name = "patientFK")
+    private PatientEntity patient;
 
-    @Column(name = "medical_date")
-    String date;
+    @Column(name = "medicalDate")
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
     @Column(name = "approved")
-    boolean approved;
+    private boolean approved;
 
-    public MedicalEntity(DoctorEntity docMedical, PatientEntity patMedical, String date) {
-        this.docMedical = docMedical;
-        this.patMedical = patMedical;
+    public MedicalEntity(DoctorEntity doctor, PatientEntity patient, Date date) {
+        this.doctor = doctor;
+        this.patient = patient;
         this.date = date;
+        this.approved = false;
     }
 
     public MedicalEntity() {
@@ -42,27 +44,27 @@ public class MedicalEntity {
         this.idCode = idCode;
     }
 
-    public DoctorEntity getDocMedical() {
-        return docMedical;
+    public DoctorEntity getDoctor() {
+        return doctor;
     }
 
-    public void setDocMedical(DoctorEntity docMedical) {
-        this.docMedical = docMedical;
+    public void setDoctor(DoctorEntity doctor) {
+        this.doctor = doctor;
     }
 
-    public PatientEntity getPatMedical() {
-        return patMedical;
+    public PatientEntity getPatient() {
+        return patient;
     }
 
-    public void setPatMedical(PatientEntity patMedical) {
-        this.patMedical = patMedical;
+    public void setPatient(PatientEntity patient) {
+        this.patient = patient;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

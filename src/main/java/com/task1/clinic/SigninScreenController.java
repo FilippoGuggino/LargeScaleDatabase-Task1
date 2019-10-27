@@ -27,6 +27,7 @@ public class SigninScreenController {
                 App.setRoot("patientScheduleScreen");
                 break;
             case "Employee":
+                App.setRoot("employeeMenuScreen");
                 break;
         }
     }

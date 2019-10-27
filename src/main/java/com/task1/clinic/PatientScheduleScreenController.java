@@ -24,6 +24,7 @@ public class PatientScheduleScreenController {
         }
         else{
             //TODO addmedical
+            errorLabel.setVisible(false);
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.task1.clinic;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import javax.persistence.*;
 
 @MappedSuperclass

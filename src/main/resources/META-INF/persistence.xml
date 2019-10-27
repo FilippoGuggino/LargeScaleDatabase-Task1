@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
     <persistence-unit name="clinic">
-        <class>com.task1.clinic.DoctorEntity</class>
-        <class>com.task1.clinic.EmployeeEntity</class>
-        <class>com.task1.clinic.MedicalEntity</class>
-        <class>com.task1.clinic.PatientEntity</class>
+        <class>com.task1.clinic.Doctor</class>
+        <class>com.task1.clinic.Employee</class>
+        <class>com.task1.clinic.Medical</class>
+        <class>com.task1.clinic.Patient</class>
         <properties>
             <!-- database connection -->
 

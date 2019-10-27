@@ -4,13 +4,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "employee", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
-public class EmployeeEntity extends User{
+public class Employee extends User{
 
-    public EmployeeEntity(String firstName, String lastName) {
+    public Employee(String firstName, String lastName) {
         super(firstName, lastName);
     }
 
-    public EmployeeEntity() {
+    public Employee() {
         super();
     }
 }

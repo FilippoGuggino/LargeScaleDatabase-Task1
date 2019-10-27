@@ -8,32 +8,32 @@ import java.util.Set;
 
 @Entity
 @Table(name = "patient", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
-public class PatientEntity extends User{
+public class Patient extends User{
 
     @OneToMany(mappedBy = "patient")
-    private Set<MedicalEntity> medicals;
+    private Set<Medical> medicals;
 
-    public PatientEntity(String firstName, String lastName) {
+    public Patient(String firstName, String lastName) {
         super(firstName, lastName);
     }
 
-    public PatientEntity() {
+    public Patient() {
         super();
     }
 
-    public Set<MedicalEntity> getMedicals() {
+    public Set<Medical> getMedicals() {
         return medicals;
     }
 
-    public void setMedicals(Set<MedicalEntity> medicals) {
+    public void setMedicals(Set<Medical> medicals) {
         this.medicals = medicals;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PatientEntity)) return false;
-        PatientEntity that = (PatientEntity) o;
+        if (!(o instanceof Patient)) return false;
+        Patient that = (Patient) o;
         return getIdCode() == that.getIdCode() &&
                 getFirstName().equals(that.getFirstName()) &&
                 getLastName().equals(that.getLastName()) &&
@@ -45,35 +45,35 @@ public class PatientEntity extends User{
         return Objects.hash(getIdCode(), getFirstName(), getLastName(), getMedicals());
     }
 
-    public List<MedicalEntity>  getSchedule() {
+    public List<Medical>  getSchedule() {
         Manager man = Manager.getInstance();
         String query = "SELECT m\n" +
-                       "FROM MedicalEntity m\n" +
+                       "FROM Medical m\n" +
                        "WHERE m.patient.idCode = :idCode\n" +
                        "ORDER BY m.date";
-        TypedQuery<MedicalEntity> preparedQuery = man.readMedicals(query);
+        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
         preparedQuery.setParameter("idCode", this.getIdCode());
-        List<MedicalEntity> result = preparedQuery.getResultList();
+        List<Medical> result = preparedQuery.getResultList();
         return result;
     }
 
-    public MedicalEntity createMedicalRequest(DoctorEntity doctor, Date date) {
+    public Medical createMedicalRequest(Doctor doctor, Date date) {
         Manager man = Manager.getInstance();
-        MedicalEntity newMed = new MedicalEntity(doctor, this, date);
+        Medical newMed = new Medical(doctor, this, date);
         man.create(newMed);
         return newMed;
     }
 
-    public DeleteRequestEntity deleteRequest(MedicalEntity med) {
+    public DeleteRequest deleteRequest(Medical med) {
         Manager man = Manager.getInstance();
-        DeleteRequestEntity del = new DeleteRequestEntity(med);
+        DeleteRequest del = new DeleteRequest(med);
         man.create(del);
         return del;
     }
 
-    public MoveRequestEntity moveRequest(MedicalEntity med, Date newDate) {
+    public MoveRequest moveRequest(Medical med, Date newDate) {
         Manager man = Manager.getInstance();
-        MoveRequestEntity mov = new MoveRequestEntity(med, newDate);
+        MoveRequest mov = new MoveRequest(med, newDate);
         man.create(mov);
         return mov;
     }

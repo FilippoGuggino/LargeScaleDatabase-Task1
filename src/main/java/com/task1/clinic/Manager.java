@@ -43,7 +43,7 @@ public class Manager {
     //TODO: Remove this method
     public void createDoctor(String firstName, String lastName){
         System.out.println("create doctor.");
-        DoctorEntity stud = new DoctorEntity("giuseppe", "bellino");
+        Doctor stud = new Doctor("giuseppe", "bellino");
         try{
             em.getTransaction().begin();
             em.persist(stud);
@@ -88,8 +88,8 @@ public class Manager {
      * @param query the string that contains the JPQL query to be evaluated.
      * @return a TypedQuery object to be used to perform the interrogation on the database.
      */
-    public TypedQuery<MedicalEntity> readMedicals(String query) {
-        TypedQuery<MedicalEntity> q = em.createQuery(query, MedicalEntity.class);
+    public TypedQuery<Medical> readMedicals(String query) {
+        TypedQuery<Medical> q = em.createQuery(query, Medical.class);
         return q;
     }
 

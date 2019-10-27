@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "medical")
-public class MedicalEntity {
+public class Medical {
     @Id
     @Column(name = "idCode")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,11 +13,11 @@ public class MedicalEntity {
 
     @ManyToOne
     @JoinColumn(name = "doctorFK")
-    private DoctorEntity doctor;
+    private Doctor doctor;
 
     @ManyToOne
     @JoinColumn(name = "patientFK")
-    private PatientEntity patient;
+    private Patient patient;
 
     @Column(name = "medicalDate")
     @Temporal(TemporalType.DATE)
@@ -26,14 +26,14 @@ public class MedicalEntity {
     @Column(name = "approved")
     private boolean approved;
 
-    public MedicalEntity(DoctorEntity doctor, PatientEntity patient, Date date) {
+    public Medical(Doctor doctor, Patient patient, Date date) {
         this.doctor = doctor;
         this.patient = patient;
         this.date = date;
         this.approved = false;
     }
 
-    public MedicalEntity() {
+    public Medical() {
 
     }
 
@@ -45,19 +45,19 @@ public class MedicalEntity {
         this.idCode = idCode;
     }
 
-    public DoctorEntity getDoctor() {
+    public Doctor getDoctor() {
         return doctor;
     }
 
-    public void setDoctor(DoctorEntity doctor) {
+    public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
 
-    public PatientEntity getPatient() {
+    public Patient getPatient() {
         return patient;
     }
 
-    public void setPatient(PatientEntity patient) {
+    public void setPatient(Patient patient) {
         this.patient = patient;
     }
 

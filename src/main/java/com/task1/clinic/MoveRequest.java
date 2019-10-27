@@ -7,30 +7,30 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "move_request")
-public class MoveRequestEntity implements Serializable {
+public class MoveRequest implements Serializable {
     @Id
     @OneToOne
     @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
-    public MedicalEntity medical;
+    public Medical medical;
 
     @Column(name = "newDate")
     @Temporal(TemporalType.DATE)
     public Date newDate;
 
-    public MoveRequestEntity(MedicalEntity medical, Date newDate) {
+    public MoveRequest(Medical medical, Date newDate) {
         this.medical = medical;
         this.newDate = newDate;
     }
 
-    public MoveRequestEntity() {
+    public MoveRequest() {
 
     }
 
-    public MedicalEntity getMedical() {
+    public Medical getMedical() {
         return medical;
     }
 
-    public void setMedical(MedicalEntity medical) {
+    public void setMedical(Medical medical) {
         this.medical = medical;
     }
 
@@ -45,8 +45,8 @@ public class MoveRequestEntity implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof MoveRequestEntity)) return false;
-        MoveRequestEntity that = (MoveRequestEntity) o;
+        if (!(o instanceof MoveRequest)) return false;
+        MoveRequest that = (MoveRequest) o;
         return Objects.equals(medical, that.medical) &&
                 Objects.equals(newDate, that.newDate);
     }

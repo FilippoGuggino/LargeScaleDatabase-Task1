@@ -5,24 +5,24 @@ import java.util.Set;
 
 @Entity
 @Table(name = "doctor", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
-public class DoctorEntity extends User{
+public class Doctor extends User{
 
     @OneToMany(mappedBy = "doctor")
-    private Set<MedicalEntity> medicals;
+    private Set<Medical> medicals;
 
-    public DoctorEntity(String firstName, String lastName) {
+    public Doctor(String firstName, String lastName) {
         super(firstName, lastName);
     }
 
-    public DoctorEntity() {
+    public Doctor() {
         super();
      }
 
-    public Set<MedicalEntity> getMedicals() {
+    public Set<Medical> getMedicals() {
         return medicals;
     }
 
-    public void setMedicals(Set<MedicalEntity> medicals) {
+    public void setMedicals(Set<Medical> medicals) {
         this.medicals = medicals;
     }
 

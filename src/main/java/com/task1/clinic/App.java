@@ -37,13 +37,13 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
         Manager man = Manager.getInstance();
-        PatientEntity pat = new PatientEntity("Francesco", "Francesconi");
+        Patient pat = new Patient("Francesco", "Francesconi");
         man.create(pat);
-        DoctorEntity doc = new DoctorEntity("Carlo", "Vallati");
+        Doctor doc = new Doctor("Carlo", "Vallati");
         man.create(doc);
         Date date = new Date();
         pat.createMedicalRequest(doc, date);
-        List<MedicalEntity> res = pat.getSchedule();
+        List<Medical> res = pat.getSchedule();
         for(int i = 0; i < res.size(); ++i)
             System.out.println(res.get(i).toString());
         man.close();

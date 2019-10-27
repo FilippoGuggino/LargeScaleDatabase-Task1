@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity(name = "patient")
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
+@Entity
+@Table(name = "patient", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
 public class PatientEntity extends User{
 
     @OneToMany(mappedBy = "patient")
@@ -49,7 +49,7 @@ public class PatientEntity extends User{
         Manager man = Manager.getInstance();
         String query = "SELECT m\n" +
                        "FROM MedicalEntity m\n" +
-                       "WHERE m.patient.idCode = :idCode" +
+                       "WHERE m.patient.idCode = :idCode\n" +
                        "ORDER BY m.date";
         TypedQuery<MedicalEntity> preparedQuery = man.readMedicals(query);
         preparedQuery.setParameter("idCode", this.getIdCode());

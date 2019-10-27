@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity(name = "delete_request")
+@Entity
+@Table(name = "delete_request")
 public class DeleteRequestEntity implements Serializable {
     @Id
     @OneToOne

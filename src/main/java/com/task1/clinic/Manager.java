@@ -1,25 +1,36 @@
 package com.task1.clinic;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 
 /**
+ * This is a Singleton class, used to manage all interactions with JPA.
  * an instance of this class is able to generate an Entity Manager for JPA.
  * It also provides a set of public methods that make CRUD operations on the database
  * extremely simple to use.
  */
 public class Manager {
     private EntityManagerFactory factory;
+
     private EntityManager em;
+
+    private static Manager singletonInstance = null;
 
     /**
      * Unique constructor for this class.
      */
-    public Manager() {
+    private Manager() {
         this.factory = Persistence.createEntityManagerFactory("clinic");
-        em = factory.createEntityManager();
+        this.em = factory.createEntityManager();
+    }
+
+    /**
+     * get the only instance of this Singleton class.
+     * @return the instance of this class
+     */
+    public static Manager getInstance() {
+        if(singletonInstance == null)
+            singletonInstance = new Manager();
+        return singletonInstance;
     }
 
     //TODO: Remove this method
@@ -63,12 +74,22 @@ public class Manager {
     }
 
     /**
-     * Prepare a query for the database and returns it before being performed.
-     * @param query the string that contains the query to be evaluated.
+     * Prepare a JPQL query for the database and returns it before being performed.
+     * @param query the string that contains the JPQL query to be evaluated.
      * @return a Query object to be used to perform the interrogation on the database.
      */
     public Query read(String query) {
         Query q = em.createQuery(query);
+        return q;
+    }
+
+    /**
+     * Prepare a JPQL query that reads a list of medicals and returns it before being performed.
+     * @param query the string that contains the JPQL query to be evaluated.
+     * @return a TypedQuery object to be used to perform the interrogation on the database.
+     */
+    public TypedQuery<MedicalEntity> readMedicals(String query) {
+        TypedQuery<MedicalEntity> q = em.createNamedQuery(query, MedicalEntity.class);
         return q;
     }
 
@@ -103,6 +124,14 @@ public class Manager {
     public void close() {
         em.close();
         factory.close();
+    }
+
+    /**
+     * Get the entity manager reference.
+     * @return the entity manager
+     */
+    public EntityManager getEm() {
+        return em;
     }
 
 

@@ -18,16 +18,18 @@ public class MedicalEntity {
     @JoinColumn(name = "patientFK")
     private PatientEntity patient;
 
-    @Column(name = "medical_date")
-    private String date;
+    @Column(name = "medicalDate")
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
     @Column(name = "approved")
     private boolean approved;
 
-    public MedicalEntity(DoctorEntity doctor, PatientEntity patient, String date) {
+    public MedicalEntity(DoctorEntity doctor, PatientEntity patient, Date date) {
         this.doctor = doctor;
         this.patient = patient;
         this.date = date;
+        this.approved = false;
     }
 
     public MedicalEntity() {
@@ -58,11 +60,11 @@ public class MedicalEntity {
         this.patient = patient;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

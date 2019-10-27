@@ -2,6 +2,7 @@ package com.task1.clinic;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity(name = "move_request")
@@ -12,9 +13,10 @@ public class MoveRequestEntity implements Serializable {
     public MedicalEntity medical;
 
     @Column(name = "newDate")
-    public String newDate;
+    @Temporal(TemporalType.DATE)
+    public Date newDate;
 
-    public MoveRequestEntity(MedicalEntity medical, String newDate) {
+    public MoveRequestEntity(MedicalEntity medical, Date newDate) {
         this.medical = medical;
         this.newDate = newDate;
     }
@@ -31,11 +33,11 @@ public class MoveRequestEntity implements Serializable {
         this.medical = medical;
     }
 
-    public String getNewDate() {
+    public Date getNewDate() {
         return newDate;
     }
 
-    public void setNewDate(String newDate) {
+    public void setNewDate(Date newDate) {
         this.newDate = newDate;
     }
 

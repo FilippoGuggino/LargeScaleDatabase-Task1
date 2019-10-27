@@ -21,7 +21,7 @@ public class DoctorScheduleScreenController {
             errorLabel.setVisible(true);
         }
         else{
-            System.out.println(selectedDate.getValue().toString());
+            errorLabel.setVisible(false);
             //TODO updateTable
         }
     }

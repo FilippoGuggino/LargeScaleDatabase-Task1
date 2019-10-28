@@ -47,6 +47,11 @@ public class App extends Application {
         List<Medical> res = pat.getSchedule();
         for(int i = 0; i < res.size(); ++i)
             System.out.println(res.get(i).toString());
+        List<Medical> res2 = doc.getSchedule(date);
+        for(int i = 0; i < res2.size(); ++i) {
+            System.out.println("Risultato per dottore Carlo:");
+            System.out.println(res2.get(i).toString());
+        }
         man.close();
     }
 

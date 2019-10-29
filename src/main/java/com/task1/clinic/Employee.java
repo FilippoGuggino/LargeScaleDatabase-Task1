@@ -17,26 +17,26 @@ public class Employee extends User{
     }
 
     public boolean addMedical(Medical m){
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         man.create(m);
         return true;
     }
 
     public boolean dropMedical(Medical m){
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         man.delete(m);
         return true;
     }
 
     public boolean handleCreateRequest(Medical med, boolean approved){
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         med.setApproved(approved);
         man.update(med);
         return true;
     }
 
     public boolean handleDeleteRequest(DeleteRequest del, boolean approved){
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         if(approved){
             String query = "SELECT d.medical\n" +
                     "FROM DeleteRequest d\n" +
@@ -52,7 +52,7 @@ public class Employee extends User{
     }
 
     public boolean handleMoveRequest(MoveRequest req, boolean approved){
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         if(approved) {
             String query = "SELECT d.medical\n" +
                     "FROM DeleteRequest d\n" +
@@ -68,7 +68,7 @@ public class Employee extends User{
     }
 
     public List<Medical> getSchedule(Patient patient, Doctor doctor, Date byDate){
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         boolean needAnd = false;
         String query = "SELECT m FROM Medical m WHERE";
 

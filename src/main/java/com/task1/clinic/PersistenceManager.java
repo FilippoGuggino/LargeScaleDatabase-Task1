@@ -4,21 +4,21 @@ import javax.persistence.*;
 
 /**
  * This is a Singleton class, used to manage all interactions with JPA.
- * an instance of this class is able to generate an Entity Manager for JPA.
+ * an instance of this class is able to generate an Entity PersistenceManager for JPA.
  * It also provides a set of public methods that make CRUD operations on the database
  * extremely simple to use.
  */
-public class Manager {
+public class PersistenceManager {
     private EntityManagerFactory factory;
 
     private EntityManager em;
 
-    private static Manager singletonInstance = null;
+    private static PersistenceManager singletonInstance = null;
 
     /**
      * Unique constructor for this class.
      */
-    private Manager() {
+    private PersistenceManager() {
         this.factory = Persistence.createEntityManagerFactory("clinic");
         this.em = factory.createEntityManager();
     }
@@ -27,9 +27,9 @@ public class Manager {
      * get the only instance of this Singleton class.
      * @return the instance of this class
      */
-    public static Manager getInstance() {
+    public static PersistenceManager getInstance() {
         if(singletonInstance == null)
-            singletonInstance = new Manager();
+            singletonInstance = new PersistenceManager();
         return singletonInstance;
     }
 

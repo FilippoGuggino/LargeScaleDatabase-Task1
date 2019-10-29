@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.hibernate.procedure.internal.Util;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -40,7 +39,7 @@ public class App extends Application {
 
     public static void main(String[] args) throws ParseException {
         launch();
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         Patient pat = new Patient("Francesco", "Francesconi");
         man.create(pat);
         Doctor doc = new Doctor("Carlo", "Vallati");

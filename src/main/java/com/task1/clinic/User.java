@@ -53,4 +53,6 @@ public abstract class User {
     public UserBean toBean() {
         return new UserBean(getFirstName(), getLastName());
     }
+
+
 }

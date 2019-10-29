@@ -16,6 +16,8 @@ import java.util.List;
 public class App extends Application {
 
     public static Scene scene;
+    public static String firstName;
+    public static String lastName;
 
     @Override
     public void start(Stage stage) throws IOException {

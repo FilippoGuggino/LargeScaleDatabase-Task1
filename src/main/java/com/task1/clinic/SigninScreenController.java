@@ -19,6 +19,8 @@ public class SigninScreenController {
             errorLabel.setVisible(true);
             return;
         }
+        App.firstName=firstNameInput.getText();
+        App.lastName=lastNameInput.getText();
         switch(roleInput.getValue().toString()){
             case "Doctor":
                 App.setRoot("doctorScheduleScreen");

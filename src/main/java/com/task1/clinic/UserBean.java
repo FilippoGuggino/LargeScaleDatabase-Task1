@@ -13,7 +13,6 @@ public class UserBean {
     public String getFirstName(){
         return firstName.get();
     }
-    public String getLastName(){
-        return lastName.get();
-    }
+
+    public String getLastName(){return lastName.get(); }
 }

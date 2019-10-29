@@ -81,4 +81,7 @@ public class Medical {
                 ", Date: " + date.toString();
     }
 
+    public MedicalBean toBean(){
+        return new MedicalBean(doctor,patient,date);
+    }
 }

@@ -1,6 +1,9 @@
 package com.task1.clinic;
 
 import javafx.beans.property.SimpleStringProperty;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,11 +17,11 @@ public class Medical {
     private int idCode;
 
     @ManyToOne
-    @JoinColumn(name = "doctorFK")
+    @JoinColumn(name = "doctorFK", referencedColumnName = "idCode")
     private Doctor doctor;
 
     @ManyToOne
-    @JoinColumn(name = "patientFK")
+    @JoinColumn(name = "patientFK", referencedColumnName = "idCode")
     private Patient patient;
 
     @Column(name = "medicalDate")
@@ -27,6 +30,10 @@ public class Medical {
 
     @Column(name = "approved")
     private boolean approved;
+
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne(mappedBy = "medical")
+    private DeleteRequest delRequest;
 
     public Medical(Doctor doctor, Patient patient, Date date) {
         this.doctor = doctor;
@@ -49,6 +56,14 @@ public class Medical {
 
     public Doctor getDoctor() {
         return doctor;
+    }
+
+    public DeleteRequest getDelRequest() {
+        return delRequest;
+    }
+
+    public void setDelRequest(DeleteRequest delRequest) {
+        this.delRequest = delRequest;
     }
 
     public void setDoctor(Doctor doctor) {

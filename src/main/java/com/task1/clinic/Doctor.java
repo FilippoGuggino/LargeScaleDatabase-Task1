@@ -29,7 +29,7 @@ public class Doctor extends User{
     }
 
     public List<Medical> getSchedule(Date byDate) {
-        Manager Man = Manager.getInstance();
+        PersistenceManager Man = PersistenceManager.getInstance();
         String query = "SELECT m\n" +
                 "FROM Medical m\n" +
                 "WHERE m.doctor.idCode = :idCode AND m.date = :byDate \n" +

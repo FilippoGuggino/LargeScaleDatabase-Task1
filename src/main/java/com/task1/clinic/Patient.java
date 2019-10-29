@@ -46,7 +46,7 @@ public class Patient extends User{
     }
 
     public List<Medical>  getSchedule() {
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         String query = "SELECT m\n" +
                        "FROM Medical m\n" +
                        "WHERE m.patient.idCode = :idCode\n" +
@@ -58,21 +58,21 @@ public class Patient extends User{
     }
 
     public Medical createMedicalRequest(Doctor doctor, Date date) {
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         Medical newMed = new Medical(doctor, this, date);
         man.create(newMed);
         return newMed;
     }
 
     public DeleteRequest deleteRequest(Medical med) {
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         DeleteRequest del = new DeleteRequest(med);
         man.create(del);
         return del;
     }
 
     public MoveRequest moveRequest(Medical med, Date newDate) {
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         MoveRequest mov = new MoveRequest(med, newDate);
         man.create(mov);
         return mov;

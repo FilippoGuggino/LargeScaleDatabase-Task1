@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -37,9 +39,9 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         launch();
-        Manager man = Manager.getInstance();
+        PersistenceManager man = PersistenceManager.getInstance();
         Patient pat = new Patient("Francesco", "Francesconi");
         man.create(pat);
         Doctor doc = new Doctor("Carlo", "Vallati");
@@ -54,6 +56,18 @@ public class App extends Application {
             System.out.println("Risultato per dottore Carlo:");
             System.out.println(res2.get(i).toString());
         }
+        Employee e = new Employee("giovanni", "lesto");
+        man.create(e);
+        DeleteRequest d = new DeleteRequest(res.get(0));
+        man.create(d);
+        String sDate1="31/12/1998";
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+        MoveRequest m = new MoveRequest(res.get(0), date1);
+        man.create(m);
+        //e.handleDeleteRequest(d, false);
+        e.handleMoveRequest(m, true);
+        List<Medical> med = e.getSchedule(pat, null,null);
+        System.out.println(med.get(0).getDate());
         man.close();
     }
 

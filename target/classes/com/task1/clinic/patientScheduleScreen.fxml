@@ -20,15 +20,7 @@
             <VBox.margin>
                 <Insets bottom="10.0" />
             </VBox.margin></Label>
-        <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="434.0">
-            <columns>
-                <TableColumn prefWidth="83.0" text="Doc_name" />
-                <TableColumn prefWidth="86.0" text="Doc_surname" />
-            <TableColumn prefWidth="84.0" text="Med_date" />
-            <TableColumn prefWidth="45.0" text="Delete" />
-            <TableColumn prefWidth="89.0" text="New_date" />
-            <TableColumn prefWidth="45.0" text="Move" />
-            </columns>
+        <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="434.0">
         </TableView>
         <HBox alignment="CENTER" prefHeight="25.0" prefWidth="284.0">
             <children>

@@ -24,19 +24,25 @@ public class SigninScreenController {
         switch(roleInput.getValue().toString()){
             case "Doctor":
                 App.setUser(Doctor.logIn(firstName,lastName));
-                App.setRoot("doctorScheduleScreen");
+                if(App.user != null)
+                    App.setRoot("doctorScheduleScreen");
                 break;
             case "Patient":
                 App.setUser(Patient.logIn(firstName,lastName));
-                App.setRoot("patientScheduleScreen");
+                if(App.user != null)
+                    App.setRoot("patientScheduleScreen");
                 break;
             case "Employee":
                 App.setUser(Employee.logIn(firstName,lastName));
-                App.setRoot("employeeMenuScreen");
+                if(App.user != null)
+                    App.setRoot("employeeMenuScreen");
                 break;
         }
-        //TODO: check if the user doesn't exist
-        //if(App.user == null) then the user doesn't exist
-        // else ok
+        firstNameInput.setText("");
+        lastNameInput.setText("");
+        roleInput.setValue(null);
+        errorLabel.setText("The selected user doesn't exist");
+        errorLabel.setVisible(true);
+
     }
 }

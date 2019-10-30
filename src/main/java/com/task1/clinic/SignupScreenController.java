@@ -25,19 +25,30 @@ public class SignupScreenController {
         switch(roleInput.getValue().toString()){
             case "Doctor":
                 App.setUser(new Doctor(firstName, lastName));
-                man.create(App.user);
-                App.setRoot("doctorScheduleScreen");
+                if(App.user == null){
+                    man.create(App.user);
+                    App.setRoot("doctorScheduleScreen");
+                }
                 break;
             case "Patient":
                 App.setUser(new Patient(firstName, lastName));
-                man.create(App.user);
-                App.setRoot("patientScheduleScreen");
+                if(App.user == null){
+                    man.create(App.user);
+                    App.setRoot("patientScheduleScreen");
+                }
                 break;
             case "Employee":
                 App.setUser(new Employee(firstName, lastName));
-                man.create(App.user);
-                App.setRoot("employeeMenuScreen");
+                if(App.user == null){
+                    man.create(App.user);
+                    App.setRoot("employeeMenuScreen");
+                }
                 break;
         }
+        firstNameInput.setText("");
+        lastNameInput.setText("");
+        roleInput.setValue(null);
+        errorLabel.setText("The selected user already exists");
+        errorLabel.setVisible(true);
     }
 }

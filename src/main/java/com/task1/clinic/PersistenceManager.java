@@ -1,6 +1,7 @@
 package com.task1.clinic;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * This is a Singleton class, used to manage all interactions with JPA.
@@ -97,6 +98,7 @@ public class PersistenceManager {
         em.getTransaction().commit();
     }
 
+
     /**
      * Close an application-managed manager.
      */
@@ -104,6 +106,7 @@ public class PersistenceManager {
         em.close();
         factory.close();
     }
+
 
     /**
      * Get the entity manager reference.

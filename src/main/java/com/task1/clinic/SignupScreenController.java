@@ -19,16 +19,23 @@ public class SignupScreenController {
             errorLabel.setVisible(true);
             return;
         }
-        App.firstName=firstNameInput.getText();
-        App.lastName=lastNameInput.getText();
+        String firstName=firstNameInput.getText();
+        String lastName=lastNameInput.getText();
+        PersistenceManager man = PersistenceManager.getInstance();
         switch(roleInput.getValue().toString()){
             case "Doctor":
+                App.setUser(new Doctor(firstName, lastName));
+                man.create(App.user);
                 App.setRoot("doctorScheduleScreen");
                 break;
             case "Patient":
+                App.setUser(new Patient(firstName, lastName));
+                man.create(App.user);
                 App.setRoot("patientScheduleScreen");
                 break;
             case "Employee":
+                App.setUser(new Employee(firstName, lastName));
+                man.create(App.user);
                 App.setRoot("employeeMenuScreen");
                 break;
         }

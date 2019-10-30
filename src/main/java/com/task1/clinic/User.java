@@ -3,6 +3,7 @@ package com.task1.clinic;
 import javafx.beans.property.SimpleStringProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @MappedSuperclass
 public abstract class User {
@@ -54,5 +55,6 @@ public abstract class User {
         return new UserBean(getFirstName(), getLastName());
     }
 
+    public abstract List<Medical> getSchedule();
 
 }

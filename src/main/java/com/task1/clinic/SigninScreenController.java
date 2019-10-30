@@ -35,6 +35,7 @@ public class SigninScreenController {
                 App.setRoot("employeeMenuScreen");
                 break;
         }
+        //TODO: check if the user doesn't exist
         //if(App.user == null) then the user doesn't exist
         // else ok
     }

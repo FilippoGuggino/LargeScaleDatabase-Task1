@@ -97,6 +97,6 @@ public class Medical {
     }
 
     public MedicalBean toBean(){
-        return new MedicalBean(doctor,patient,date);
+        return new MedicalBean(getDoctor(),getPatient(),getDate());
     }
 }

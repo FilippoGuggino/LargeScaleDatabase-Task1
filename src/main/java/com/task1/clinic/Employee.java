@@ -96,6 +96,10 @@ public class Employee extends User{
         return  preparedQuery.getResultList();
     }
 
+    public List<Medical> getSchedule(){
+        return getSchedule(null, null, new Date());
+    }
+
     public static Employee logIn(String firstName, String lastName) {
         PersistenceManager man = PersistenceManager.getInstance();
         String logQuery = "SELECT e FROM Employee e WHERE e.firstName = :fn AND e.lastName = :ln";

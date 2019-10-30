@@ -18,8 +18,8 @@ import java.util.List;
 public class App extends Application {
 
     public static Scene scene;
-    public static String firstName;
-    public static String lastName;
+
+    public static User user;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -69,6 +69,10 @@ public class App extends Application {
         List<Medical> med = e.getSchedule(pat, null,null);
         System.out.println(med.get(0).getDate());
         man.close();
+    }
+
+    public static void setUser(User user) {
+        App.user = user;
     }
 
 }

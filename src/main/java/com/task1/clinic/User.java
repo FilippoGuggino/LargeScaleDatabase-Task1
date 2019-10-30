@@ -54,5 +54,4 @@ public abstract class User {
         return new UserBean(getFirstName(), getLastName());
     }
 
-
 }

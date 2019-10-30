@@ -95,4 +95,16 @@ public class Employee extends User{
             preparedQuery.setParameter("date", byDate);
         return  preparedQuery.getResultList();
     }
+
+    public static Employee logIn(String firstName, String lastName) {
+        PersistenceManager man = PersistenceManager.getInstance();
+        String logQuery = "SELECT e FROM Employee e WHERE e.firstName = :fn AND e.lastName = :ln";
+        Query queryRes = man.read(logQuery);
+        queryRes.setParameter("fn", firstName);
+        queryRes.setParameter("ln", lastName);
+        List result = queryRes.getResultList();
+        if(result.isEmpty())
+            return null;
+        return (Employee) result.get(0);
+    }
 }

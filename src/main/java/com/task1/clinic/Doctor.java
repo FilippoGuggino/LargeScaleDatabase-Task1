@@ -41,4 +41,16 @@ public class Doctor extends User{
         return result;
     }
 
+    public static Doctor logIn(String firstName, String lastName) {
+        PersistenceManager man = PersistenceManager.getInstance();
+        String logQuery = "SELECT d FROM Doctor d WHERE d.firstName = :fn AND d.lastName = :ln";
+        Query queryRes = man.read(logQuery);
+        queryRes.setParameter("fn", firstName);
+        queryRes.setParameter("ln", lastName);
+        List result = queryRes.getResultList();
+        if(result.isEmpty())
+            return null;
+        return (Doctor) result.get(0);
+    }
+
 }

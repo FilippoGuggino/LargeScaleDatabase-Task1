@@ -24,27 +24,36 @@ public class SignupScreenController {
         PersistenceManager man = PersistenceManager.getInstance();
         switch(roleInput.getValue().toString()){
             case "Doctor":
-                App.setUser(new Doctor(firstName, lastName));
+                //preventive login to check if user already exists
+                App.setUser(Doctor.logIn(firstName,lastName));
                 if(App.user == null){
+                    App.setUser(new Doctor(firstName, lastName));
                     man.create(App.user);
                     App.setRoot("doctorScheduleScreen");
                 }
                 break;
             case "Patient":
-                App.setUser(new Patient(firstName, lastName));
+                //preventive login to check if user already exists
+                App.setUser(Patient.logIn(firstName,lastName));
                 if(App.user == null){
+                    App.setUser(new Patient(firstName, lastName));
                     man.create(App.user);
                     App.setRoot("patientScheduleScreen");
                 }
                 break;
             case "Employee":
-                App.setUser(new Employee(firstName, lastName));
+                //preventive login to check if user already exists
+                App.setUser(Employee.logIn(firstName,lastName));
                 if(App.user == null){
+                    App.setUser(new Employee(firstName, lastName));
                     man.create(App.user);
                     App.setRoot("employeeMenuScreen");
                 }
                 break;
         }
+
+        //cleaning
+        App.setUser(null);
         firstNameInput.setText("");
         lastNameInput.setText("");
         roleInput.setValue(null);

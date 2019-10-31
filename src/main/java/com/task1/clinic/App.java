@@ -41,7 +41,9 @@ public class App extends Application {
 
     public static void main(String[] args) throws ParseException {
         launch();
+
         PersistenceManager man = PersistenceManager.getInstance();
+        /*
         Patient pat = new Patient("Francesco", "Francesconi");
         man.create(pat);
         Doctor doc = new Doctor("Carlo", "Vallati");
@@ -68,6 +70,8 @@ public class App extends Application {
         e.handleMoveRequest(m, true);
         List<Medical> med = e.getSchedule(pat, null,null);
         System.out.println(med.get(0).getDate());
+
+         */
         man.close();
     }
 

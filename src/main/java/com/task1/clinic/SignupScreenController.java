@@ -27,6 +27,7 @@ public class SignupScreenController {
                 //preventive login to check if user already exists
                 App.setUser(Doctor.logIn(firstName,lastName));
                 if(App.user == null){
+                    //user didn't exist, proceeding with sign up:
                     App.setUser(new Doctor(firstName, lastName));
                     man.create(App.user);
                     App.setRoot("doctorScheduleScreen");
@@ -36,6 +37,7 @@ public class SignupScreenController {
                 //preventive login to check if user already exists
                 App.setUser(Patient.logIn(firstName,lastName));
                 if(App.user == null){
+                    //user didn't exist, proceeding with sign up:
                     App.setUser(new Patient(firstName, lastName));
                     man.create(App.user);
                     App.setRoot("patientScheduleScreen");
@@ -45,6 +47,7 @@ public class SignupScreenController {
                 //preventive login to check if user already exists
                 App.setUser(Employee.logIn(firstName,lastName));
                 if(App.user == null){
+                    //user didn't exist, proceeding with sign up:
                     App.setUser(new Employee(firstName, lastName));
                     man.create(App.user);
                     App.setRoot("employeeMenuScreen");
@@ -52,7 +55,7 @@ public class SignupScreenController {
                 break;
         }
 
-        //cleaning
+        //user did exist, cleaning and showing error message:
         App.setUser(null);
         firstNameInput.setText("");
         lastNameInput.setText("");

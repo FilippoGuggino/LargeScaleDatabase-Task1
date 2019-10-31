@@ -84,7 +84,7 @@ public class Employee extends User{
         if(byDate != null){
             if(needAnd)
                 query += " and";
-            query += " and m.date = :date";
+            query += " m.date = :date";
         }
         TypedQuery<Medical> preparedQuery = man.readMedicals(query);
         if(patient!=null)

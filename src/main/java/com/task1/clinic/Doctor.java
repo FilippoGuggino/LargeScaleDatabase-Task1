@@ -29,6 +29,7 @@ public class Doctor extends User{
     }
 
     public List<Medical> getSchedule(Date byDate) {
+        System.out.println(byDate.toString());
         PersistenceManager Man = PersistenceManager.getInstance();
         String query = "SELECT m\n" +
                 "FROM Medical m\n" +

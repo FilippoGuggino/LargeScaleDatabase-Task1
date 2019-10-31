@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 
 public class EmployeeRequestsScreenController {
 
+
     @FXML
     private void switchToInitial() throws IOException {
         App.setRoot("initialScreen");

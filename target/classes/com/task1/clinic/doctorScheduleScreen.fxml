@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -31,8 +30,8 @@
       </Label>
       <HBox alignment="CENTER" prefHeight="25.0" prefWidth="284.0">
          <children>
-            <DatePicker fx:id="selectedDate" promptText="Date (YYYY-MM-DD)" />
-            <Button mnemonicParsing="false" onAction="#updateSchedule" text="GO">
+            <DatePicker fx:id="selectedDate" editable="false" promptText="Date (YYYY-MM-DD)" />
+            <Button mnemonicParsing="false" onAction="#updateTable" text="GO">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

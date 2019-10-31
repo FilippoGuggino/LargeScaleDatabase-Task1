@@ -27,7 +27,17 @@ public class DoctorScheduleScreenController implements Initializable  {
     @Override
     public void initialize(URL location, ResourceBundle resources){
         selectedDate.setValue(LocalDate.now());
-        try{updateSchedule();}
+        TableColumn nameCol = new TableColumn("Patient first name");
+        nameCol.setCellValueFactory(
+                new PropertyValueFactory<UserBean,String>("firstName")
+        );
+        TableColumn surnameCol = new TableColumn("Patient last name");
+        surnameCol.setCellValueFactory(
+                new PropertyValueFactory<UserBean,String>("lastName")
+        );
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.getColumns().addAll(nameCol, surnameCol);
+        try{updateTable();}
         catch(IOException e){
             e.printStackTrace();
         }
@@ -37,7 +47,7 @@ public class DoctorScheduleScreenController implements Initializable  {
         App.setRoot("initialScreen");
     }
     @FXML
-    private void updateSchedule() throws IOException {
+    private void updateTable() throws IOException {
         if(selectedDate.getValue()==null){
             errorLabel.setText("Select a date!");
             errorLabel.setVisible(true);
@@ -45,21 +55,13 @@ public class DoctorScheduleScreenController implements Initializable  {
         else{
             errorLabel.setVisible(false);
             labelScheduleDate.setText(selectedDate.getValue()+" SCHEDULE: ");
-            ObservableList<UserBean> mm= FXCollections.observableArrayList(
-                    );
-
-            TableColumn nameCol = new TableColumn("Patient first name");
-            nameCol.setCellValueFactory(
-                    new PropertyValueFactory<UserBean,String>("firstName")
-            );
-            TableColumn surnameCol = new TableColumn("Patient last name");
-            surnameCol.setCellValueFactory(
-                    new PropertyValueFactory<UserBean,String>("lastName")
-            );
-            tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-            tableView.setItems(mm);
-            tableView.getColumns().addAll(nameCol, surnameCol);
-
+            ObservableList<UserBean> observablePatients=FXCollections.observableArrayList();
+            Doctor d=(Doctor)App.user;
+            Date date = java.sql.Date.valueOf(selectedDate.getValue());
+            for(Medical m:d.getSchedule(date))
+                observablePatients.add(m.getPatient().toBean());
+            tableView.setItems(observablePatients);
         }
     }
+
 }

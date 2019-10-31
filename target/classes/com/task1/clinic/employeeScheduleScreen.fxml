@@ -4,14 +4,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="587.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.EmployeeScheduleScreenController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="598.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.EmployeeScheduleScreenController">
     <children>
         <Label text="SCHEDULES" textAlignment="CENTER">
             <font>
@@ -32,57 +31,61 @@
             </Label>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="25.0" prefWidth="284.0">
+      <HBox alignment="CENTER" prefHeight="25.0" prefWidth="550.0">
          <children>
-            <TextField id="firstnameInputFilter" prefHeight="25.0" prefWidth="134.0" promptText="Doctor name surname">
+            <TextField fx:id="patFirstNameFilter" prefHeight="25.0" prefWidth="72.0" promptText="Pat_name">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <TextField id="lastnameInputFilter" prefHeight="25.0" prefWidth="136.0" promptText="Patient name surname">
+            <TextField fx:id="patLastNameFilter" prefHeight="25.0" prefWidth="84.0" promptText="Pat_surname">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <DatePicker id="selectedDateFilter" prefHeight="25.0" prefWidth="144.0" promptText="Date" />
-            <Button mnemonicParsing="false" onAction="#addMedical" text="Apply">
+            <TextField fx:id="docFirstNameFilter" prefHeight="25.0" prefWidth="72.0" promptText="Doc_name">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </TextField>
+            <TextField fx:id="docLastNameFilter" prefHeight="25.0" prefWidth="88.0" promptText="Doc_surname">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </TextField>
+            <DatePicker fx:id="selectedDateFilter" prefHeight="25.0" prefWidth="144.0" promptText="Date (yyyy-mm-dd)" />
+            <Button fx:id="applyButton" mnemonicParsing="false" onAction="#applyFilters" prefHeight="25.0" prefWidth="54.0" text="APPLY">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-        <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="354.0">
-            <columns>
-                <TableColumn prefWidth="114.0" text="Doctor" />
-                <TableColumn prefWidth="93.0" text="Patient" />
-                <TableColumn prefWidth="87.0" text="Date" />
-                <TableColumn minWidth="4.0" prefWidth="59.0" text="Delete" />
-            </columns>
+        <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="354.0">
         </TableView>
         <HBox alignment="CENTER" prefHeight="25.0" prefWidth="550.0">
             <children>
-            <TextField id="patFirstnameInput" prefHeight="25.0" prefWidth="72.0" promptText="Pat_name">
+            <TextField fx:id="patFirstnameInput" prefHeight="25.0" prefWidth="72.0" promptText="Pat_name">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <TextField id="patLastnameInput" prefHeight="25.0" prefWidth="84.0" promptText="Pat_surname">
+            <TextField fx:id="patLastnameInput" prefHeight="25.0" prefWidth="84.0" promptText="Pat_surname">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-                <TextField id="docFirstnameInput" prefHeight="25.0" prefWidth="72.0" promptText="Doc_name">
+                <TextField fx:id="docFirstnameInput" prefHeight="25.0" prefWidth="72.0" promptText="Doc_name">
                     <HBox.margin>
                         <Insets right="10.0" />
                     </HBox.margin>
                 </TextField>
-                <TextField id="docLastnameInput" prefHeight="25.0" prefWidth="88.0" promptText="Doc_surname">
+                <TextField fx:id="docLastnameInput" prefHeight="25.0" prefWidth="88.0" promptText="Doc_surname">
                     <HBox.margin>
                         <Insets right="10.0" />
                     </HBox.margin>
                 </TextField>
-                <DatePicker id="selectedDate" prefHeight="25.0" prefWidth="144.0" promptText="Date (yyyy-mm-dd)" />
+                <DatePicker fx:id="selectedDate" prefHeight="25.0" prefWidth="144.0" promptText="Date (yyyy-mm-dd)" />
                 <Button mnemonicParsing="false" onAction="#addMedical" text="ADD">
                     <HBox.margin>
                         <Insets left="10.0" />

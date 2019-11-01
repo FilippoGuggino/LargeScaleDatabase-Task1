@@ -50,7 +50,7 @@ public class Patient extends User{
         String query = "SELECT m\n" +
                        "FROM Medical m\n" +
                        "WHERE m.patient.idCode = :idCode\n" +
-         //              "AND m.approved = true\n" +
+         //              "AND m.approved = true\n" + TODO: remove this comment
                        "ORDER BY m.date";
         TypedQuery<Medical> preparedQuery = man.readMedicals(query);
         preparedQuery.setParameter("idCode", this.getIdCode());

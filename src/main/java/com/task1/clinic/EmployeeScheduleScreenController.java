@@ -19,7 +19,7 @@ public class EmployeeScheduleScreenController implements Initializable {
 
     @FXML
     private TableView tableView;
-    private ArrayList<Medical> medicalRows=new ArrayList<>();
+    private ArrayList<Medical> medicalRows=new ArrayList<>(); //List that stores the medicals for each row.
 
     @FXML
     private TextField patFirstNameFilter;
@@ -64,9 +64,9 @@ public class EmployeeScheduleScreenController implements Initializable {
                 new PropertyValueFactory<MedicalBean,String>("medicalDate")
         );
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableView.getColumns().addAll(docNameCol, docSurnameCol,patNameCol, patSurnameCol,medicalDateCol);
+        tableView.getColumns().addAll(patNameCol, patSurnameCol,docNameCol, docSurnameCol,medicalDateCol);
         try{
-            updateTable();
+            updateTable(null,null,null);
         }
         catch(IOException e){
             e.printStackTrace();
@@ -84,35 +84,52 @@ public class EmployeeScheduleScreenController implements Initializable {
         App.setRoot("initialScreen");
     }
     @FXML
-    private void updateTable() throws IOException {
+    private void updateTable(Patient p,Doctor d,Date date) throws IOException {
         medicalRows= (ArrayList<Medical>) App.user.getSchedule();
         ObservableList<MedicalBean> observableMedicals= FXCollections.observableArrayList();
-        for(Medical m:App.user.getSchedule())
-            observableMedicals.add(m.toBean());
+        Employee e=(Employee)App.user;
+        if(p==null && d==null && date==null){ //Initializing tableView
+            for(Medical m:e.getSchedule()){
+                observableMedicals.add(m.toBean());
+                medicalRows.add(m);
+            }
+        }
+        else
+            for(Medical m:e.getSchedule(p,d,date)){ //Applying filters
+                observableMedicals.add(m.toBean());
+                medicalRows.add(m);
+            }
         tableView.setItems(observableMedicals);
     }
     @FXML
-    private void applyFilters(){
+    private void applyFilters()throws IOException{
+        //check if the user selects at least one field
         if(selectedDateFilter.getValue()==null && patFirstNameFilter.getText().equals("")&&patLastNameFilter.getText().equals("") &&docFirstNameFilter.getText().equals("")&&docLastNameFilter.getText().equals("")){
             errorLabel.setText("Select at least one filter!");
             errorLabel.setVisible(true);
             return;
         }
-        Patient p;
-        Doctor d;
-        if(patFirstNameFilter.getText().equals(""))
-            p=null;
+        Date date;
+        Patient p=Patient.logIn(patFirstNameFilter.getText(),patLastNameFilter.getText());
+        Doctor d=Doctor.logIn(docFirstNameFilter.getText(),docLastNameFilter.getText());
+        //check if the user selects a non existing patient
+        if(p==null && (!patFirstNameFilter.getText().equals("") || !patLastNameFilter.getText().equals(""))){
+            errorLabel.setText("Selected patient doesn't exist.");
+            errorLabel.setVisible(true);
+            return;
+        }
+        //check if the user selects a non existing doctor
+        if(d==null && (!docFirstNameFilter.getText().equals("") || !docLastNameFilter.getText().equals(""))){
+            errorLabel.setText("Selected doctor doesn't exist.");
+            errorLabel.setVisible(true);
+            return;
+        }
+        errorLabel.setVisible(false);
+        if(selectedDateFilter.getValue()==null)
+            date=null;
         else
-            p=new Patient(patFirstNameFilter.getText(),patLastNameFilter.getText());
-        if(docFirstNameFilter.getText().equals(""))
-            d=null;
-        else
-            d=new Doctor(docFirstNameFilter.getText(),docLastNameFilter.getText());
-        ObservableList<MedicalBean> observableMedicals= FXCollections.observableArrayList();
-        Employee e=(Employee)App.user;
-        Date date = java.sql.Date.valueOf(selectedDateFilter.getValue());
-        for(Medical m:e.getSchedule(p,d,date))
-            observableMedicals.add(m.toBean());
+            date = java.sql.Date.valueOf(selectedDateFilter.getValue());
+        updateTable(p,d,date);
     }
     @FXML
     private void addMedical() throws IOException {

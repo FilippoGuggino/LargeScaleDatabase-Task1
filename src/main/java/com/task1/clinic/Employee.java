@@ -1,6 +1,7 @@
 package com.task1.clinic;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -71,7 +72,6 @@ public class Employee extends User{
         PersistenceManager man = PersistenceManager.getInstance();
         boolean needAnd = false;
         String query = "SELECT m FROM Medical m WHERE";
-
         if(patient != null){
             query += " m.patient = :idPatient";
             needAnd = true;
@@ -80,6 +80,7 @@ public class Employee extends User{
             if(needAnd)
                 query += " and";
             query += " m.doctor = :idDoctor";
+            needAnd = true;
         }
         if(byDate != null){
             if(needAnd)
@@ -97,7 +98,8 @@ public class Employee extends User{
     }
 
     public List<Medical> getSchedule(){
-        return getSchedule(null, null, new Date());
+        Date date = java.sql.Date.valueOf(LocalDate.now());
+        return getSchedule(null, null,date);
     }
 
     public static Employee logIn(String firstName, String lastName) {

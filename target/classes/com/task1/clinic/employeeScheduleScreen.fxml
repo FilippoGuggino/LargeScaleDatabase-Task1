@@ -53,7 +53,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <DatePicker fx:id="selectedDateFilter" prefHeight="25.0" prefWidth="144.0" promptText="Date (yyyy-mm-dd)" />
+            <DatePicker fx:id="selectedDateFilter" editable="false" prefHeight="25.0" prefWidth="144.0" promptText="Date (yyyy-mm-dd)" />
             <Button fx:id="applyButton" mnemonicParsing="false" onAction="#applyFilters" prefHeight="25.0" prefWidth="54.0" text="APPLY">
                <HBox.margin>
                   <Insets left="10.0" />
@@ -61,7 +61,7 @@
             </Button>
          </children>
       </HBox>
-        <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="354.0">
+        <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="504.0">
         </TableView>
         <HBox alignment="CENTER" prefHeight="25.0" prefWidth="550.0">
             <children>
@@ -85,7 +85,7 @@
                         <Insets right="10.0" />
                     </HBox.margin>
                 </TextField>
-                <DatePicker fx:id="selectedDate" prefHeight="25.0" prefWidth="144.0" promptText="Date (yyyy-mm-dd)" />
+                <DatePicker fx:id="selectedDate" editable="false" prefHeight="25.0" prefWidth="144.0" promptText="Date (yyyy-mm-dd)" />
                 <Button mnemonicParsing="false" onAction="#addMedical" text="ADD">
                     <HBox.margin>
                         <Insets left="10.0" />
@@ -93,7 +93,7 @@
                 </Button>
             </children>
         </HBox>
-        <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="129.0" textFill="#ff0303" visible="false" />
+        <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="299.0" textFill="#ff0303" visible="false" />
         <HBox prefHeight="21.0" prefWidth="497.0">
             <children>
                 <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="60.0" text="logout">

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * This is a Singleton class, used to manage all interactions with JPA.
- * an instance of this class is able to generate an Entity PersistenceManager for JPA.
+ * An instance of this class is able to generate an Entity Manager for JPA.
  * It also provides a set of public methods that make CRUD operations on the database
  * extremely simple to use.
  */
@@ -47,7 +47,7 @@ public class PersistenceManager {
 
         /*
         this EntityManager method cuts the relationship between the object and cache/database, so that
-        changes to the object doesn't affect cache/database. To attach it back there's the merge()
+        changes to the object don't affect cache/database. To attach it back there's the merge()
         method of EntityManager class.
         */
         em.detach(obj);

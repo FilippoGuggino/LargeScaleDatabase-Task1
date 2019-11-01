@@ -113,4 +113,30 @@ public class Employee extends User{
             return null;
         return (Employee) result.get(0);
     }
+
+    public List<Medical> getCreateRequests() {
+        PersistenceManager man = PersistenceManager.getInstance();
+        String query = "SELECT m\n"
+                + "FROM Medical m\n"
+                + "WHERE m.approved = false\n"
+                + "ORDER BY m.patient";
+        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
+        return  preparedQuery.getResultList();
+    }
+
+    public List<DeleteRequest> getDeleteRequests() {
+        PersistenceManager man = PersistenceManager.getInstance();
+        String query = "SELECT dr\nFROM DeleteRequest dr";
+        Query preparedQuery = man.read(query);
+        return  (List<DeleteRequest>) preparedQuery.getResultList();
+    }
+
+    public List<MoveRequest> getMoveRequests() {
+        PersistenceManager man = PersistenceManager.getInstance();
+        String query = "SELECT dr\nFROM MoveRequest dr";
+        Query preparedQuery = man.read(query);
+        return  (List<MoveRequest>) preparedQuery.getResultList();
+    }
+
+
 }

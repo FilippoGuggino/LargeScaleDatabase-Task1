@@ -93,7 +93,7 @@
                 </Button>
             </children>
         </HBox>
-        <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="299.0" textFill="#ff0303" visible="false" />
+        <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="299.0" textFill="#ff0303" visible="false" />
         <HBox prefHeight="21.0" prefWidth="497.0">
             <children>
                 <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="60.0" text="logout">

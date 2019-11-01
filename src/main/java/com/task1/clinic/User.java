@@ -1,9 +1,6 @@
 package com.task1.clinic;
 
-import javafx.beans.property.SimpleStringProperty;
-
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @MappedSuperclass

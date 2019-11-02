@@ -20,7 +20,17 @@ public class PatientScheduleScreenController implements Initializable {
     @FXML
     private TableView tableView;
     private ArrayList<Medical> medicalRows=new ArrayList<>();
-
+    private int selectedIndex;
+    @FXML
+    private TextField firstnameInput;
+    @FXML
+    private TextField lastnameInput;
+    @FXML
+    private DatePicker selectedDate;
+    @FXML
+    private DatePicker newDate;
+    @FXML
+    private Label errorLabel;
     @FXML
     private Button deleteButton;
     @FXML
@@ -51,7 +61,10 @@ public class PatientScheduleScreenController implements Initializable {
         }
         tableView.setOnMouseClicked((MouseEvent event) -> {
             if(event.getButton().equals(MouseButton.PRIMARY)){
-                System.out.println(tableView.getSelectionModel().getSelectedIndex());
+                selectedIndex=tableView.getSelectionModel().getSelectedIndex();
+                //Verify if a row is selected
+                if(selectedIndex<0)
+                    return;
                 deleteButton.setDisable(false);
                 moveButton.setDisable(false);
             }
@@ -73,42 +86,38 @@ public class PatientScheduleScreenController implements Initializable {
     }
     @FXML
     private void addMedicalRequest()throws IOException{
-        TextField firstNameInput=(TextField) App.scene.lookup("#firstnameInput");
-        TextField lastNameInput=(TextField) App.scene.lookup("#lastnameInput");
-        DatePicker selectedDate=(DatePicker)App.scene.lookup("#selectedDate");
-        Label errorLabel=(Label) App.scene.lookup("#errorLabel");
-        if(selectedDate.getValue()==null|| firstNameInput.getText().equals("")||lastNameInput.getText().equals("")){
+        if(selectedDate.getValue()==null|| firstnameInput.getText().equals("")||lastnameInput.getText().equals("")){
             errorLabel.setText("All fields must be filled!");
             errorLabel.setVisible(true);
         }
         else{
-            errorLabel.setVisible(false);
-            Doctor d=new Doctor(firstNameInput.getText(),lastNameInput.getText());
+            Doctor d=Doctor.logIn(firstnameInput.getText(),lastnameInput.getText());
+            if(d==null) {
+                errorLabel.setVisible(true);
+                errorLabel.setText("Selected doctor doesn't exist!");
+                return;
+            }
             Patient p=(Patient)App.user;
             Date date = java.sql.Date.valueOf(selectedDate.getValue());
             p.createMedicalRequest(d,date);
-            firstNameInput.setText("");
-            lastNameInput.setText("");
+            firstnameInput.setText("");
+            lastnameInput.setText("");
         }
     }
     @FXML
     private void addDeleteRequest()throws IOException{
-        int selectedIndex= tableView.getSelectionModel().getSelectedIndex();
-        System.out.println(selectedIndex);
         Medical medicalToDelete=medicalRows.get(selectedIndex);
         Patient p=(Patient)App.user;
         p.deleteRequest(medicalToDelete);
     }
     @FXML
     private void addMoveRequest()throws IOException{
-        int selectedIndex= tableView.getSelectionModel().getSelectedIndex();
-        DatePicker newDate=(DatePicker)App.scene.lookup("#newDate");
-        Label errorLabel2=(Label)App.scene.lookup("#errorLabel2");
         if(newDate.getValue()==null){
-            errorLabel2.setText("fill all the fields!");
-            errorLabel2.setVisible(false);
+            errorLabel.setText("fill all the fields!");
+            errorLabel.setVisible(true);
             return;
         }
+        errorLabel.setVisible(false);
         Medical medicalToUpdate=medicalRows.get(selectedIndex);
         Patient p=(Patient)App.user;
         Date date = java.sql.Date.valueOf(newDate.getValue());

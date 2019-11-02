@@ -20,7 +20,14 @@ public class PatientScheduleScreenController implements Initializable {
     @FXML
     private TableView tableView;
     private ArrayList<Medical> medicalRows=new ArrayList<>();
-
+    @FXML
+    private TextField firstNameInput;
+    @FXML
+    private TextField lastNameInput;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    DatePicker selectedDate;
     @FXML
     private Button deleteButton;
     @FXML
@@ -73,10 +80,6 @@ public class PatientScheduleScreenController implements Initializable {
     }
     @FXML
     private void addMedicalRequest()throws IOException{
-        TextField firstNameInput=(TextField) App.scene.lookup("#firstnameInput");
-        TextField lastNameInput=(TextField) App.scene.lookup("#lastnameInput");
-        DatePicker selectedDate=(DatePicker)App.scene.lookup("#selectedDate");
-        Label errorLabel=(Label) App.scene.lookup("#errorLabel");
         if(selectedDate.getValue()==null|| firstNameInput.getText().equals("")||lastNameInput.getText().equals("")){
             errorLabel.setText("All fields must be filled!");
             errorLabel.setVisible(true);

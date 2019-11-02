@@ -62,7 +62,6 @@ public class PatientScheduleScreenController implements Initializable {
         tableView.setOnMouseClicked((MouseEvent event) -> {
             if(event.getButton().equals(MouseButton.PRIMARY)){
                 selectedIndex=tableView.getSelectionModel().getSelectedIndex();
-                System.out.println(selectedIndex);
                 //Verify if a row is selected
                 if(selectedIndex<0)
                     return;
@@ -107,7 +106,6 @@ public class PatientScheduleScreenController implements Initializable {
     }
     @FXML
     private void addDeleteRequest()throws IOException{
-        System.out.println(selectedIndex);
         Medical medicalToDelete=medicalRows.get(selectedIndex);
         Patient p=(Patient)App.user;
         p.deleteRequest(medicalToDelete);
@@ -120,8 +118,6 @@ public class PatientScheduleScreenController implements Initializable {
             return;
         }
         errorLabel.setVisible(false);
-        for(Medical m:medicalRows)
-            System.out.println("id:"+m.getIdCode());
         Medical medicalToUpdate=medicalRows.get(selectedIndex);
         Patient p=(Patient)App.user;
         Date date = java.sql.Date.valueOf(newDate.getValue());

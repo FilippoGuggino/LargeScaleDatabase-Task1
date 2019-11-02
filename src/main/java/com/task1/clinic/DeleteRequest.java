@@ -11,9 +11,11 @@ import java.util.Objects;
 @Table(name = "delete_request")
 public class DeleteRequest implements Serializable {
     @Id
+    private int id;
+
+    @MapsId
     @OneToOne
-   // @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
-    @PrimaryKeyJoinColumn(name = "medicalFK", referencedColumnName = "idCode")
+    @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
     private Medical medical;
 
     public DeleteRequest(Medical medical) {

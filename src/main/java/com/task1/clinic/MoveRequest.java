@@ -9,6 +9,9 @@ import java.util.Objects;
 @Table(name = "move_request")
 public class MoveRequest implements Serializable {
     @Id
+    int id;
+
+    @MapsId
     @OneToOne
     @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
     public Medical medical;

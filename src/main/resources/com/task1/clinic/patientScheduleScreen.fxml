@@ -23,17 +23,17 @@
         </TableView>
         <HBox alignment="CENTER" prefHeight="25.0" prefWidth="284.0">
             <children>
-            <TextField id="firstnameInput" prefHeight="25.0" prefWidth="107.0" promptText="Doc_name">
+            <TextField fx:id="firstnameInput" prefHeight="25.0" prefWidth="107.0" promptText="Doc_name">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <TextField id="lastnameInput" prefHeight="25.0" prefWidth="104.0" promptText="Doc_surname">
+            <TextField fx:id="lastnameInput" prefHeight="25.0" prefWidth="104.0" promptText="Doc_surname">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <DatePicker id="selectedDate" editable="false" prefHeight="25.0" prefWidth="147.0" promptText="Date (yyyy-mm-dd)" />
+            <DatePicker fx:id="selectedDate" editable="false" prefHeight="25.0" prefWidth="147.0" promptText="Date (yyyy-mm-dd)" />
                 <Button mnemonicParsing="false" onAction="#addMedicalRequest" prefHeight="25.0" prefWidth="60.0" text="ADD">
                     <HBox.margin>
                         <Insets left="10.0" />
@@ -48,7 +48,7 @@
                   <Insets left="230.0" />
                </HBox.margin>
             </DatePicker>
-            <Button fx:id="deleteButton" onAction="#addDeleteRequest" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="MOVE">
+            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#addDeleteRequest" prefHeight="25.0" prefWidth="60.0" text="MOVE">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -57,14 +57,14 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="moveButton" onAction="#addMoveRequest" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="DELETE">
+            <Button fx:id="moveButton" disable="true" mnemonicParsing="false" onAction="#addMoveRequest" prefHeight="25.0" prefWidth="60.0" text="DELETE">
                <HBox.margin>
                   <Insets left="388.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-        <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="129.0" textFill="#ff0303" visible="false" />
+        <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="247.0" textFill="#ff0303" visible="false" />
         <HBox prefHeight="21.0" prefWidth="497.0">
             <children>
                 <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="60.0" text="logout">

@@ -21,13 +21,13 @@ public class PatientScheduleScreenController implements Initializable {
     private TableView tableView;
     private ArrayList<Medical> medicalRows=new ArrayList<>();
     @FXML
-    private TextField firstNameInput;
+    private TextField firstnameInput;
     @FXML
-    private TextField lastNameInput;
+    private TextField lastnameInput;
+    @FXML
+    private DatePicker selectedDate;
     @FXML
     private Label errorLabel;
-    @FXML
-    DatePicker selectedDate;
     @FXML
     private Button deleteButton;
     @FXML
@@ -80,18 +80,22 @@ public class PatientScheduleScreenController implements Initializable {
     }
     @FXML
     private void addMedicalRequest()throws IOException{
-        if(selectedDate.getValue()==null|| firstNameInput.getText().equals("")||lastNameInput.getText().equals("")){
+        if(selectedDate.getValue()==null|| firstnameInput.getText().equals("")||lastnameInput.getText().equals("")){
             errorLabel.setText("All fields must be filled!");
             errorLabel.setVisible(true);
         }
         else{
-            errorLabel.setVisible(false);
-            Doctor d=new Doctor(firstNameInput.getText(),lastNameInput.getText());
+            Doctor d=Doctor.logIn(firstnameInput.getText(),lastnameInput.getText());
+            if(d==null) {
+                errorLabel.setVisible(true);
+                errorLabel.setText("Selected doctor doesn't exist!");
+                return;
+            }
             Patient p=(Patient)App.user;
             Date date = java.sql.Date.valueOf(selectedDate.getValue());
             p.createMedicalRequest(d,date);
-            firstNameInput.setText("");
-            lastNameInput.setText("");
+            firstnameInput.setText("");
+            lastnameInput.setText("");
         }
     }
     @FXML

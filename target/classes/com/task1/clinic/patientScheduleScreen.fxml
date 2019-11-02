@@ -23,17 +23,17 @@
         </TableView>
         <HBox alignment="CENTER" prefHeight="25.0" prefWidth="284.0">
             <children>
-            <TextField id="firstnameInput" prefHeight="25.0" prefWidth="107.0" promptText="Doc_name">
+            <TextField fx:id="firstnameInput" prefHeight="25.0" prefWidth="107.0" promptText="Doc_name">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <TextField id="lastnameInput" prefHeight="25.0" prefWidth="104.0" promptText="Doc_surname">
+            <TextField fx:id="lastnameInput" prefHeight="25.0" prefWidth="104.0" promptText="Doc_surname">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <DatePicker id="selectedDate" editable="false" prefHeight="25.0" prefWidth="147.0" promptText="Date (yyyy-mm-dd)" />
+            <DatePicker fx:id="selectedDate" editable="false" prefHeight="25.0" prefWidth="147.0" promptText="Date (yyyy-mm-dd)" />
                 <Button mnemonicParsing="false" onAction="#addMedicalRequest" prefHeight="25.0" prefWidth="60.0" text="ADD">
                     <HBox.margin>
                         <Insets left="10.0" />

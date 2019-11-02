@@ -62,8 +62,12 @@ public class Employee extends User{
 
     public boolean handleCreateRequest(Medical med, boolean approved){
         PersistenceManager man = PersistenceManager.getInstance();
-        med.setApproved(approved);
-        man.update(med);
+        if(approved) {
+            med.setApproved(true);
+            man.update(med);
+            return true;
+        }
+        man.delete(med);
         return true;
     }
 

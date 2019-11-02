@@ -43,12 +43,12 @@
         </HBox>
       <HBox alignment="CENTER" prefHeight="18.0" prefWidth="486.0">
          <children>
-            <DatePicker editable="false" prefHeight="25.0" prefWidth="147.0" promptText="Date (yyyy-mm-dd)">
+            <DatePicker fx:id="newDate"  editable="false" prefHeight="25.0" prefWidth="147.0" promptText="Date (yyyy-mm-dd)">
                <HBox.margin>
                   <Insets left="230.0" />
                </HBox.margin>
             </DatePicker>
-            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#addDeleteRequest" prefHeight="25.0" prefWidth="60.0" text="MOVE">
+            <Button fx:id="moveButton" disable="true" mnemonicParsing="false" onAction="#addMoveRequest" prefHeight="25.0" prefWidth="60.0" text="MOVE">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -57,7 +57,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="moveButton" disable="true" mnemonicParsing="false" onAction="#addMoveRequest" prefHeight="25.0" prefWidth="60.0" text="DELETE">
+            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#addDeleteRequest" prefHeight="25.0" prefWidth="60.0" text="DELETE">
                <HBox.margin>
                   <Insets left="388.0" />
                </HBox.margin>

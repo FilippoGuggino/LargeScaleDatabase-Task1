@@ -20,12 +20,15 @@ public class PatientScheduleScreenController implements Initializable {
     @FXML
     private TableView tableView;
     private ArrayList<Medical> medicalRows=new ArrayList<>();
+    private int selectedIndex;
     @FXML
     private TextField firstnameInput;
     @FXML
     private TextField lastnameInput;
     @FXML
     private DatePicker selectedDate;
+    @FXML
+    private DatePicker newDate;
     @FXML
     private Label errorLabel;
     @FXML
@@ -58,7 +61,11 @@ public class PatientScheduleScreenController implements Initializable {
         }
         tableView.setOnMouseClicked((MouseEvent event) -> {
             if(event.getButton().equals(MouseButton.PRIMARY)){
-                System.out.println(tableView.getSelectionModel().getSelectedIndex());
+                selectedIndex=tableView.getSelectionModel().getSelectedIndex();
+                System.out.println(selectedIndex);
+                //Verify if a row is selected
+                if(selectedIndex<0)
+                    return;
                 deleteButton.setDisable(false);
                 moveButton.setDisable(false);
             }
@@ -100,7 +107,6 @@ public class PatientScheduleScreenController implements Initializable {
     }
     @FXML
     private void addDeleteRequest()throws IOException{
-        int selectedIndex= tableView.getSelectionModel().getSelectedIndex();
         System.out.println(selectedIndex);
         Medical medicalToDelete=medicalRows.get(selectedIndex);
         Patient p=(Patient)App.user;
@@ -108,14 +114,14 @@ public class PatientScheduleScreenController implements Initializable {
     }
     @FXML
     private void addMoveRequest()throws IOException{
-        int selectedIndex= tableView.getSelectionModel().getSelectedIndex();
-        DatePicker newDate=(DatePicker)App.scene.lookup("#newDate");
-        Label errorLabel2=(Label)App.scene.lookup("#errorLabel2");
         if(newDate.getValue()==null){
-            errorLabel2.setText("fill all the fields!");
-            errorLabel2.setVisible(false);
+            errorLabel.setText("fill all the fields!");
+            errorLabel.setVisible(true);
             return;
         }
+        errorLabel.setVisible(false);
+        for(Medical m:medicalRows)
+            System.out.println("id:"+m.getIdCode());
         Medical medicalToUpdate=medicalRows.get(selectedIndex);
         Patient p=(Patient)App.user;
         Date date = java.sql.Date.valueOf(newDate.getValue());

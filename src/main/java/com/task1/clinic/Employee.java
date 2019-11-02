@@ -104,7 +104,6 @@ public class Employee extends User{
         if(approved) {
             req.medical.setDate(req.getNewDate());
             man.update(req.getMedical());
-            man.delete(req);
         }
         man.delete(req);
         return true;

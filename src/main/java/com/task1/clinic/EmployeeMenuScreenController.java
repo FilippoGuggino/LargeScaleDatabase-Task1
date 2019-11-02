@@ -18,21 +18,19 @@ public class EmployeeMenuScreenController {
     }
     @FXML
     private void switchToNewMedRequestsScreen() throws IOException {
+        //Setting static int requestType=0 means that the visualized requests regard new medicals.
+        App.requestType=0;
         App.setRoot("employeeRequestsScreen");
-        Label requestTypeLabel=(Label)App.scene.lookup("#requestTypeLabel");
-        requestTypeLabel.setText("New medical requests");
     }
     @FXML
     private void switchToDeleteRequestsScreen() throws IOException {
+        App.requestType=1;
         App.setRoot("employeeRequestsScreen");
-        Label requestTypeLabel=(Label)App.scene.lookup("#requestTypeLabel");
-        requestTypeLabel.setText("Delete requests");
     }
     @FXML
     private void switchToMoveRequestsScreen() throws IOException {
+        App.requestType=2;
         App.setRoot("employeeRequestsScreen");
-        Label requestTypeLabel=(Label)App.scene.lookup("#requestTypeLabel");
-        requestTypeLabel.setText("Move requests");
     }
 
 }

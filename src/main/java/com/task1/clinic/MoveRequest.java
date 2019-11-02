@@ -9,6 +9,9 @@ import java.util.Objects;
 @Table(name = "move_request")
 public class MoveRequest implements Serializable {
     @Id
+    int id;
+
+    @MapsId
     @OneToOne
     @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
     public Medical medical;
@@ -55,4 +58,6 @@ public class MoveRequest implements Serializable {
     public int hashCode() {
         return Objects.hash(medical, newDate);
     }
+
+    public MedicalBean toBean() {return new MedicalBean(medical.getDoctor(),medical.getPatient(),medical.getDate(),newDate);}
 }

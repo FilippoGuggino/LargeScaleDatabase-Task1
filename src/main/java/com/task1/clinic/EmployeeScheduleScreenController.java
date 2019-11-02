@@ -85,7 +85,7 @@ public class EmployeeScheduleScreenController implements Initializable {
     }
     @FXML
     private void updateTable(Patient p,Doctor d,Date date) throws IOException {
-        medicalRows= (ArrayList<Medical>) App.user.getSchedule();
+        medicalRows.clear();
         ObservableList<MedicalBean> observableMedicals= FXCollections.observableArrayList();
         Employee e=(Employee)App.user;
         if(p==null && d==null && date==null){ //Initializing tableView

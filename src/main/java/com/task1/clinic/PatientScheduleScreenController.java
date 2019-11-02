@@ -63,12 +63,14 @@ public class PatientScheduleScreenController implements Initializable {
     }
     @FXML
     private void updateTable() throws IOException {
-        medicalRows= (ArrayList<Medical>) App.user.getSchedule();
+        medicalRows.clear();
         ObservableList<MedicalBean> observableMedicals= FXCollections.observableArrayList();
-        for(Medical m:App.user.getSchedule())
+        for(Medical m:App.user.getSchedule()) {
             observableMedicals.add(m.toBean());
-        tableView.setItems(observableMedicals);
+            medicalRows.add(m);
         }
+        tableView.setItems(observableMedicals);
+    }
     @FXML
     private void addMedicalRequest()throws IOException{
         TextField firstNameInput=(TextField) App.scene.lookup("#firstnameInput");

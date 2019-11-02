@@ -11,6 +11,9 @@ import java.util.Objects;
 @Table(name = "delete_request")
 public class DeleteRequest implements Serializable {
     @Id
+    private int id;
+
+    @MapsId
     @OneToOne
     @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
     private Medical medical;
@@ -43,4 +46,6 @@ public class DeleteRequest implements Serializable {
     public int hashCode() {
         return Objects.hash(medical);
     }
+
+    public MedicalBean toBean(){ return new MedicalBean(medical.getDoctor(),medical.getPatient(),medical.getDate());}
 }

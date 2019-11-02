@@ -38,6 +38,11 @@ public class Doctor extends User{
         return medicals;
     }
 
+    /**
+     * ??
+     * @returns ??
+     */
+
     public void setMedicals(Set<Medical> medicals) {
         this.medicals = medicals;
     }

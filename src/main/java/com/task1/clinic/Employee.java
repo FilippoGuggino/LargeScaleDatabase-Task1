@@ -83,12 +83,7 @@ public class Employee extends User{
     public boolean handleDeleteRequest(DeleteRequest del, boolean approved){
         PersistenceManager man = PersistenceManager.getInstance();
         if(approved){
-            String query = "SELECT d.medical\n" +
-                    "FROM DeleteRequest d\n" +
-                    "INNER JOIN d.medical\n";
-            TypedQuery<Medical> preparedQuery = man.readMedicals(query);
-            List<Medical> result = preparedQuery.getResultList();
-            man.delete(result.get(0));
+            man.delete(del.getMedical());
         }
         else{
             man.delete(del);
@@ -107,14 +102,9 @@ public class Employee extends User{
     public boolean handleMoveRequest(MoveRequest req, boolean approved){
         PersistenceManager man = PersistenceManager.getInstance();
         if(approved) {
-            String query = "SELECT d.medical\n" +
-                    "FROM DeleteRequest d\n" +
-                    "INNER JOIN d.medical\n";
-            TypedQuery<Medical> preparedQuery = man.readMedicals(query);
-            List<Medical> result = preparedQuery.getResultList();
-            Medical tmp = result.get(0);
-            tmp.setDate(req.getNewDate());
-            man.update(tmp);
+            req.medical.setDate(req.getNewDate());
+            man.update(req.getMedical());
+            man.delete(req);
         }
         man.delete(req);
         return true;

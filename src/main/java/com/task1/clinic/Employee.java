@@ -56,7 +56,7 @@ public class Employee extends User{
     /**
      * Handle a Create request for a medical depending on the value of <code>approved</code>,
      * if it's true then the new medical is created, otherwise it's rejected.
-     * @param med object medical that needs to be updated
+     * @param med medical not yet approved
      * @param approved indicates if the request is approved (true) or rejected (false)
      * @return true if the request has been correctly handled
      */

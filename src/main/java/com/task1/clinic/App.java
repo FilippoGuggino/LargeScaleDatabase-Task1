@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.hibernate.sql.Delete;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -43,8 +44,8 @@ public class App extends Application {
         launch();
 
         PersistenceManager man = PersistenceManager.getInstance();
-        /*
-        Patient pat = new Patient("Francesco", "Francesconi");
+
+        /*Patient pat = new Patient("Francesco", "Francesconi");
         man.create(pat);
         Doctor doc = new Doctor("Carlo", "Vallati");
         man.create(doc);
@@ -62,6 +63,9 @@ public class App extends Application {
         man.create(e);
         DeleteRequest d = new DeleteRequest(res.get(0));
         man.create(d);
+        System.out.println(d.getMedical().getDate());
+        List<DeleteRequest> tmp = e.getDeleteRequests();
+        System.out.println(tmp.get(0).getMedical().getDate());
         String sDate1="31/12/1998";
         Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
         MoveRequest m = new MoveRequest(res.get(0), date1);
@@ -69,9 +73,8 @@ public class App extends Application {
         //e.handleDeleteRequest(d, false);
         e.handleMoveRequest(m, true);
         List<Medical> med = e.getSchedule(pat, null,null);
-        System.out.println(med.get(0).getDate());
+        System.out.println(med.get(0).getDate());*/
 
-         */
         man.close();
     }
 

@@ -55,4 +55,6 @@ public class MoveRequest implements Serializable {
     public int hashCode() {
         return Objects.hash(medical, newDate);
     }
+
+    public MedicalBean toBean() {return new MedicalBean(medical.getDoctor(),medical.getPatient(),medical.getDate(),newDate);}
 }

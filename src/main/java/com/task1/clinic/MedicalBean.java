@@ -10,7 +10,12 @@ public class MedicalBean {
     private SimpleStringProperty patientFirstName;
     private SimpleStringProperty patientLastName;
     private SimpleStringProperty medicalDate;
+    private SimpleStringProperty newMedicalDate;
 
+    public MedicalBean(Doctor doctor, Patient patient, Date date,Date newDate){
+        this(doctor,patient,date);
+        this.newMedicalDate=new SimpleStringProperty(newDate.toString());
+    }
     public MedicalBean(Doctor doctor, Patient patient, Date date){
         this.doctorFirstName=new SimpleStringProperty(doctor.getFirstName());
         this.doctorLastName=new SimpleStringProperty(doctor.getLastName());
@@ -33,5 +38,6 @@ public class MedicalBean {
     public String getMedicalDate(){
         return medicalDate.get();
     }
+    public String getNewMedicalDate(){ return newMedicalDate.get(); }
 
 }

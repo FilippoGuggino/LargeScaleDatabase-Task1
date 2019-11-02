@@ -12,7 +12,8 @@ import java.util.Objects;
 public class DeleteRequest implements Serializable {
     @Id
     @OneToOne
-    @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
+   // @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
+    @PrimaryKeyJoinColumn(name = "medicalFK", referencedColumnName = "idCode")
     private Medical medical;
 
     public DeleteRequest(Medical medical) {
@@ -43,4 +44,6 @@ public class DeleteRequest implements Serializable {
     public int hashCode() {
         return Objects.hash(medical);
     }
+
+    public MedicalBean toBean(){ return new MedicalBean(medical.getDoctor(),medical.getPatient(),medical.getDate());}
 }

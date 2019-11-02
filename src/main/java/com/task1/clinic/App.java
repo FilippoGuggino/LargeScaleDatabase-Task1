@@ -18,14 +18,14 @@ import java.util.List;
 public class App extends Application {
 
     public static Scene scene;
-
     public static User user = null;
+    public static int requestType;
 
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("initialScreen"));
         stage.setWidth(630);
-        stage.setHeight(420);
+        stage.setHeight(480);
         stage.setScene(scene);
         stage.show();
     }

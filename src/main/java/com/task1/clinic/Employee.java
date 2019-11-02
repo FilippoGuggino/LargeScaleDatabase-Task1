@@ -128,6 +128,7 @@ public class Employee extends User{
         PersistenceManager man = PersistenceManager.getInstance();
         String query = "SELECT dr\nFROM DeleteRequest dr";
         Query preparedQuery = man.read(query);
+//        System.out.println(preparedQuery.getResultList().size());
         return  (List<DeleteRequest>) preparedQuery.getResultList();
     }
 

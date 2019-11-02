@@ -30,7 +30,7 @@ public class Employee extends User{
     }
 
     /**
-     * Add the specified object Medical to the database
+     * Add the specified object Medical to the database.
      * @param m object Medical to be added to the database
      * @return true if the object has been inserted correctly
      */
@@ -42,7 +42,7 @@ public class Employee extends User{
     }
 
     /**
-     * Delete the specified object Medical from the database
+     * Delete the specified object Medical from the database.
      * @param m object Medical to be dropped
      * @return true if the object has been correctly removed
      */
@@ -122,7 +122,7 @@ public class Employee extends User{
 
     /**
      * Retrieve the schedule of medicals for the specified patient, doctor and date.
-     * If any of the parameters is set to null then it's not used to filter the result set
+     * If any of the parameters is set to null then it's not used to filter the result set.
      * @param patient object Patient that is involved in the medicals
      * @param doctor object Doctor that is involved in the medicals
      * @param byDate object Date used to filter the medicals
@@ -159,7 +159,7 @@ public class Employee extends User{
     }
 
     /**
-     * Retrieve the schedule of all medicals for the current date from the database
+     * Retrieve the schedule of all medicals for the current date from the database.
      * @return the list of medicals
      */
 
@@ -169,7 +169,7 @@ public class Employee extends User{
     }
 
     /**
-     * Check the credentials of an employee that wants to access to the app
+     * Check the credentials of an employee that wants to access to the app.
      * @param firstName the first name of the employee
      * @param lastName the last name of the employee
      * @returns null if the specified credentials are invalid, an object Employee if they are correct
@@ -188,8 +188,8 @@ public class Employee extends User{
     }
 
     /**
-     * function that retrieves all the medical requests that are not approved from the database
-     * @return a list of objects Medical
+     * Retrieve all the Create Medical requests from the database.
+     * @return the list of not yet approved medicals
      */
 
     public List<Medical> getCreateRequests() {
@@ -203,8 +203,8 @@ public class Employee extends User{
     }
 
     /**
-     * function that retrieves all the delete requests of the medicals from the database
-     * @return a list of objects DeleteRequest
+     * Retrieve all Delete Requests from the database.
+     * @return the list of delete request
      */
 
     public List<DeleteRequest> getDeleteRequests() {
@@ -216,8 +216,8 @@ public class Employee extends User{
     }
 
     /**
-     * function that retrieves all the move requests of the medicals from the database
-     * @return a list of objects MoveRequests
+     * Retrieve all Move Requests from the database.
+     * @return the list of move requests
      */
 
     public List<MoveRequest> getMoveRequests() {

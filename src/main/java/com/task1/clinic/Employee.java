@@ -31,7 +31,7 @@ public class Employee extends User{
 
     /**
      * function that adds the specified object Medical to the database
-     * @param m object Medical that needs to be added to the database
+     * @param m object Medical to be added to the database
      * @return true if the object has been inserted correctly
      */
 
@@ -43,7 +43,7 @@ public class Employee extends User{
 
     /**
      * function that deletes the specified object Medical from the database
-     * @param m object Medical that needs to be dropped
+     * @param m object Medical to be dropped
      * @return true if the object has been correctly removed
      */
 

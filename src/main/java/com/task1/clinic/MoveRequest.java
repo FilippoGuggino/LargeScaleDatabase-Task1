@@ -20,26 +20,56 @@ public class MoveRequest implements Serializable {
     @Temporal(TemporalType.DATE)
     public Date newDate;
 
+    /**
+     * constructor which creates a new move request for the specified medical
+     * @param medical the medical to be moved
+     * @param newDate the new date for the medical
+     */
+
     public MoveRequest(Medical medical, Date newDate) {
         this.medical = medical;
         this.newDate = newDate;
     }
 
+    /**
+     * default constructor
+     */
+
     public MoveRequest() {
 
     }
+
+    /**
+     * function that return the medical
+     * @return an object Medical
+     */
 
     public Medical getMedical() {
         return medical;
     }
 
+    /**
+     * function that set a new medical for the move request
+     * @param medical the medical request to be attached to the move request
+     */
+
     public void setMedical(Medical medical) {
         this.medical = medical;
     }
 
+    /**
+     * function that return the new date of the move request for the medical
+     * @return an object Date
+     */
+
     public Date getNewDate() {
         return newDate;
     }
+
+    /**
+     * function that return the delete request for the medical
+     * @param  newDate the date to which the medical is requested to be moved
+     */
 
     public void setNewDate(Date newDate) {
         this.newDate = newDate;
@@ -58,6 +88,12 @@ public class MoveRequest implements Serializable {
     public int hashCode() {
         return Objects.hash(medical, newDate);
     }
+
+    /**
+     * function that transform the object MoveRequest to an object MedicalBean
+     * @return an object MedicalBean
+     */
+
 
     public MedicalBean toBean() {return new MedicalBean(medical.getDoctor(),medical.getPatient(),medical.getDate(),newDate);}
 }

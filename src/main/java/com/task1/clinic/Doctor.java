@@ -30,8 +30,8 @@ public class Doctor extends User{
      }
 
     /**
-     * ??
-     * @returns ??
+     * function that retrieve all the medical
+     * @returns a set of Medical
      */
 
     public Set<Medical> getMedicals() {
@@ -39,8 +39,7 @@ public class Doctor extends User{
     }
 
     /**
-     * ??
-     * @returns ??
+     * function that set the medicals
      */
 
     public void setMedicals(Set<Medical> medicals) {

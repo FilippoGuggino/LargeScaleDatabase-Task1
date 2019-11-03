@@ -2,6 +2,7 @@ package com.task1.clinic;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +21,7 @@ public class Doctor extends User{
 
     public Doctor(String firstName, String lastName) {
         super(firstName, lastName);
+        medicals = new HashSet<Medical>();
     }
     /**
      * default constructor which takes and initializes all attributes of the class using

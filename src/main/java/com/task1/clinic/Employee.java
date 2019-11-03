@@ -82,11 +82,13 @@ public class Employee extends User{
 
     public boolean handleDeleteRequest(DeleteRequest del, boolean approved){
         PersistenceManager man = PersistenceManager.getInstance();
+        Medical tmp = del.getMedical();
         if(approved){
-            man.delete(del.getMedical());
+            man.delete(tmp);
         }
         else{
             man.delete(del);
+            tmp.removeDelRequest();
         }
         return true;
     }
@@ -101,11 +103,13 @@ public class Employee extends User{
 
     public boolean handleMoveRequest(MoveRequest req, boolean approved){
         PersistenceManager man = PersistenceManager.getInstance();
+        Medical tmp = req.getMedical();
         if(approved) {
-            req.medical.setDate(req.getNewDate());
-            man.update(req.getMedical());
+            tmp.setDate(req.getNewDate());
+            man.update(tmp);
         }
-        man.delete(req);
+        man.delete(tmp.getMoveRequest());
+        tmp.removeMoveRequest();
         return true;
     }
 

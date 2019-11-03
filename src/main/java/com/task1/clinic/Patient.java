@@ -1,10 +1,7 @@
 package com.task1.clinic;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "patient", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
@@ -22,6 +19,7 @@ public class Patient extends User{
 
     public Patient(String firstName, String lastName) {
         super(firstName, lastName);
+        medicals = new HashSet<Medical>();
     }
 
     /**

@@ -31,9 +31,13 @@ public class Medical {
     @Column(name = "approved")
     private boolean approved;
 
+    @OneToOne(mappedBy = "medical", cascade = CascadeType.MERGE, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @OneToOne(mappedBy = "medical")
     private DeleteRequest delRequest;
+
+    @OneToOne(mappedBy = "medical", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private MoveRequest moveRequest;
 
     /**
      * constructor which creates a new instance of a medical request for the specified patient
@@ -48,6 +52,8 @@ public class Medical {
         this.patient = patient;
         this.date = date;
         this.approved = false;
+        doctor.getMedicals().add(this);
+        patient.getMedicals().add(this);
     }
 
     public Medical() {
@@ -81,6 +87,15 @@ public class Medical {
         return doctor;
     }
 
+    public MoveRequest getMoveRequest() {
+        return moveRequest;
+    }
+
+    public void setMoveRequest(MoveRequest moveRequest) {
+        this.moveRequest = moveRequest;
+        moveRequest.setMedical(this);
+    }
+
     /**
      * function that return the delete request for the medical
      * @return an object DeleteRequest
@@ -97,6 +112,7 @@ public class Medical {
 
     public void setDelRequest(DeleteRequest delRequest) {
         this.delRequest = delRequest;
+        delRequest.setMedical(this);
     }
 
     /**
@@ -171,5 +187,15 @@ public class Medical {
 
     public MedicalBean toBean(){
         return new MedicalBean(getDoctor(),getPatient(),getDate());
+    }
+
+    public void removeMoveRequest(){
+        this.moveRequest.setMedical(null);
+        this.moveRequest = null;
+    }
+
+    public void removeDelRequest(){
+        this.delRequest.setMedical(null);
+        this.delRequest = null;
     }
 }

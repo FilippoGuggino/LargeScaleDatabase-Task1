@@ -9,12 +9,13 @@ import java.util.Objects;
 @Table(name = "move_request")
 public class MoveRequest implements Serializable {
     @Id
-    int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @MapsId
-    @OneToOne
+    @OneToOne( cascade = CascadeType.MERGE)
     @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
-    public Medical medical;
+    private Medical medical;
 
     @Column(name = "newDate")
     @Temporal(TemporalType.DATE)
@@ -27,8 +28,8 @@ public class MoveRequest implements Serializable {
      */
 
     public MoveRequest(Medical medical, Date newDate) {
-        this.medical = medical;
         this.newDate = newDate;
+        medical.setMoveRequest(this);
     }
 
     /**
@@ -87,6 +88,14 @@ public class MoveRequest implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(medical, newDate);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

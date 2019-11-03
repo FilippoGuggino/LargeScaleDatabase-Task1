@@ -11,6 +11,7 @@ import java.util.Objects;
 @Table(name = "delete_request")
 public class DeleteRequest implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @MapsId
@@ -24,7 +25,7 @@ public class DeleteRequest implements Serializable {
      */
 
     public DeleteRequest(Medical medical) {
-        this.medical = medical;
+        medical.setDelRequest(this);
     }
 
     /**
@@ -66,6 +67,13 @@ public class DeleteRequest implements Serializable {
         return Objects.hash(medical);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     /**
      * function that transform the object DeleteRequest to an object MedicalBean

@@ -44,8 +44,8 @@ public class App extends Application {
     public static void main(String[] args) throws ParseException {
         launch();
 
-        PersistenceManager man = PersistenceManager.getInstance();
-        /*Patient pat = new Patient("Francesco", "Francesconi");
+        /*PersistenceManager man = PersistenceManager.getInstance();
+        Patient pat = new Patient("Francesco", "Francesconi");
         man.create(pat);
         Doctor doc = new Doctor("Carlo", "Vallati");
         man.create(doc);
@@ -61,20 +61,23 @@ public class App extends Application {
         }
         Employee e = new Employee("giovanni", "lesto");
         man.create(e);
+
         DeleteRequest d = new DeleteRequest(res.get(0));
         man.create(d);
-        System.out.println(d.getMedical().getDate());
-        List<DeleteRequest> tmp = e.getDeleteRequests();
-        System.out.println(tmp.get(0).getMedical().getDate());
+
         String sDate1="31/12/1998";
         Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
         MoveRequest m = new MoveRequest(res.get(0), date1);
         man.create(m);
-        //e.handleDeleteRequest(d, false);
-        e.handleMoveRequest(m, true);
-        List<Medical> med = e.getSchedule(pat, null,null);
-        System.out.println(med.get(0).getDate());*/
-        man.close();
+
+        System.out.println("Delete : " + d.getId());
+        System.out.println("Move : " + m.getId());
+
+        e.handleDeleteRequest(d, false);
+        //e.handleMoveRequest(m, true);
+        List<Medical> med = doc.getSchedule();
+        System.out.println(med.get(0).getDelRequest());
+        man.close();*/
     }
 
     public static void setUser(User user) {

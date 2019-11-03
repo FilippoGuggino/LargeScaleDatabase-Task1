@@ -9,7 +9,7 @@ import java.util.List;
  * It also provides a set of public methods that make CRUD operations on the database
  * extremely simple to use.
  */
-public class PersistenceManager {
+public class PersistenceManager implements AutoCloseable{
     private EntityManagerFactory factory;
 
     private EntityManager em;

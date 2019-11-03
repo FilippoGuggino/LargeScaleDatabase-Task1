@@ -13,13 +13,25 @@ public class Patient extends User{
     @OneToMany(mappedBy = "patient")
     private Set<Medical> medicals;
 
+    /**
+     * constructor which takes and initializes all attributes of the class using
+     * the constructor of superclass User.
+     * @param firstName first name of the doctor
+     * @param lastName last name of the doctor
+     */
+
     public Patient(String firstName, String lastName) {
         super(firstName, lastName);
     }
 
+    /**
+     * default constructor
+     */
+
     public Patient() {
         super();
     }
+
 
     public Set<Medical> getMedicals() {
         return medicals;
@@ -45,6 +57,12 @@ public class Patient extends User{
         return Objects.hash(getIdCode(), getFirstName(), getLastName(), getMedicals());
     }
 
+    /**
+     * functions that returns all the medicals of the specified date
+     * where the patient is involved
+     * @returns a list of object Medical
+     */
+
     public List<Medical>  getSchedule() {
         PersistenceManager man = PersistenceManager.getInstance();
         String query = "SELECT m\n" +
@@ -58,12 +76,25 @@ public class Patient extends User{
         return result;
     }
 
+    /**
+     * functions that create a new medical request with the specified doctor on the specified date
+     * @param doctor the requested doctor for the medical
+     * @param date the requested date of the medical
+     * @returns a list of object Medical
+     */
+
     public Medical createMedicalRequest(Doctor doctor, Date date) {
         PersistenceManager man = PersistenceManager.getInstance();
         Medical newMed = new Medical(doctor, this, date);
         man.create(newMed);
         return newMed;
     }
+
+    /**
+     * functions that create a new delete request for the specified medical
+     * @param med the medical request that wants to be deleted
+     * @returns an object DeleteRequest
+     */
 
     public DeleteRequest deleteRequest(Medical med) {
         PersistenceManager man = PersistenceManager.getInstance();
@@ -72,12 +103,26 @@ public class Patient extends User{
         return del;
     }
 
+    /**
+     * functions that create a new move request for the specified medical
+     * @param med the medical request that wants to be moved
+     * @param newDate the date to which the medical request wants to be moved
+     * @returns an object MoveRequest
+     */
+
     public MoveRequest moveRequest(Medical med, Date newDate) {
         PersistenceManager man = PersistenceManager.getInstance();
         MoveRequest mov = new MoveRequest(med, newDate);
         man.create(mov);
         return mov;
     }
+
+    /**
+     * functions that checks the credentials of a patient that wants to access to the app
+     * @param firstName the first name of the patient
+     * @param lastName the last name of the patient
+     * @returns null if the specified credentials are invalid, an object Patient if they are correct
+     */
 
     public static Patient logIn(String firstName, String lastName) {
         PersistenceManager man = PersistenceManager.getInstance();

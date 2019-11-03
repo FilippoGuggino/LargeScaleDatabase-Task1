@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -44,7 +45,6 @@ public class App extends Application {
         launch();
 
         PersistenceManager man = PersistenceManager.getInstance();
-
         /*Patient pat = new Patient("Francesco", "Francesconi");
         man.create(pat);
         Doctor doc = new Doctor("Carlo", "Vallati");
@@ -74,7 +74,6 @@ public class App extends Application {
         e.handleMoveRequest(m, true);
         List<Medical> med = e.getSchedule(pat, null,null);
         System.out.println(med.get(0).getDate());*/
-
         man.close();
     }
 

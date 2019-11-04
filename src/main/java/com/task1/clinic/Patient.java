@@ -75,21 +75,33 @@ public class Patient extends User{
     }
 
     /**
-     * functions that create a new medical request with the specified doctor on the specified date
+     * Create a new medical request with the specified doctor on the specified date
      * @param doctor the requested doctor for the medical
      * @param date the requested date of the medical
-     * @returns a list of object Medical
+     * @returns the Medical object if everything worked fine, null if an error occurred.
      */
 
     public Medical createMedicalRequest(Doctor doctor, Date date) {
         PersistenceManager man = PersistenceManager.getInstance();
         Medical newMed = new Medical(doctor, this, date);
+        String checkQuery = "SELECT m FROM Medical m\n" +
+                            "WHERE m.doctor.idCode = :docId AND m.patient.idCode = :patId\n" +
+                            "AND m.date = :date";
+        TypedQuery<Medical> prepQuery = man.readMedicals(checkQuery);
+        prepQuery.setParameter("docId", doctor.idCode);
+        prepQuery.setParameter("patId", this.idCode);
+        prepQuery.setParameter("date", date);
+        List<Medical> res = prepQuery.getResultList();
+        if(!res.isEmpty()) {
+            //medical already existed -> return null
+            return null;
+        }
         man.create(newMed);
         return newMed;
     }
 
     /**
-     * functions that create a new delete request for the specified medical
+     * Create a new delete request for the specified medical
      * @param med the medical request that wants to be deleted
      * @returns an object DeleteRequest
      */
@@ -105,12 +117,24 @@ public class Patient extends User{
      * functions that create a new move request for the specified medical
      * @param med the medical request that wants to be moved
      * @param newDate the date to which the medical request wants to be moved
-     * @returns an object MoveRequest
+     * @returns the MoveRequest if everything worked fine, null if an error occurred.
      */
 
     public MoveRequest moveRequest(Medical med, Date newDate) {
         PersistenceManager man = PersistenceManager.getInstance();
         MoveRequest mov = new MoveRequest(med, newDate);
+        String checkQuery = "SELECT m FROM Medical m\n" +
+                "WHERE m.doctor.idCode = :docId AND m.patient.idCode = :patId\n" +
+                "AND m.date = :date";
+        TypedQuery<Medical> prepQuery = man.readMedicals(checkQuery);
+        prepQuery.setParameter("docId", med.getDoctor().idCode);
+        prepQuery.setParameter("patId", this.idCode);
+        prepQuery.setParameter("date", newDate);
+        List<Medical> res = prepQuery.getResultList();
+        if(!res.isEmpty()) {
+            //medical already existed -> return null
+            return null;
+        }
         man.create(mov);
         return mov;
     }

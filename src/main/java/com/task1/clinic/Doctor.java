@@ -59,7 +59,7 @@ public class Doctor extends User{
         PersistenceManager Man = PersistenceManager.getInstance();
         String query = "SELECT m\n" +
                 "FROM Medical m\n" +
-                "WHERE m.doctor.idCode = :idCode AND m.date = :byDate \n" +
+                "WHERE m.doctor.idCode = :idCode AND m.date = :byDate AND m.approved=true\n" +
                 "ORDER BY m.date";
         TypedQuery<Medical> preparedQuery = Man.readMedicals(query);
         preparedQuery.setParameter("idCode", this.getIdCode());

@@ -9,6 +9,10 @@ import javafx.scene.control.TextField;
 public class SignupScreenController {
 
     @FXML
+    private void switchToInitial() throws IOException {
+        App.setRoot("initialScreen");
+    }
+    @FXML
     private void signup() throws IOException {
         TextField firstNameInput=(TextField) App.scene.lookup("#firstnameInput");
         TextField lastNameInput=(TextField) App.scene.lookup("#lastnameInput");

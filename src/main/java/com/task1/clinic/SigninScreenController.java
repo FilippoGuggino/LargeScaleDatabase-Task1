@@ -7,7 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class SigninScreenController {
-
+    @FXML
+    private void switchToInitial() throws IOException {
+        App.setRoot("initialScreen");
+    }
     @FXML
     private void signin() throws IOException {
         TextField firstNameInput=(TextField) App.scene.lookup("#firstnameInput");

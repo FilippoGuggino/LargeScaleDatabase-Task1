@@ -30,7 +30,7 @@ public class Employee extends User{
     }
 
     /**
-     * function that adds the specified object Medical to the database
+     * Add the specified object Medical to the database.
      * @param m object Medical to be added to the database
      * @return true if the object has been inserted correctly
      */
@@ -43,7 +43,7 @@ public class Employee extends User{
     }
 
     /**
-     * function that deletes the specified object Medical from the database
+     * Delete the specified object Medical from the database.
      * @param m object Medical to be dropped
      * @return true if the object has been correctly removed
      */
@@ -55,10 +55,11 @@ public class Employee extends User{
     }
 
     /**
-     * functions that update the approved status of a specified medical request
-     * @param med object medical that needs to be updated
-     * @param approved status that has be set
-     * @return true if the status has been correctly updated
+     * Handle a Create request for a medical depending on the value of <code>approved</code>,
+     * if it's true then the new medical is created, otherwise it's rejected.
+     * @param med medical not approved yet
+     * @param approved indicates if the request is approved (true) or rejected (false)
+     * @return true if the request has been correctly handled
      */
 
     public boolean handleCreateRequest(Medical med, boolean approved){
@@ -73,50 +74,53 @@ public class Employee extends User{
     }
 
     /**
-     * functions that deletes the specified medical that has a pending delete request attached
+     * Handle a Delete Request for a medical depending on the value of <code>approved</code>,
+     * if it's true then the medical is dropped, otherwise the request is rejected.
      * @param del delete request of the medical
-     * @param approved actual status of the medical request
-     * @return true if the status has been correctly updated
+     * @param approved indicates if the request is approved (true) or rejected (false)
+     * @return true if the request has been correctly handled
      */
 
     public boolean handleDeleteRequest(DeleteRequest del, boolean approved){
         PersistenceManager man = PersistenceManager.getInstance();
+        Medical tmp = del.getMedical();
         if(approved){
-            man.delete(del.getMedical());
-            man.delete(del);
-                System.out.println(del.getMedical().getIdCode());
+            man.delete(tmp);
         }
         else{
             man.delete(del);
+            tmp.removeDelRequest();
         }
         return true;
     }
 
     /**
-     * functions that sets the new date for the specified medical that has a pending move request attached
+     * Handle a Move Request for a medical depending on the value of <code>approved</code>,
+     * if it's true then the medical is moved, otherwise the request is rejected.
      * @param req move request of the medical
-     * @param approved actual status of the medical request
-     * @return true if the status has been correctly updated
+     * @param approved indicates if the request is approved (true) or rejected (false)
+     * @return true if the request has been correctly handled
      */
 
     public boolean handleMoveRequest(MoveRequest req, boolean approved){
         PersistenceManager man = PersistenceManager.getInstance();
+        Medical tmp = req.getMedical();
         if(approved) {
-            req.medical.setDate(req.getNewDate());
-            man.update(req.getMedical());
-            man.delete(req);
+            tmp.setDate(req.getNewDate());
+            man.update(tmp);
         }
-        else
-            man.delete(req);
+        man.delete(tmp.getMoveRequest());
+        tmp.removeMoveRequest();
         return true;
     }
 
     /**
-     * function that retrieves the list of the medical for the specified patient, doctor and date
+     * Retrieve the schedule of medicals for the specified patient, doctor and date.
+     * If any of the parameters is set to null then it's not used to filter the result set.
      * @param patient object Patient that is involved in the medicals
      * @param doctor object Doctor that is involved in the medicals
      * @param byDate object Date used to filter the medicals
-     * @return a list of objects Medical
+     * @return the list of medicals
      */
 
     public List<Medical> getSchedule(Patient patient, Doctor doctor, Date byDate){
@@ -140,6 +144,7 @@ public class Employee extends User{
         }
         query += " and";
         query += " m.approved = true";
+
         TypedQuery<Medical> preparedQuery = man.readMedicals(query);
         if(patient!=null)
             preparedQuery.setParameter("idPatient", patient);
@@ -151,8 +156,8 @@ public class Employee extends User{
     }
 
     /**
-     * function that retrieves the list of all medicals for the current date from the database
-     * @return a list of objects Medical
+     * Retrieve the schedule of all medicals for the current date from the database.
+     * @return the list of medicals
      */
 
     public List<Medical> getSchedule(){
@@ -161,9 +166,9 @@ public class Employee extends User{
     }
 
     /**
-     * functions that checks the credentials of an employee that wants to access to the app
-     * @param firstName the first name of the doctor
-     * @param lastName the last name of the doctor
+     * Check the credentials of an employee that wants to access to the app.
+     * @param firstName the first name of the employee
+     * @param lastName the last name of the employee
      * @returns null if the specified credentials are invalid, an object Employee if they are correct
      */
 
@@ -180,8 +185,8 @@ public class Employee extends User{
     }
 
     /**
-     * function that retrieves all the medical requests that are not approved from the database
-     * @return a list of objects Medical
+     * Retrieve all the Create Medical requests from the database.
+     * @return the list of not yet approved medicals
      */
 
     public List<Medical> getCreateRequests() {
@@ -195,8 +200,8 @@ public class Employee extends User{
     }
 
     /**
-     * function that retrieves all the delete requests of the medicals from the database
-     * @return a list of objects DeleteRequest
+     * Retrieve all Delete Requests from the database.
+     * @return the list of delete request
      */
 
     public List<DeleteRequest> getDeleteRequests() {
@@ -208,8 +213,8 @@ public class Employee extends User{
     }
 
     /**
-     * function that retrieves all the move requests of the medicals from the database
-     * @return a list of objects MoveRequests
+     * Retrieve all Move Requests from the database.
+     * @return the list of move requests
      */
 
     public List<MoveRequest> getMoveRequests() {

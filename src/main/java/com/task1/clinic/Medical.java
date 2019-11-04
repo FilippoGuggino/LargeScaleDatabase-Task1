@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "medical")
+@Table(name = "medical", uniqueConstraints = {@UniqueConstraint(columnNames = {"doctorFK", "patientFK", "medicalDate"})})
 public class Medical {
     @Id
     @Column(name = "idCode")

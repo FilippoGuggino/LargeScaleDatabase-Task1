@@ -17,7 +17,7 @@ import javafx.scene.input.MouseEvent;
 
 public class EmployeeRequestsScreenController implements Initializable {
 
-    private ArrayList<Medical> medicalRows=new ArrayList<>(); //List that stores the medicals for each row.
+    private ArrayList<Object> medicalRows=new ArrayList<>(); //List that stores the medicals for each row.
 
     @FXML
     private Button approveButton;
@@ -27,7 +27,7 @@ public class EmployeeRequestsScreenController implements Initializable {
     private TableView tableView;
     @FXML
     private Label requestTypeLabel;
-
+    private int selectedIndex;
     @FXML
     @Override
     public void initialize(URL location, ResourceBundle resources){
@@ -36,12 +36,13 @@ public class EmployeeRequestsScreenController implements Initializable {
                 requestTypeLabel.setText("New medical requests");
                 break;
             case 1:
-                requestTypeLabel.setText("Move requests");
-                break;
-            case 2:
                 requestTypeLabel.setText("Delete requests");
                 break;
+            case 2:
+                requestTypeLabel.setText("Move requests");
+                break;
         }
+
         TableColumn docNameCol = new TableColumn("Doc_Name");
         docNameCol.setCellValueFactory(
                 new PropertyValueFactory<MedicalBean,String>("doctorFirstName")
@@ -66,8 +67,8 @@ public class EmployeeRequestsScreenController implements Initializable {
         tableView.getColumns().addAll(patNameCol, patSurnameCol,docNameCol, docSurnameCol,medicalDateCol);
         if(App.requestType==2){
             TableColumn medicalNewDateCol = new TableColumn("New date");
-            medicalDateCol.setCellValueFactory(
-                    new PropertyValueFactory<MedicalBean,String>("newDate")
+            medicalNewDateCol.setCellValueFactory(
+                    new PropertyValueFactory<MedicalBean,String>("newMedicalDate")
             );
             tableView.getColumns().addAll(medicalNewDateCol);
         }
@@ -79,9 +80,12 @@ public class EmployeeRequestsScreenController implements Initializable {
         }
         tableView.setOnMouseClicked((MouseEvent event) -> {
             if(event.getButton().equals(MouseButton.PRIMARY)){
-      /*          System.out.println(tableView.getSelectionModel().getSelectedIndex());
-                deleteButton.setDisable(false);
-                moveButton.setDisable(false);   */
+                selectedIndex=tableView.getSelectionModel().getSelectedIndex();
+                //Verify if a row is selected
+                if(selectedIndex<0)
+                    return;
+                approveButton.setDisable(false);
+                rejectButton.setDisable(false);
             }
         });
     }
@@ -100,13 +104,13 @@ public class EmployeeRequestsScreenController implements Initializable {
             case 1:
                 for(DeleteRequest m:e.getDeleteRequests()){
                     observableMedicals.add(m.toBean());
-                    medicalRows.add(m.getMedical());
+                    medicalRows.add(m);
                 }
                 break;
             case 2:
                 for(MoveRequest m:e.getMoveRequests()){
                     observableMedicals.add(m.toBean());
-                    medicalRows.add(m.getMedical());
+                    medicalRows.add(m);
                 }
                 break;
         }
@@ -122,5 +126,32 @@ public class EmployeeRequestsScreenController implements Initializable {
         App.setRoot("employeeMenuScreen");
     }
 
+    @FXML
+    private void handleRequest(Boolean outcome) throws IOException{
+        Employee e=(Employee)App.user;
+        switch(App.requestType){
+            case 0:
+                Medical medicalToDelete=(Medical)medicalRows.get(selectedIndex);
+                e.handleCreateRequest(medicalToDelete,outcome);
+                break;
+            case 1:
+                DeleteRequest deleteRequest=(DeleteRequest)medicalRows.get(selectedIndex);
+                e.handleDeleteRequest(deleteRequest,outcome);
+                break;
+            case 2:
+                MoveRequest moveRequest=(MoveRequest)medicalRows.get(selectedIndex);
+                e.handleMoveRequest(moveRequest,outcome);
+                break;
+        }
+        updateTable();
+    }
+    @FXML
+    private void rejectRequest() throws IOException{
+        handleRequest(false);
+    }
+    @FXML
+    private void approveRequest() throws IOException{
+        handleRequest(true);
+    }
 
 }

@@ -31,6 +31,7 @@ public class SignupScreenController {
                     App.setUser(new Doctor(firstName, lastName));
                     man.create(App.user);
                     App.setRoot("doctorScheduleScreen");
+                    return;
                 }
                 break;
             case "Patient":
@@ -41,6 +42,7 @@ public class SignupScreenController {
                     App.setUser(new Patient(firstName, lastName));
                     man.create(App.user);
                     App.setRoot("patientScheduleScreen");
+                    return;
                 }
                 break;
             case "Employee":
@@ -51,6 +53,7 @@ public class SignupScreenController {
                     App.setUser(new Employee(firstName, lastName));
                     man.create(App.user);
                     App.setRoot("employeeMenuScreen");
+                    return;
                 }
                 break;
         }

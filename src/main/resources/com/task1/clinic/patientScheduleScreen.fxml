@@ -43,7 +43,7 @@
         </HBox>
       <HBox alignment="CENTER" prefHeight="18.0" prefWidth="486.0">
          <children>
-            <DatePicker fx:id="newDate"  editable="false" prefHeight="25.0" prefWidth="147.0" promptText="Date (yyyy-mm-dd)">
+            <DatePicker fx:id="newDate" editable="false" prefHeight="25.0" prefWidth="147.0" promptText="Date (yyyy-mm-dd)">
                <HBox.margin>
                   <Insets left="230.0" />
                </HBox.margin>
@@ -64,7 +64,7 @@
             </Button>
          </children>
       </HBox>
-        <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="247.0" textFill="#ff0303" visible="false" />
+        <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="247.0" textFill="#ff0303" visible="false" />
         <HBox prefHeight="21.0" prefWidth="497.0">
             <children>
                 <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="60.0" text="logout">

@@ -10,43 +10,39 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="587.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.EmployeeRequestsScreenController">
     <children>
-      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="600.0">
-         <children>
-              <Label fx:id="requestTypeLabel" textAlignment="CENTER">
-                  <font>
-                      <Font name="System Bold" size="18.0" />
-                  </font>
-               <padding>
-                  <Insets left="180.0" right="130.0" />
-               </padding>
-            </Label>
-            <Button mnemonicParsing="false" onAction="#switchToEmployeeMenuScreen" prefHeight="25.0" prefWidth="53.0" text="Back">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
+        <Label fx:id="requestTypeLabel" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+         <padding>
+            <Insets left="180.0" right="130.0" />
+         </padding>
+      </Label>
         <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="216.0" prefWidth="420.0">
         </TableView>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="approveButton" mnemonicParsing="false" text="APPROVE">
+            <Button fx:id="approveButton" mnemonicParsing="false" onAction="#approveRequest" prefHeight="25.0" prefWidth="70.0" text="APPROVE">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="rejectButton" mnemonicParsing="false" text="REJECT" />
+            <Button fx:id="rejectButton" mnemonicParsing="false" onAction="#rejectRequest" prefHeight="25.0" prefWidth="70.0" text="REJECT" />
          </children>
       </HBox>
         <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="129.0" textFill="#ff0303" visible="false" />
-        <HBox prefHeight="21.0" prefWidth="497.0">
+        <HBox alignment="CENTER" prefHeight="21.0" prefWidth="497.0">
             <children>
                 <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="60.0" text="logout">
                     <font>
                         <Font size="11.0" />
                     </font>
                 </Button>
+            <Button mnemonicParsing="false" onAction="#switchToEmployeeMenuScreen" prefHeight="25.0" prefWidth="53.0" text="Back">
+               <HBox.margin>
+                  <Insets left="450.0" />
+               </HBox.margin>
+            </Button>
             </children>
         </HBox>
     </children>

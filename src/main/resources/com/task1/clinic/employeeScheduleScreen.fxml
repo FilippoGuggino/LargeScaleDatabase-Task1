@@ -12,13 +12,11 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="598.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.EmployeeScheduleScreenController">
     <children>
-        <Label text="SCHEDULES" textAlignment="CENTER">
+        <Label prefHeight="27.0" prefWidth="103.0" text="SCHEDULES" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
-            <VBox.margin>
-                <Insets />
-            </VBox.margin></Label>
+      </Label>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
             <Label text="Filters:" textAlignment="CENTER">
@@ -33,22 +31,22 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="25.0" prefWidth="550.0">
          <children>
-            <TextField fx:id="patFirstNameFilter" prefHeight="25.0" prefWidth="72.0" promptText="Pat_name">
+            <TextField fx:id="patFirstnameFilter" prefHeight="25.0" prefWidth="72.0" promptText="Pat_name">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <TextField fx:id="patLastNameFilter" prefHeight="25.0" prefWidth="84.0" promptText="Pat_surname">
+            <TextField fx:id="patLastnameFilter" prefHeight="25.0" prefWidth="84.0" promptText="Pat_surname">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <TextField fx:id="docFirstNameFilter" prefHeight="25.0" prefWidth="72.0" promptText="Doc_name">
+            <TextField fx:id="docFirstnameFilter" prefHeight="25.0" prefWidth="72.0" promptText="Doc_name">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <TextField fx:id="docLastNameFilter" prefHeight="25.0" prefWidth="88.0" promptText="Doc_surname">
+            <TextField fx:id="docLastnameFilter" prefHeight="25.0" prefWidth="88.0" promptText="Doc_surname">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -86,21 +84,31 @@
                     </HBox.margin>
                 </TextField>
                 <DatePicker fx:id="selectedDate" editable="false" prefHeight="25.0" prefWidth="144.0" promptText="Date (yyyy-mm-dd)" />
-                <Button mnemonicParsing="false" onAction="#addMedical" text="ADD">
+                <Button mnemonicParsing="false" onAction="#addMedical" prefHeight="25.0" prefWidth="60.0" text="ADD">
                     <HBox.margin>
                         <Insets left="10.0" />
                     </HBox.margin>
                 </Button>
             </children>
         </HBox>
+      <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#dropMedical" prefHeight="25.0" prefWidth="60.0" text="DELETE" />
+         </children>
+      </HBox>
         <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="299.0" textFill="#ff0303" visible="false" />
-        <HBox prefHeight="21.0" prefWidth="497.0">
+        <HBox alignment="CENTER" prefHeight="21.0" prefWidth="497.0">
             <children>
                 <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="60.0" text="logout">
                     <font>
                         <Font size="11.0" />
                     </font>
                 </Button>
+            <Button mnemonicParsing="false" onAction="#switchToEmployeeMenuScreen" prefHeight="25.0" prefWidth="53.0" text="Back">
+               <HBox.margin>
+                  <Insets left="400.0" />
+               </HBox.margin>
+            </Button>
             </children>
         </HBox>
     </children>

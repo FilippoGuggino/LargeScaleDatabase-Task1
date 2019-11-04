@@ -97,6 +97,7 @@ public class PatientScheduleScreenController implements Initializable {
                 errorLabel.setText("Selected doctor doesn't exist!");
                 return;
             }
+            errorLabel.setVisible(false);
             Patient p=(Patient)App.user;
             Date date = java.sql.Date.valueOf(selectedDate.getValue());
             p.createMedicalRequest(d,date);
@@ -109,6 +110,7 @@ public class PatientScheduleScreenController implements Initializable {
         Medical medicalToDelete=medicalRows.get(selectedIndex);
         Patient p=(Patient)App.user;
         p.deleteRequest(medicalToDelete);
+        errorLabel.setVisible(false);
     }
     @FXML
     private void addMoveRequest()throws IOException{

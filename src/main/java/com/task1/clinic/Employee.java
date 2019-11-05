@@ -38,6 +38,17 @@ public class Employee extends User{
     public boolean addMedical(Medical m){
         m.setApproved(true);
         PersistenceManager man = PersistenceManager.getInstance();
+        String checkQuery = "SELECT m FROM Medical m\n" +
+                "WHERE m.doctor.idCode = :docId AND m.patient.idCode = :patId\n" +
+                "AND m.date = :date";
+        TypedQuery<Medical> prepQuery = man.readMedicals(checkQuery);
+        prepQuery.setParameter("docId", m.getDoctor().getIdCode());
+        prepQuery.setParameter("patId", m.getPatient().getIdCode());
+        prepQuery.setParameter("date", m.getDate());
+        List<Medical> res = prepQuery.getResultList();
+        if(!res.isEmpty()) {
+            return false;
+        }
         man.create(m);
         return true;
     }
@@ -50,6 +61,17 @@ public class Employee extends User{
 
     public boolean dropMedical(Medical m){
         PersistenceManager man = PersistenceManager.getInstance();
+        String checkQuery = "SELECT m FROM Medical m\n" +
+                "WHERE m.doctor.idCode = :docId AND m.patient.idCode = :patId\n" +
+                "AND m.date = :date";
+        TypedQuery<Medical> prepQuery = man.readMedicals(checkQuery);
+        prepQuery.setParameter("docId", m.getDoctor().getIdCode());
+        prepQuery.setParameter("patId", m.getPatient().getIdCode());
+        prepQuery.setParameter("date", m.getDate());
+        List<Medical> res = prepQuery.getResultList();
+        if(res.isEmpty()) {
+            return false;
+        }
         man.delete(m);
         return true;
     }

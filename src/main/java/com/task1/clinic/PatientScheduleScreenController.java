@@ -90,17 +90,22 @@ public class PatientScheduleScreenController implements Initializable {
             errorLabel.setText("All fields must be filled!");
             errorLabel.setVisible(true);
         }
-        else{
-            Doctor d=Doctor.logIn(firstnameInput.getText(),lastnameInput.getText());
-            if(d==null) {
+        else {
+            Doctor d = Doctor.logIn(firstnameInput.getText(), lastnameInput.getText());
+            if (d == null) {
                 errorLabel.setVisible(true);
                 errorLabel.setText("Selected doctor doesn't exist!");
                 return;
             }
             errorLabel.setVisible(false);
-            Patient p=(Patient)App.user;
+            Patient p = (Patient) App.user;
             Date date = java.sql.Date.valueOf(selectedDate.getValue());
-            p.createMedicalRequest(d,date);
+            if (p.createMedicalRequest(d, date) == null) {
+                errorLabel.setVisible(true);
+                errorLabel.setText("Medical already exists");
+            } else {
+                errorLabel.setVisible(false);
+            }
             firstnameInput.setText("");
             lastnameInput.setText("");
         }

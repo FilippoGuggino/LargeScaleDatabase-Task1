@@ -31,9 +31,14 @@
           </items>
       </ChoiceBox>
         <Label fx:id="errorLabel" textFill="#ff0303" visible="false" />
-        <Button fx:id="secondaryButton" onAction="#signin" prefHeight="25.0" prefWidth="73.0" text="LOGIN">
+        <Button fx:id="secondaryButton" onAction="#signin" prefHeight="30.0" prefWidth="80.0" text="LOGIN">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
+      <Button mnemonicParsing="false" onAction="#switchToInitial" prefHeight="25.0" prefWidth="80.0" text="BACK" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
     </children>
 </VBox>

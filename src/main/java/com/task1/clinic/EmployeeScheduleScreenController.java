@@ -172,8 +172,13 @@ public class EmployeeScheduleScreenController implements Initializable {
             date = java.sql.Date.valueOf(selectedDate.getValue());
             Employee e=(Employee)App.user;
             Medical m=new Medical(d,p,date);
-            e.addMedical(m);
-            errorLabel.setVisible(false);
+            if(e.addMedical(m)){
+                errorLabel.setVisible(false);
+            }
+            else{
+                errorLabel.setVisible(true);
+                errorLabel.setText("Medical already exists");
+            }
             patFirstnameInput.setText("");
             patLastnameInput.setText("");
             docFirstnameInput.setText("");

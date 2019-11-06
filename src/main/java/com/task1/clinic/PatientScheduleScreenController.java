@@ -112,10 +112,13 @@ public class PatientScheduleScreenController implements Initializable {
     }
     @FXML
     private void addDeleteRequest()throws IOException{
+        errorLabel.setVisible(false);
         Medical medicalToDelete=medicalRows.get(selectedIndex);
         Patient p=(Patient)App.user;
-        p.deleteRequest(medicalToDelete);
-        errorLabel.setVisible(false);
+        if(p.deleteRequest(medicalToDelete)==null){
+            errorLabel.setText("The request has already been sent!");
+            errorLabel.setVisible(true);
+        }
     }
     @FXML
     private void addMoveRequest()throws IOException{
@@ -128,6 +131,9 @@ public class PatientScheduleScreenController implements Initializable {
         Medical medicalToUpdate=medicalRows.get(selectedIndex);
         Patient p=(Patient)App.user;
         Date date = java.sql.Date.valueOf(newDate.getValue());
-        p.moveRequest(medicalToUpdate,date);
+        if(p.moveRequest(medicalToUpdate,date)==null){
+            errorLabel.setText("The request has already been sent!");
+            errorLabel.setVisible(true);
+        }
     }
 }

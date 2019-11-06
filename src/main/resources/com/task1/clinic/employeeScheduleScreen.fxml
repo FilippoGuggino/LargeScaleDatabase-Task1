@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="598.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.EmployeeScheduleScreenController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="623.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.EmployeeScheduleScreenController">
     <children>
         <Label prefHeight="27.0" prefWidth="103.0" text="SCHEDULES" textAlignment="CENTER">
             <font>
@@ -59,7 +59,7 @@
             </Button>
          </children>
       </HBox>
-        <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="504.0">
+        <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="504.0">
         </TableView>
         <HBox alignment="CENTER" prefHeight="25.0" prefWidth="550.0">
             <children>
@@ -83,7 +83,7 @@
                         <Insets right="10.0" />
                     </HBox.margin>
                 </TextField>
-                <DatePicker fx:id="selectedDate" editable="false" prefHeight="25.0" prefWidth="144.0" promptText="Date (yyyy-mm-dd)" />
+                <DatePicker fx:id="selectedDate" editable="false" prefHeight="25.0" prefWidth="146.0" promptText="Date (yyyy-mm-dd)" />
                 <Button mnemonicParsing="false" onAction="#addMedical" prefHeight="25.0" prefWidth="60.0" text="ADD">
                     <HBox.margin>
                         <Insets left="10.0" />
@@ -93,9 +93,9 @@
         </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#dropMedical" prefHeight="25.0" prefWidth="60.0" text="DELETE">
+            <Button fx:id="deleteButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#dropMedical" prefHeight="25.0" prefWidth="60.0" text="DELETE">
                <HBox.margin>
-                  <Insets left="500.0" />
+                  <Insets left="512.0" />
                </HBox.margin></Button>
          </children>
       </HBox>
@@ -109,7 +109,7 @@
                 </Button>
             <Button mnemonicParsing="false" onAction="#switchToEmployeeMenuScreen" prefHeight="25.0" prefWidth="53.0" text="Back">
                <HBox.margin>
-                  <Insets left="400.0" />
+                  <Insets left="350.0" />
                </HBox.margin>
             </Button>
             </children>

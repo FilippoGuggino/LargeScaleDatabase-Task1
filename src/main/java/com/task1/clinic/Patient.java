@@ -108,6 +108,16 @@ public class Patient extends User{
     public DeleteRequest deleteRequest(Medical med) {
         PersistenceManager man = PersistenceManager.getInstance();
         DeleteRequest del = new DeleteRequest(med);
+        String checkQuery = "SELECT dr\n" +
+                "FROM DeleteRequest dr\n" +
+                "WHERE dr.medical.idCode = :idCode";
+        Query prepQuery = man.read(checkQuery);
+        prepQuery.setParameter("idCode", med.getIdCode());
+        List<DeleteRequest> res = (List<DeleteRequest>)prepQuery.getResultList();
+        if(!res.isEmpty()) {
+            //deleteRequest already existed -> return null
+            return null;
+        }
         man.create(del);
         return del;
     }
@@ -122,16 +132,14 @@ public class Patient extends User{
     public MoveRequest moveRequest(Medical med, Date newDate) {
         PersistenceManager man = PersistenceManager.getInstance();
         MoveRequest mov = new MoveRequest(med, newDate);
-        String checkQuery = "SELECT m FROM Medical m\n" +
-                "WHERE m.doctor.idCode = :docId AND m.patient.idCode = :patId\n" +
-                "AND m.date = :date";
-        TypedQuery<Medical> prepQuery = man.readMedicals(checkQuery);
-        prepQuery.setParameter("docId", med.getDoctor().idCode);
-        prepQuery.setParameter("patId", this.idCode);
-        prepQuery.setParameter("date", newDate);
-        List<Medical> res = prepQuery.getResultList();
+        String checkQuery = "SELECT mr\n" +
+                "FROM MoveRequest mr\n" +
+                "WHERE mr.medical.idCode = :idCode";
+        Query prepQuery = man.read(checkQuery);
+        prepQuery.setParameter("idCode", med.getIdCode());
+        List<MoveRequest> res = (List<MoveRequest>)prepQuery.getResultList();
         if(!res.isEmpty()) {
-            //medical already existed -> return null
+            //moveRequest already existed -> return null
             return null;
         }
         man.create(mov);

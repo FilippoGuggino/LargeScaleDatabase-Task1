@@ -1,7 +1,5 @@
 package com.task1.clinic;
 
-import javafx.beans.property.SimpleStringProperty;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 

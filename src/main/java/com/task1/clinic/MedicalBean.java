@@ -1,5 +1,7 @@
 package com.task1.clinic;
 
+import com.task1.clinic.Doctor;
+import com.task1.clinic.Patient;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.Date;
@@ -12,7 +14,7 @@ public class MedicalBean {
     private SimpleStringProperty medicalDate;
     private SimpleStringProperty newMedicalDate;
 
-    public MedicalBean(Doctor doctor, Patient patient, Date date,Date newDate){
+    public MedicalBean(Doctor doctor, Patient patient, Date date, Date newDate){
         this(doctor,patient,date);
         this.newMedicalDate=new SimpleStringProperty(newDate.toString());
     }

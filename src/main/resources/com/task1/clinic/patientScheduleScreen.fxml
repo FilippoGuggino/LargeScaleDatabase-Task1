@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="526.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.PatientScheduleScreenController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="526.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.PatientScheduleScreenController">
     <children>
         <Label text="MEDICALS IN SCHEDULE (ONLY APPROVED):" textAlignment="CENTER">
             <font>
@@ -19,7 +19,7 @@
             <VBox.margin>
                 <Insets bottom="10.0" />
             </VBox.margin></Label>
-        <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="434.0">
+        <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="204.0" prefWidth="434.0">
         </TableView>
         <HBox alignment="CENTER" prefHeight="25.0" prefWidth="284.0">
             <children>
@@ -55,7 +55,7 @@
             </Button>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="4.0" prefWidth="486.0">
          <children>
             <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#addDeleteRequest" prefHeight="25.0" prefWidth="60.0" text="DELETE">
                <HBox.margin>

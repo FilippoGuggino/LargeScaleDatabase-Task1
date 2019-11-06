@@ -32,8 +32,8 @@ public class Doctor extends User{
      }
 
     /**
-     * function that retrieve all the medical
-     * @returns a set of Medical
+     * Get all the medicals with this doctor
+     * @returns The set of medicals.
      */
 
     public Set<Medical> getMedicals() {
@@ -41,7 +41,7 @@ public class Doctor extends User{
     }
 
     /**
-     * function that set the medicals
+     * Set the medicals that this doctor will hold.
      */
 
     public void setMedicals(Set<Medical> medicals) {
@@ -49,10 +49,10 @@ public class Doctor extends User{
     }
 
     /**
-     * functions that returns all the medicals of the specified date
-     * where the doctor is involved
+     * Get all the medicals of the specified date
+     * where the doctor is involved.
      * @param byDate the date of the medicals that are requested to be shown
-     * @returns a list of object Medical
+     * @returns the list of requested medicals.
      */
 
     public List<Medical> getSchedule(Date byDate) {
@@ -68,8 +68,8 @@ public class Doctor extends User{
         return result;
     }
     /**
-     * functions that returns all the medicals of the actual date where the doctor is involved
-     * @returns a list of object Medical
+     * Get all the medicals of the current date where the doctor is involved.
+     * @returns the list of requested medicals.
      */
 
     public List<Medical> getSchedule() {
@@ -77,7 +77,7 @@ public class Doctor extends User{
     }
 
     /**
-     * functions that checks the credentials of a doctor that wants to access to the app
+     * Check the credentials of an employee that wants to access to the app.
      * @param firstName the first name of the doctor
      * @param lastName the last name of the doctor
      * @returns null if the specified credentials are invalid, an object Doctor if they are correct

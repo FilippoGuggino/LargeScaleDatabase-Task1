@@ -72,8 +72,8 @@ public abstract class User {
     }
 
     /**
-     * function that gets the last name of the user
-     * @return string lastName
+     * Get the last name of the user.
+     * @return the last name of the user
      */
 
     public String getLastName() {
@@ -81,7 +81,7 @@ public abstract class User {
     }
 
     /**
-     * function that set the last name of the user
+     * Set the last name of the user.
      * @param lastName last name of the user
      */
 
@@ -90,7 +90,7 @@ public abstract class User {
     }
 
     /**
-     * function that transform the object User to an object UserBean
+     * Transform the object User into an object UserBean
      * @return an object UserBean
      */
 
@@ -99,8 +99,8 @@ public abstract class User {
     }
 
     /**
-     * abstract function that gets the schedule of an user
-     * @return a list of objects Medical
+     * get the default schedule of the user
+     * @return the list of requested medicals
      */
 
     public abstract List<Medical> getSchedule();

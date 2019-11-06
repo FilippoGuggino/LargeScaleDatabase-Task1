@@ -41,8 +41,8 @@ public class MoveRequest implements Serializable {
     }
 
     /**
-     * function that return the medical
-     * @return an object Medical
+     * Get the medical associated to this request.
+     * @return the medical associated to this request
      */
 
     public Medical getMedical() {
@@ -50,7 +50,7 @@ public class MoveRequest implements Serializable {
     }
 
     /**
-     * function that set a new medical for the move request
+     * Set a medical for the move request.
      * @param medical the medical request to be attached to the move request
      */
 
@@ -59,8 +59,8 @@ public class MoveRequest implements Serializable {
     }
 
     /**
-     * function that return the new date of the move request for the medical
-     * @return an object Date
+     * Get the new date of the move request for the medical
+     * @return the date the patient wants to move the medical to
      */
 
     public Date getNewDate() {
@@ -68,8 +68,8 @@ public class MoveRequest implements Serializable {
     }
 
     /**
-     * function that return the delete request for the medical
-     * @param  newDate the date to which the medical is requested to be moved
+     * Set the new date of the move request for the medical.
+     * @param  newDate the date the patient wants to move the medical to
      */
 
     public void setNewDate(Date newDate) {
@@ -99,7 +99,7 @@ public class MoveRequest implements Serializable {
     }
 
     /**
-     * function that transform the object MoveRequest to an object MedicalBean
+     * Transform the object MoveRequest into an object MedicalBean
      * @return an object MedicalBean
      */
 

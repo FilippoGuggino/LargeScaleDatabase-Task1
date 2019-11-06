@@ -37,8 +37,8 @@ public class DeleteRequest implements Serializable {
     }
 
     /**
-     * function that return the medical
-     * @return an object Medical
+     * Get the medical attached to this request
+     * @return the medical related with this request
      */
 
     public Medical getMedical() {
@@ -46,7 +46,7 @@ public class DeleteRequest implements Serializable {
     }
 
     /**
-     * function that set a new medical for the delete request
+     * Set the medical for the delete request
      * @param medical the medical request to be attached to the delete request
      */
 
@@ -76,7 +76,7 @@ public class DeleteRequest implements Serializable {
     }
 
     /**
-     * function that transform the object DeleteRequest to an object MedicalBean
+     * Transform the object DeleteRequest into an object MedicalBean
      * @return an object MedicalBean
      */
 

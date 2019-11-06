@@ -56,9 +56,8 @@ public class Patient extends User{
     }
 
     /**
-     * functions that returns all the medicals of the specified date
-     * where the patient is involved
-     * @returns a list of object Medical
+     * Get all the medicals where the patient is involved.
+     * @returns the list of requested medicals
      */
 
     public List<Medical>  getSchedule() {
@@ -101,8 +100,8 @@ public class Patient extends User{
     }
 
     /**
-     * Create a new delete request for the specified medical
-     * @param med the medical request that wants to be deleted
+     * Create a new delete request for the specified medical.
+     * @param med the medical to be deleted
      * @returns an object DeleteRequest
      */
 
@@ -114,9 +113,9 @@ public class Patient extends User{
     }
 
     /**
-     * functions that create a new move request for the specified medical
-     * @param med the medical request that wants to be moved
-     * @param newDate the date to which the medical request wants to be moved
+     * Create a new move request for the specified medical.
+     * @param med the medical to be moved
+     * @param newDate the date to which the medical has to be moved
      * @returns the MoveRequest if everything worked fine, null if an error occurred.
      */
 
@@ -140,7 +139,7 @@ public class Patient extends User{
     }
 
     /**
-     * functions that checks the credentials of a patient that wants to access to the app
+     * Check the credentials of a patient that wants to access to the app
      * @param firstName the first name of the patient
      * @param lastName the last name of the patient
      * @returns null if the specified credentials are invalid, an object Patient if they are correct

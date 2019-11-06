@@ -223,7 +223,7 @@ public class Employee extends User{
 
     /**
      * Retrieve all Delete Requests from the database.
-     * @return the list of delete request
+     * @return the list of delete requests
      */
 
     public List<DeleteRequest> getDeleteRequests() {

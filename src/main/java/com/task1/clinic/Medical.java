@@ -70,7 +70,7 @@ public class Medical {
     }
 
     /**
-     * function that set the idCode of the medical through the specified one
+     * Set the idCode of the medical through the specified one
      * @param idCode idCode to be set to the user
      */
 
@@ -79,8 +79,8 @@ public class Medical {
     }
 
     /**
-     * function that return the doctor of the medical
-     * @return an object Doctor
+     * Get the doctor of the medical
+     * @return the doctor of the medical
      */
 
     public Doctor getDoctor() {
@@ -97,8 +97,8 @@ public class Medical {
     }
 
     /**
-     * function that return the delete request for the medical
-     * @return an object DeleteRequest
+     * Get the delete request for the medical.
+     * @return the delete request if it's present, otherwise returns <code>null</code>.
      */
 
     public DeleteRequest getDelRequest() {
@@ -106,7 +106,7 @@ public class Medical {
     }
 
     /**
-     * function that set the delete request for the medical
+     * Set the delete request for the medical.
      * @param delRequest the delete request to be set
      */
 
@@ -116,7 +116,7 @@ public class Medical {
     }
 
     /**
-     * function that set the doctor of the medical
+     * Set the doctor of the medical.
      * @param doctor the doctor to be set for the medical
      */
 
@@ -125,8 +125,8 @@ public class Medical {
     }
 
     /**
-     * function that return the delete patient of the medical
-     * @return an object Patient
+     * Get the patient of the medical.
+     * @return the patient of the medical
      */
 
     public Patient getPatient() {
@@ -134,7 +134,7 @@ public class Medical {
     }
 
     /**
-     * function that set the patient of the medical
+     * Set the patient of the medical.
      * @param patient the patient to be set for the medical
      */
 
@@ -143,8 +143,8 @@ public class Medical {
     }
 
     /**
-     * function that return the date of the medical
-     * @return an object Date
+     * Get the date of the medical
+     * @return the date of the medical
      */
 
     public Date getDate() {
@@ -152,7 +152,7 @@ public class Medical {
     }
 
     /**
-     * function that set the date of the medical
+     * Set the date of the medical
      * @param date the date to be set for the medical
      */
 
@@ -161,14 +161,14 @@ public class Medical {
     }
 
     /**
-     * function that return the approved status of the medical
-     * @return a boolean status of the medical
+     * Get the approved status of the medical.
+     * @return the boolean status of the medical.
      */
 
     public boolean isApproved() { return approved; }
 
     /**
-     * function that set the approved status of the medical
+     * Set the approved status of the medical.
      * @param approved the status to be set for the medical
      */
 
@@ -181,7 +181,7 @@ public class Medical {
     }
 
     /**
-     * function that transform the object Medical to an object MedicalBean
+     * Transform the object Medical into an object MedicalBean.
      * @return an object MedicalBean
      */
 
@@ -189,11 +189,17 @@ public class Medical {
         return new MedicalBean(getDoctor(),getPatient(),getDate());
     }
 
+    /**
+     * Remove the move request associated with this medical.
+     */
     public void removeMoveRequest(){
         this.moveRequest.setMedical(null);
         this.moveRequest = null;
     }
 
+    /**
+     * Remove the delete request associated with this medical.
+     */
     public void removeDelRequest(){
         this.delRequest.setMedical(null);
         this.delRequest = null;

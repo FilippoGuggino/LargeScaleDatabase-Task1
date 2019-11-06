@@ -57,7 +57,7 @@ public class Patient extends User{
 
     /**
      * Get all the medicals where the patient is involved.
-     * @returns the list of requested medicals
+     * @return the list of requested medicals
      */
 
     public List<Medical>  getSchedule() {
@@ -77,7 +77,7 @@ public class Patient extends User{
      * Create a new medical request with the specified doctor on the specified date
      * @param doctor the requested doctor for the medical
      * @param date the requested date of the medical
-     * @returns the Medical object if everything worked fine, null if an error occurred.
+     * @return the Medical object if everything worked fine, null if an error occurred.
      */
 
     public Medical createMedicalRequest(Doctor doctor, Date date) {
@@ -102,7 +102,7 @@ public class Patient extends User{
     /**
      * Create a new delete request for the specified medical.
      * @param med the medical to be deleted
-     * @returns an object DeleteRequest
+     * @return an object DeleteRequest
      */
 
     public DeleteRequest deleteRequest(Medical med) {
@@ -116,7 +116,7 @@ public class Patient extends User{
      * Create a new move request for the specified medical.
      * @param med the medical to be moved
      * @param newDate the date to which the medical has to be moved
-     * @returns the MoveRequest if everything worked fine, null if an error occurred.
+     * @return the MoveRequest if everything worked fine, null if an error occurred.
      */
 
     public MoveRequest moveRequest(Medical med, Date newDate) {
@@ -142,7 +142,7 @@ public class Patient extends User{
      * Check the credentials of a patient that wants to access to the app
      * @param firstName the first name of the patient
      * @param lastName the last name of the patient
-     * @returns null if the specified credentials are invalid, an object Patient if they are correct
+     * @return null if the specified credentials are invalid, an object Patient if they are correct
      */
 
     public static Patient logIn(String firstName, String lastName) {

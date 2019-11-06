@@ -75,7 +75,7 @@ public class PersistenceManager implements AutoCloseable{
 
     /**
      * Synchronize the status of the parameter <code>obj</code> with its related row
-     * in the database. At the end leaves <code>obj<code/> in a detached state
+     * in the database. At the end leaves <code>obj</code> in a detached state
      * @param obj the object to be synchronized with the database. It must be an instance of an Entity class.
      */
     public void update(Object obj) {

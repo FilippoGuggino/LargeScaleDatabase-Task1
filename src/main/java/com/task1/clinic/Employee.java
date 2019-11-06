@@ -191,7 +191,7 @@ public class Employee extends User{
      * Check the credentials of an employee that wants to access to the app.
      * @param firstName the first name of the employee
      * @param lastName the last name of the employee
-     * @returns null if the specified credentials are invalid, an object Employee if they are correct
+     * @return null if the specified credentials are invalid, an object Employee if they are correct
      */
 
     public static Employee logIn(String firstName, String lastName) {

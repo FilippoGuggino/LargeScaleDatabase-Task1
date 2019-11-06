@@ -33,7 +33,7 @@ public class Doctor extends User{
 
     /**
      * Get all the medicals with this doctor
-     * @returns The set of medicals.
+     * @return The set of medicals.
      */
 
     public Set<Medical> getMedicals() {
@@ -42,6 +42,7 @@ public class Doctor extends User{
 
     /**
      * Set the medicals that this doctor will hold.
+     * @param medicals  the medicals involving the doctor
      */
 
     public void setMedicals(Set<Medical> medicals) {
@@ -52,7 +53,7 @@ public class Doctor extends User{
      * Get all the medicals of the specified date
      * where the doctor is involved.
      * @param byDate the date of the medicals that are requested to be shown
-     * @returns the list of requested medicals.
+     * @return the list of requested medicals.
      */
 
     public List<Medical> getSchedule(Date byDate) {
@@ -69,7 +70,7 @@ public class Doctor extends User{
     }
     /**
      * Get all the medicals of the current date where the doctor is involved.
-     * @returns the list of requested medicals.
+     * @return the list of requested medicals.
      */
 
     public List<Medical> getSchedule() {
@@ -80,7 +81,7 @@ public class Doctor extends User{
      * Check the credentials of an employee that wants to access to the app.
      * @param firstName the first name of the doctor
      * @param lastName the last name of the doctor
-     * @returns null if the specified credentials are invalid, an object Doctor if they are correct
+     * @return null if the specified credentials are invalid, an object Doctor if they are correct
      */
 
     public static Doctor logIn(String firstName, String lastName) {

@@ -3,6 +3,9 @@ package com.task1.clinic;
 import javax.persistence.*;
 import java.util.*;
 
+/**
+ * An entity that represents a patient of the clinic.
+ */
 @Entity
 @Table(name = "patient", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
 public class Patient extends User{

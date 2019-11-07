@@ -6,6 +6,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * An entity that represents a medical.
+ */
 @Entity
 @Table(name = "medical", uniqueConstraints = {@UniqueConstraint(columnNames = {"doctorFK", "patientFK", "medicalDate"})})
 public class Medical {

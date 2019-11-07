@@ -25,7 +25,7 @@ public class PersistenceManager implements AutoCloseable{
     }
 
     /**
-     * get the only instance of this Singleton class.
+     * Get the only instance of this Singleton class.
      * @return the instance of this class
      */
     public static PersistenceManager getInstance() {
@@ -54,7 +54,7 @@ public class PersistenceManager implements AutoCloseable{
     }
 
     /**
-     * Prepare a JPQL query for the database and returns it before being performed.
+     * Prepare a JPQL query for the database and get it returned before being performed.
      * @param query the string that contains the JPQL query to be evaluated.
      * @return a Query object to be used to perform the interrogation on the database.
      */
@@ -64,7 +64,7 @@ public class PersistenceManager implements AutoCloseable{
     }
 
     /**
-     * Prepare a JPQL query that reads a list of medicals and returns it before being performed.
+     * Prepare a JPQL query that reads a list of medicals and get it returned before being performed.
      * @param query the string that contains the JPQL query to be evaluated.
      * @return a TypedQuery object to be used to perform the interrogation on the database.
      */
@@ -74,8 +74,9 @@ public class PersistenceManager implements AutoCloseable{
     }
 
     /**
-     * Synchronize the status of the parameter <code>obj</code> with its related row
-     * in the database. At the end leaves <code>obj</code> in a detached state
+     * Update the related row in the database
+     * with the current status of the parameter <code>obj</code>.
+     * At the end leaves <code>obj</code> in a detached state.
      * @param obj the object to be synchronized with the database. It must be an instance of an Entity class.
      */
     public void update(Object obj) {
@@ -86,7 +87,7 @@ public class PersistenceManager implements AutoCloseable{
     }
 
     /**
-     * Delete the related row of parameter <code>obj</code> from the database.
+     * Delete the associated row of parameter <code>obj</code> from the database.
      * The parameter still stays in cache memory and in Java memory.
      * At the end leaves <code>obj</code> in a detached state.
      * @param obj the object to be deleted from the database. It must be an instance of an Entity class.

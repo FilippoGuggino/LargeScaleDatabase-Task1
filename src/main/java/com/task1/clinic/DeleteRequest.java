@@ -7,6 +7,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * An entity that represents a delete request made by a patient for a specific medical.
+ */
 @Entity
 @Table(name = "delete_request")
 public class DeleteRequest implements Serializable {
@@ -67,10 +70,18 @@ public class DeleteRequest implements Serializable {
         return Objects.hash(medical);
     }
 
+    /**
+     * Get the id code of the request.
+     * @return the id code of the request
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Set the id code of the request.
+     * @param id the id code of the request
+     */
     public void setId(int id) {
         this.id = id;
     }

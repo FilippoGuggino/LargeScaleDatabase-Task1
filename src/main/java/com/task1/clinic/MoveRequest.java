@@ -5,6 +5,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * An entity that represents a move request made by a patient for a specific medical.
+ */
 @Entity
 @Table(name = "move_request")
 public class MoveRequest implements Serializable {
@@ -90,10 +93,18 @@ public class MoveRequest implements Serializable {
         return Objects.hash(medical, newDate);
     }
 
+    /**
+     * Get the id code of the request.
+     * @return the id code of the request
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Set the id code of the request.
+     * @param id the id code of the request
+     */
     public void setId(int id) {
         this.id = id;
     }

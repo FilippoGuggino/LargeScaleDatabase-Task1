@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * An entity that represents an employee of the clinic.
+ */
 @Entity
 @Table(name = "employee", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
 public class Employee extends User{

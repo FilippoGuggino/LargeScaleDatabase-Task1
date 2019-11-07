@@ -3,6 +3,9 @@ package com.task1.clinic;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Abstract class that represents a generic User of the system.
+ */
 @MappedSuperclass
 public abstract class User {
     @Id
@@ -17,7 +20,7 @@ public abstract class User {
     protected String lastName;
 
     /**
-     * constructor which takes and initializes all attributes of the class
+     * constructor which takes and initializes all attributes of the class.
      * @param firstName first name of the user
      * @param lastName last name of the user
      */
@@ -28,7 +31,7 @@ public abstract class User {
     }
 
     /**
-     * default constructor
+     * default constructor.
      */
 
     public User() {
@@ -36,7 +39,7 @@ public abstract class User {
     }
 
     /**
-     * function that gets the idCode of the user
+     * Get the idCode of the user.
      * @return integer idCode
      */
 
@@ -45,7 +48,7 @@ public abstract class User {
     }
 
     /**
-     * function that set the idCode of the user through the specified one
+     * Set the idCode of the user through the specified one.
      * @param idCode idCode to be set to the user
      */
 
@@ -54,7 +57,7 @@ public abstract class User {
     }
 
     /**
-     * function that gets the first name of the user
+     * Get the first name of the user.
      * @return string firstName
      */
 
@@ -63,7 +66,7 @@ public abstract class User {
     }
 
     /**
-     * function that set the first name of the user
+     * Set the first name of the user.
      * @param firstName first name of the user
      */
 
@@ -90,7 +93,7 @@ public abstract class User {
     }
 
     /**
-     * Transform the object User into an object UserBean
+     * Transform the object User into an object UserBean.
      * @return an object UserBean
      */
 
@@ -99,7 +102,7 @@ public abstract class User {
     }
 
     /**
-     * get the default schedule of the user
+     * Get the default schedule of the user.
      * @return the list of requested medicals
      */
 

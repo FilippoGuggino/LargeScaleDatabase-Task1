@@ -9,16 +9,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="385.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.DoctorScheduleScreenController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="472.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.DoctorScheduleScreenController">
     <children>
-        <Label fx:id="labelScheduleDate" text="TODAY SCHEDULE:" textAlignment="CENTER">
+        <Label fx:id="labelScheduleDate" text="TODAY'S SCHEDULE:" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
             <VBox.margin>
                 <Insets bottom="10.0" />
             </VBox.margin></Label>
-      <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="324.0">
+      <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="415.0">
       </TableView>
       <Label prefHeight="23.0" prefWidth="187.0" text="(Or) see another day's schedule:">
          <font>
@@ -35,6 +35,9 @@
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Aharoni Bold" size="12.0" />
+               </font>
             </Button>
          </children>
       </HBox>
@@ -43,7 +46,7 @@
          <children>
               <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="60.0" text="logout">
                   <font>
-                      <Font size="11.0" />
+                      <Font name="Aharoni Bold" size="11.0" />
                   </font>
             </Button>
          </children>

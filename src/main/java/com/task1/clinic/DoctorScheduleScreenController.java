@@ -31,10 +31,12 @@ public class DoctorScheduleScreenController implements Initializable  {
         nameCol.setCellValueFactory(
                 new PropertyValueFactory<UserBean,String>("firstName")
         );
+        nameCol.setStyle("-fx-alignment:CENTER");
         TableColumn surnameCol = new TableColumn("Patient last name");
         surnameCol.setCellValueFactory(
                 new PropertyValueFactory<UserBean,String>("lastName")
         );
+        surnameCol.setStyle("-fx-alignment:CENTER");
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.getColumns().addAll(nameCol, surnameCol);
         try{updateTable();}

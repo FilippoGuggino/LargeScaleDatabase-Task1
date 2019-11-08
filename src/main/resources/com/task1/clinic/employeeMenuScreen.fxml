@@ -18,24 +18,24 @@
                 <Insets bottom="100.0" />
             </VBox.margin>
         </Label>
-          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToScheduleScreen" prefHeight="36.0" prefWidth="205.0" text="See schedules">
+          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToScheduleScreen" prefHeight="46.0" prefWidth="325.0" text="See schedules">
               <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
               </font>
           </Button>
-          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToNewMedRequestsScreen" prefHeight="37.0" prefWidth="206.0" text="See new medical requests">
+          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToNewMedRequestsScreen" prefHeight="45.0" prefWidth="325.0" text="See new medical requests">
               <font>
-                  <Font size="15.0" />
+                  <Font name="Aharoni Bold" size="18.0" />
               </font>
           </Button>
-          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToDeleteRequestsScreen" prefHeight="33.0" prefWidth="208.0" text="See delete requests">
+          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToDeleteRequestsScreen" prefHeight="45.0" prefWidth="328.0" text="See delete requests">
               <font>
-                  <Font size="16.0" />
+                  <Font name="Aharoni Bold" size="18.0" />
               </font>
           </Button>
-      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToMoveRequestsScreen" prefHeight="38.0" prefWidth="210.0" text="See move requests">
+      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToMoveRequestsScreen" prefHeight="45.0" prefWidth="327.0" text="See move requests">
          <font>
-            <Font size="16.0" />
+            <Font name="Aharoni Bold" size="18.0" />
          </font>
          <VBox.margin>
             <Insets bottom="50.0" />
@@ -46,9 +46,9 @@
                 <Insets />
             </VBox.margin>
          <children>
-            <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="58.0" text="logout">
+            <Button onAction="#switchToInitial" prefHeight="27.0" prefWidth="66.0" text="logout">
                <font>
-                  <Font size="11.0" />
+                  <Font name="Aharoni Bold" size="13.0" />
                </font>
             </Button>
          </children>

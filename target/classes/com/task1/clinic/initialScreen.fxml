@@ -8,32 +8,29 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.InitialScreenController">
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="520.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.InitialScreenController">
    <children>
       <Label alignment="CENTER" prefHeight="35.0" prefWidth="172.0" text="CLINIC ASSISTANT">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="150.0" />
+            <Insets bottom="220.0" />
          </VBox.margin>
       </Label>
+      <Button fx:id="signupButton" onAction="#switchToSignup" prefHeight="43.0" prefWidth="265.0" text="SIGN UP">
+         <font>
+            <Font name="Aharoni Bold" size="22.0" />
+         </font>
+      </Button>
       <HBox alignment="CENTER" prefHeight="46.0" prefWidth="385.0">
          <children>
-            <Button fx:id="signupButton" onAction="#switchToSignup" prefHeight="20.0" prefWidth="101.0" text="SIGN UP">
-               <HBox.margin>
-                  <Insets right="50.0" />
-               </HBox.margin>
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="signinButton" alignment="CENTER" onAction="#switchToSignin" prefHeight="25.0" prefWidth="101.0" text="SIGN IN">
+            <Button fx:id="signinButton" alignment="CENTER" onAction="#switchToSignin" prefHeight="43.0" prefWidth="265.0" text="SIGN IN">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
                <font>
-                  <Font size="18.0" />
+                  <Font name="Aharoni Bold" size="22.0" />
                </font>
             </Button>
          </children>

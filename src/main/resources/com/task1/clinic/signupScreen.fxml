@@ -17,10 +17,23 @@
                 <Font name="System Bold" size="18.0" />
             </font>
             <VBox.margin>
-                <Insets bottom="120.0" />
+                <Insets bottom="60.0" />
             </VBox.margin></Label>
+      <Label text="Insert your credentials:">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+      </Label>
         <TextField id="firstnameInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="260.0" promptText="First name" />
         <TextField id="lastnameInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="260.0" promptText="Last name" />
+      <Label text="Select a role:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
         <ChoiceBox id="roleInput" prefHeight="25.0" prefWidth="150.0">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -31,13 +44,13 @@
             </items>
         </ChoiceBox>
         <Label fx:id="errorLabel" textFill="#ff0303" visible="false" />
-        <Button fx:id="secondaryButton" onAction="#signup" prefHeight="30.0" prefWidth="80.0" text="SIGN UP">
+        <Button fx:id="secondaryButton" onAction="#signup" prefHeight="18.0" prefWidth="116.0" text="SIGN UP">
             <font>
-                <Font name="System Bold" size="14.0" />
+                <Font name="Aharoni Bold" size="13.0" />
             </font></Button>
-      <Button mnemonicParsing="false" onAction="#switchToInitial" prefHeight="25.0" prefWidth="80.0" text="BACK" textAlignment="CENTER">
+      <Button mnemonicParsing="false" onAction="#switchToInitial" prefHeight="25.0" prefWidth="116.0" text="BACK" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Aharoni Bold" size="13.0" />
          </font>
       </Button>
     </children>

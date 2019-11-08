@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.TableColumn?>
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="526.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.PatientScheduleScreenController">
     <children>
         <Label text="MEDICALS IN SCHEDULE (ONLY APPROVED):" textAlignment="CENTER">
@@ -19,8 +20,9 @@
             <VBox.margin>
                 <Insets bottom="10.0" />
             </VBox.margin></Label>
-        <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="204.0" prefWidth="434.0">
+        <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="104.0" prefWidth="462.0">
         </TableView>
+      <Label text="Add a new medical:" />
         <HBox alignment="CENTER" prefHeight="25.0" prefWidth="284.0">
             <children>
             <TextField fx:id="firstnameInput" prefHeight="25.0" prefWidth="107.0" promptText="Doc_name">
@@ -38,29 +40,40 @@
                     <HBox.margin>
                         <Insets left="10.0" />
                     </HBox.margin>
+               <font>
+                  <Font name="Aharoni Bold" size="12.0" />
+               </font>
                 </Button>
             </children>
         </HBox>
+      <Label text="Insert a new date for the selected medical:" />
       <HBox alignment="CENTER" prefHeight="18.0" prefWidth="486.0">
          <children>
             <DatePicker fx:id="newDate" editable="false" prefHeight="25.0" prefWidth="147.0" promptText="Date (yyyy-mm-dd)">
                <HBox.margin>
-                  <Insets left="230.0" />
+                  <Insets />
                </HBox.margin>
             </DatePicker>
             <Button fx:id="moveButton" disable="true" mnemonicParsing="false" onAction="#addMoveRequest" prefHeight="25.0" prefWidth="60.0" text="MOVE">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Aharoni Bold" size="12.0" />
+               </font>
             </Button>
          </children>
       </HBox>
+      <Label text="Delete the selected medical:" />
       <HBox alignment="CENTER" prefHeight="4.0" prefWidth="486.0">
          <children>
             <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#addDeleteRequest" prefHeight="25.0" prefWidth="60.0" text="DELETE">
                <HBox.margin>
-                  <Insets left="388.0" />
+                  <Insets />
                </HBox.margin>
+               <font>
+                  <Font name="Aharoni Bold" size="12.0" />
+               </font>
             </Button>
          </children>
       </HBox>
@@ -69,7 +82,7 @@
             <children>
                 <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="60.0" text="logout">
                     <font>
-                        <Font size="11.0" />
+                        <Font name="Aharoni Bold" size="11.0" />
                     </font>
                 </Button>
             </children>

@@ -52,28 +52,26 @@ public class EmployeeScheduleScreenController implements Initializable {
     @FXML
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        TableColumn docNameCol = new TableColumn("Doc_Name");
-        docNameCol.setCellValueFactory(
-                new PropertyValueFactory<MedicalBean,String>("doctorFirstName")
+        TableColumn doctorCol = new TableColumn("Doctor");
+        doctorCol.setCellValueFactory(
+                new PropertyValueFactory<MedicalBean,String>("doctor")
         );
-        TableColumn docSurnameCol = new TableColumn("Doc_Surname");
-        docSurnameCol.setCellValueFactory(
-                new PropertyValueFactory<MedicalBean,String>("doctorLastName")
+        doctorCol.setStyle("-fx-alignment:CENTER");
+
+        TableColumn patientCol = new TableColumn("Patient");
+        patientCol.setCellValueFactory(
+                new PropertyValueFactory<MedicalBean,String>("patient")
         );
-        TableColumn patNameCol = new TableColumn("Pat_Name");
-        patNameCol.setCellValueFactory(
-                new PropertyValueFactory<MedicalBean,String>("patientFirstName")
-        );
-        TableColumn patSurnameCol = new TableColumn("Pat_Surname");
-        patSurnameCol.setCellValueFactory(
-                new PropertyValueFactory<MedicalBean,String>("patientLastName")
-        );
+        patientCol.setStyle("-fx-alignment:CENTER");
+
         TableColumn medicalDateCol = new TableColumn("Date");
         medicalDateCol.setCellValueFactory(
                 new PropertyValueFactory<MedicalBean,String>("medicalDate")
         );
+        medicalDateCol.setStyle("-fx-alignment:CENTER");
+
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableView.getColumns().addAll(patNameCol, patSurnameCol,docNameCol, docSurnameCol,medicalDateCol);
+        tableView.getColumns().addAll(patientCol,doctorCol,medicalDateCol);
         try{
             updateTable(null,null,null);
         }

@@ -39,20 +39,20 @@ public class PatientScheduleScreenController implements Initializable {
     @FXML
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        TableColumn nameCol = new TableColumn("Doc_Name");
-        nameCol.setCellValueFactory(
-                new PropertyValueFactory<MedicalBean,String>("doctorFirstName")
+        TableColumn docCol = new TableColumn("Doctor");
+        docCol.setCellValueFactory(
+                new PropertyValueFactory<MedicalBean,String>("doctor")
         );
-        TableColumn surnameCol = new TableColumn("Doc_Surname");
-        surnameCol.setCellValueFactory(
-                new PropertyValueFactory<MedicalBean,String>("doctorLastName")
-        );
+        docCol.setStyle("-fx-alignment:CENTER");
+
         TableColumn medicalDateCol = new TableColumn("Date");
         medicalDateCol.setCellValueFactory(
                 new PropertyValueFactory<MedicalBean,String>("medicalDate")
         );
+        medicalDateCol.setStyle("-fx-alignment:CENTER");
+
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableView.getColumns().addAll(nameCol, surnameCol,medicalDateCol);
+        tableView.getColumns().addAll(docCol,medicalDateCol);
         try{
             updateTable();
         }

@@ -108,4 +108,12 @@ public abstract class User {
 
     public abstract List<Medical> getSchedule();
 
+    /**
+     * Transform a user object into a string with format "idCode,firstName,lastName"
+     * @return a string in format "idCode,firstName,lastName"
+     */
+    public String toString() {
+        return Integer.toString(getIdCode()) + "," + getFirstName() + "," + getLastName();
+    }
+
 }

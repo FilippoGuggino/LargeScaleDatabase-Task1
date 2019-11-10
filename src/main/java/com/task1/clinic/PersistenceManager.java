@@ -1,7 +1,18 @@
 package com.task1.clinic;
 
 import javax.persistence.*;
+
+import org.iq80.leveldb.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static org.iq80.leveldb.impl.Iq80DBFactory.*;
 
 /**
  * This is a Singleton class, used to manage all interactions with JPA.
@@ -10,9 +21,11 @@ import java.util.List;
  * extremely simple to use.
  */
 public class PersistenceManager implements AutoCloseable{
-    private EntityManagerFactory factory;
+    private EntityManagerFactory em_factory;
 
     private EntityManager em;
+
+    private DB cache_keyValue;
 
     private static PersistenceManager singletonInstance = null;
 
@@ -20,8 +33,8 @@ public class PersistenceManager implements AutoCloseable{
      * Unique constructor for this class.
      */
     private PersistenceManager() {
-        this.factory = Persistence.createEntityManagerFactory("clinic");
-        this.em = factory.createEntityManager();
+        this.em_factory = Persistence.createEntityManagerFactory("clinic");
+        this.em = em_factory.createEntityManager();
     }
 
     /**
@@ -99,13 +112,116 @@ public class PersistenceManager implements AutoCloseable{
         em.getTransaction().commit();
     }
 
+    private DB openCache() {
+        try {
+            Options options = new Options();
+            //We use default options
+            this.cache_keyValue = factory.open(new File("cache_keyValue"), options);
+        } catch(IOException e) {
+            System.out.println("Error while opening database main directory:");
+            e.printStackTrace();
+        }
+
+        String date = asString(cache_keyValue.get(bytes("GLOBAL_CACHE_DATE")));
+        if(date == null) {
+            //TODO: init the cache
+            return cache_keyValue;
+        }
+        Date current = new Date();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String current_str = df.format(current);
+        if(date.equals(current_str)) {
+            return cache_keyValue;
+        }
+
+        //TODO: update the cache
+        return cache_keyValue;
+    }
+
+    private void closeCache() {
+        try {
+            this.cache_keyValue.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public List<Medical> getTodayMedicals(Doctor byDoctor, Patient byPatient) {
+        DB cache = openCache();
+        String keyStart = "medical:";
+        List<Medical> result = new ArrayList<Medical>();
+        Patient current_pat = null;
+        Doctor current_doc = null;
+        int counter = 0;
+        boolean isAccepted = true;
+        Medical current_med = null;
+        try (DBIterator iterator = cache.iterator();) {
+            iterator.seek(bytes(keyStart));
+            while (iterator.hasNext()) {
+                String key = asString(iterator.peekNext().getKey()); // key arrangement : medical:$medical_id:attr_name
+                String[] keySplit = key.split(":"); // split the key
+                String value = asString(iterator.peekNext().getValue());
+                if(keySplit[2].equals("doctor")) {
+                    if(byDoctor == null) {
+                        String[] params = value.split(",");
+                        current_doc = new Doctor(params[1], params[2]);
+                        current_doc.setIdCode(Integer.parseInt(params[0]));
+                    }
+                    else if ( value.equals(byDoctor.toString())) {
+                        current_doc = byDoctor;
+                    }
+                    else {
+                        current_doc = null;
+                        isAccepted = false;
+                    }
+                    counter++;
+
+                }
+                else if(keySplit[2].equals("patient")) {
+                    if(byPatient == null) {
+                        String[] params = value.split(",");
+                        current_pat = new Patient(params[1], params[2]);
+                        current_pat.setIdCode(Integer.parseInt(params[0]));
+                    }
+                    else if ( value.equals(byPatient.toString())) {
+                        current_pat = byPatient;
+                    }
+                    else {
+                        current_doc = null;
+                        isAccepted = false;
+                    }
+                    counter++;
+                }
+
+                if(counter == 2) {
+                    counter = 0;
+                    if(!isAccepted) {
+                        isAccepted = true;
+                        continue;
+                    }
+                    current_med = new Medical(current_doc, current_pat, new Date());
+                    result.add(current_med);
+                    counter = 0;
+                }
+
+
+            }
+        } catch(DBException | IOException e) {
+            System.out.println("Exception occurred while reading the cache...");
+            e.printStackTrace();
+        }
+
+        closeCache();
+        return result;
+    }
 
     /**
      * Close an application-managed manager.
      */
     public void close() {
         em.close();
-        factory.close();
+        em_factory.close();
     }
 
 

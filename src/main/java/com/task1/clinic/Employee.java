@@ -56,6 +56,7 @@ public class Employee extends User{
         if(m.getDate().compareTo(new Date()) == 0) {
             //if medical is scheduled today
             //TODO: update cache
+            man.addToCache(m);
         }
         return true;
     }
@@ -83,6 +84,7 @@ public class Employee extends User{
         if(m.getDate().compareTo(new Date()) == 0) {
             //if medical was scheduled today
             //TODO: update cache
+            man.removeFromCache(m);
         }
         return true;
     }
@@ -103,6 +105,7 @@ public class Employee extends User{
             if(med.getDate().compareTo(new Date()) == 0) {
                 //if medical is scheduled today
                 //TODO: update cache
+                man.addToCache(med);
             }
             return true;
         }
@@ -126,6 +129,7 @@ public class Employee extends User{
             if(del.getMedical().getDate().compareTo(new Date()) == 0) {
                 //if medical was scheduled today
                 //TODO: update cache
+                man.removeFromCache(del.getMedical());
             }
         }
         else{
@@ -152,10 +156,13 @@ public class Employee extends User{
             if(req.getMedical().getDate().compareTo(new Date()) == 0) {
                 //if medical was scheduled today and it's been moved
                 //TODO: update cache
+                man.removeFromCache(req.getMedical());
+
             }
             if(req.getNewDate().compareTo(new Date()) == 0) {
                 //if medical is moved to today
                 //TODO: update cache
+                man.addToCache(req.getMedical());
             }
         }
         man.delete(tmp.getMoveRequest());
@@ -175,13 +182,13 @@ public class Employee extends User{
     public List<Medical> getSchedule(Patient patient, Doctor doctor, Date byDate){
         PersistenceManager man = PersistenceManager.getInstance();
 
-        /*
-        TODO: remove this comment when cache is ready
+
+        //TODO: remove this comment when cache is ready
         if(byDate.compareTo(new Date()) == 0) {
             return man.getTodayMedicals(doctor, patient);
         }
 
-        */
+
 
         boolean needAnd = false;
         String query = "SELECT m FROM Medical m WHERE";

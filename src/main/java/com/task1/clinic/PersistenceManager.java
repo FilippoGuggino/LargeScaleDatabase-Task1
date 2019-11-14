@@ -123,18 +123,73 @@ public class PersistenceManager implements AutoCloseable{
         }
 
         String date = asString(cache_keyValue.get(bytes("GLOBAL_CACHE_DATE")));
-        if(date == null) {
-            //TODO: init the cache
-            return cache_keyValue;
-        }
         Date current = new Date();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String current_str = df.format(current);
+        if(date == null) {
+            //TODO: init the cache
+            PersistenceManager man = PersistenceManager.getInstance();
+            String query = "SELECT *m\n" +
+                    "FROM Medical m\n" +
+                    "WHERE m.date = :currentDate\n" +
+                    "AND m.approved = true\n" +
+                    "ORDER BY m.date DESC";
+            TypedQuery<Medical> preparedQuery = man.readMedicals(query);
+            preparedQuery.setParameter("currentDate",current);
+            List<Medical> initList = preparedQuery.getResultList();
+            WriteBatch batch = cache_keyValue.createWriteBatch();
+            for(int i = 0; i < initList.size(); ++i){
+                Doctor doc = initList.get(i).getDoctor();
+                Patient pat = initList.get(i).getPatient();
+                int medId = initList.get(i).getIdCode();
+                batch.put(bytes("medical"+":"+medId+":"+"doctor"),bytes(doc.getIdCode()+","+doc.getFirstName()+","+doc.getLastName()));
+                batch.put(bytes("medical"+":"+medId+":"+"patient"),bytes(pat.getIdCode()+","+pat.getFirstName()+","+pat.getLastName()));
+            }
+            cache_keyValue.write(batch);
+            cache_keyValue.put(bytes("GLOBAL_CACHE_DATE"),bytes(current_str));
+            return cache_keyValue;
+        }
         if(date.equals(current_str)) {
             return cache_keyValue;
         }
 
         //TODO: update the cache
+        //deletes everything and initialize the cache
+        WriteBatch deleteBatch =cache_keyValue.createWriteBatch();
+        DBIterator iterator = cache_keyValue.iterator();
+        iterator.seekToFirst();
+        //all deletes in a batch
+        while(iterator.hasNext()){
+            byte[] key = iterator.peekNext().getKey();
+            deleteBatch.delete(key);
+            iterator.next();
+        }
+        //deletes all stored info in the cache
+        cache_keyValue.write(deleteBatch);
+        //deletes GLOBAL_CACHE_DATE
+        cache_keyValue.delete(bytes("GLOBAL_CACHE_DATE"));
+
+        //initialize the cache
+        PersistenceManager man = PersistenceManager.getInstance();
+        String query = "SELECT *m\n" +
+                "FROM Medical m\n" +
+                "WHERE m.date = :currentDate\n" +
+                "AND m.approved = true\n" +
+                "ORDER BY m.date DESC";
+        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
+        preparedQuery.setParameter("currentDate",current);
+        List<Medical> initList = preparedQuery.getResultList();
+        WriteBatch batch = cache_keyValue.createWriteBatch();
+        for(int i = 0; i < initList.size(); ++i){
+            Doctor doc = initList.get(i).getDoctor();
+            Patient pat = initList.get(i).getPatient();
+            int medId = initList.get(i).getIdCode();
+            batch.put(bytes("medical"+":"+medId+":"+"doctor"),bytes(doc.getIdCode()+","+doc.getFirstName()+","+doc.getLastName()));
+            batch.put(bytes("medical"+":"+medId+":"+"patient"),bytes(pat.getIdCode()+","+pat.getFirstName()+","+pat.getLastName()));
+        }
+        cache_keyValue.write(batch);
+        //updates GLOBAL_CACHE_DATE
+        cache_keyValue.put(bytes("GLOBAL_CACHE_DATE"),bytes(current_str));
         return cache_keyValue;
     }
 
@@ -233,8 +288,43 @@ public class PersistenceManager implements AutoCloseable{
         return em;
     }
 
+    public boolean removeFromCache(Medical med){
+        if (med == null){
+            return false;
+        }
+        DB cache = openCache();
+        String keyDoc = "medical"+":"+med.getIdCode()+":"+"doctor";
+        String keyPat = "medical"+":"+med.getIdCode()+":"+"patient";
+        WriteBatch deleteBatch = cache.createWriteBatch();
+        deleteBatch.delete(bytes(keyDoc));
+        deleteBatch.delete(bytes(keyPat));
+        cache.write(deleteBatch);
+
+        return true;
+    }
+
+    public boolean addToCache(Medical med){
+        if (med == null){
+            return false;
+        }
+        DB cache = openCache();
+        String keyDoc = "medical"+":"+med.getIdCode()+":"+"doctor";
+        Doctor doc = med.getDoctor();
+        String valueDoc =doc.getIdCode()+","+doc.getFirstName()+","+doc.getLastName();
+        String keyPat = "medical"+":"+med.getIdCode()+":"+"patient";
+        Patient pat = med.getPatient();
+        String valuePat = pat.getIdCode()+","+pat.getFirstName()+","+pat.getLastName();
+        WriteBatch addBatch = cache.createWriteBatch();
+        addBatch.put(bytes(keyDoc),bytes(valueDoc));
+        addBatch.put(bytes(keyPat),bytes(valuePat));
+        cache.write(addBatch);
+
+        return true;
+    }
+
 
 }
+
 
 
 

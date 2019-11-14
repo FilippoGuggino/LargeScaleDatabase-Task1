@@ -129,7 +129,7 @@ public class PersistenceManager implements AutoCloseable{
         if(date == null) {
             //TODO: init the cache
             PersistenceManager man = PersistenceManager.getInstance();
-            String query = "SELECT *m\n" +
+            String query = "SELECT m\n" +
                     "FROM Medical m\n" +
                     "WHERE m.date = :currentDate\n" +
                     "AND m.approved = true\n" +
@@ -171,7 +171,7 @@ public class PersistenceManager implements AutoCloseable{
 
         //initialize the cache
         PersistenceManager man = PersistenceManager.getInstance();
-        String query = "SELECT *m\n" +
+        String query = "SELECT m\n" +
                 "FROM Medical m\n" +
                 "WHERE m.date = :currentDate\n" +
                 "AND m.approved = true\n" +
@@ -288,6 +288,12 @@ public class PersistenceManager implements AutoCloseable{
         return em;
     }
 
+    /**
+     * Removes from the levelDB cache the specified Medical.
+     * The delete operation is done inside of a batch.
+     * @param med the Medical to be deleted from the cache.
+     */
+
     public boolean removeFromCache(Medical med){
         if (med == null){
             return false;
@@ -300,8 +306,15 @@ public class PersistenceManager implements AutoCloseable{
         deleteBatch.delete(bytes(keyPat));
         cache.write(deleteBatch);
 
+        closeCache();
         return true;
     }
+
+    /**
+     * Add the specified Medical to  the levelDB cache.
+     * The put operation is done inside of a batch.
+     * @param med the Medical to be added to the cache.
+     */
 
     public boolean addToCache(Medical med){
         if (med == null){
@@ -319,6 +332,7 @@ public class PersistenceManager implements AutoCloseable{
         addBatch.put(bytes(keyPat),bytes(valuePat));
         cache.write(addBatch);
 
+        closeCache();
         return true;
     }
 

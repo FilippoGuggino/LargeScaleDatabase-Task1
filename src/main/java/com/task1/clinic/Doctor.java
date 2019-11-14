@@ -61,13 +61,10 @@ public class Doctor extends User{
 
     public List<Medical> getSchedule(Date byDate) {
         PersistenceManager Man = PersistenceManager.getInstance();
-
         //TODO: remove this comment when cache is ready
-        if(byDate.compareTo(new Date()) == 0) {
+        if(byDate.compareTo(new Date())==0) {
             return Man.getTodayMedicals(this, null);
         }
-
-
 
         String query = "SELECT m\n" +
                 "FROM Medical m\n" +

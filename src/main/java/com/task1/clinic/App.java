@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.hibernate.sql.Delete;
+import org.iq80.leveldb.DB;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -46,14 +47,16 @@ public class App extends Application {
         launch();
         PersistenceManager man = PersistenceManager.getInstance();
         /*
-        Patient pat = new Patient("Francesco", "Francesconi");
+        Patient pat = new Patient("zio", "zio");
         man.create(pat);
-        Doctor doc = new Doctor("Carlo", "Vallati");
+        Doctor doc = new Doctor("lesto", "uozio");
         man.create(doc);
         Date date = new Date();
         pat.createMedicalRequest(doc, date);
         pat.createMedicalRequest(doc, date);
+        doc.getSchedule(new Date());
         List<Medical> res = pat.getSchedule();
+
         for(int i = 0; i < res.size(); ++i)
             System.out.println(res.get(i).toString());
         List<Medical> res2 = doc.getSchedule(date);

@@ -1,6 +1,8 @@
 package com.task1.clinic;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -61,8 +63,13 @@ public class Doctor extends User{
 
     public List<Medical> getSchedule(Date byDate) {
         PersistenceManager Man = PersistenceManager.getInstance();
-        //TODO: remove this comment when cache is ready
-        if(byDate.compareTo(new Date())==0) {
+        //TODO: test cache
+        Date today = new Date();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String today_str = df.format(today);
+        String byDate_str = df.format(byDate);
+        if(byDate_str.compareTo(today_str)==0) {
+            System.out.println("Cache avviata"); //debug
             return Man.getTodayMedicals(this, null);
         }
 

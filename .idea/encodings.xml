@@ -3,5 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cache_keyValue/000007.sst" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/cache_keyValue/000008.log" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/cache_keyValue/000013.sst" charset="windows-1252" />
   </component>
 </project>

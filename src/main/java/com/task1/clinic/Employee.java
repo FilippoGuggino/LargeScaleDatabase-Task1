@@ -143,8 +143,13 @@ public class Employee extends User{
         Medical tmp = del.getMedical();
         if(approved){
             man.delete(tmp);
-            //TODO: sistemare compare data
-            if(del.getMedical().getDate().compareTo(new Date()) == 0) {
+            Date today = new Date();
+            Date dDate = del.getMedical().getDate();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String today_str = df.format(today);
+            String dDate_str = df.format(dDate);
+            //TODO: test cache
+            if(dDate_str.compareTo(today_str) == 0) {
                 //if medical was scheduled today
                 man.removeFromCache(del.getMedical());
             }
@@ -170,14 +175,21 @@ public class Employee extends User{
         if(approved) {
             tmp.setDate(req.getNewDate());
             man.update(tmp);
-            //TODO: sistemare compare data
-            if(req.getMedical().getDate().compareTo(new Date()) == 0) {
+            Date today = new Date();
+            Date reqDate = req.getMedical().getDate();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String today_str = df.format(today);
+            String reqDate_str = df.format(reqDate);
+            //TODO: test cache
+            if(reqDate_str.compareTo(today_str) == 0) {
                 //if medical was scheduled today and it's been moved
                 man.removeFromCache(req.getMedical());
 
             }
-            //TODO: sistemare compare data
-            if(req.getNewDate().compareTo(new Date()) == 0) {
+            //TODO: test cache
+            Date req_newDate = req.getNewDate();
+            String req_newDate_str = df.format(req_newDate);
+            if(req_newDate_str.compareTo(today_str) == 0) {
                 //if medical is moved to today
                 man.addToCache(req.getMedical());
             }
@@ -200,7 +212,7 @@ public class Employee extends User{
         PersistenceManager man = PersistenceManager.getInstance();
 
 
-        //TODO: remove this comment when cache is ready
+        //TODO: test cache
         Date today = new Date();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String today_str = df.format(today);

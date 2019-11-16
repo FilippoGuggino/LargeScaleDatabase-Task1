@@ -147,9 +147,11 @@ public class PersistenceManager implements AutoCloseable{
             }
             cache_keyValue.write(batch);
             cache_keyValue.put(bytes("GLOBAL_CACHE_DATE"),bytes(current_str));
+            //closeCache();
             return cache_keyValue;
         }
         if(date.equals(current_str)) {
+           // closeCache();
             return cache_keyValue;
         }
 
@@ -190,6 +192,7 @@ public class PersistenceManager implements AutoCloseable{
         cache_keyValue.write(batch);
         //updates GLOBAL_CACHE_DATE
         cache_keyValue.put(bytes("GLOBAL_CACHE_DATE"),bytes(current_str));
+      //  closeCache();
         return cache_keyValue;
     }
 

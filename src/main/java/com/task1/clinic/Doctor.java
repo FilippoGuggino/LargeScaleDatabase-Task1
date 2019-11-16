@@ -1,8 +1,6 @@
 package com.task1.clinic;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -62,22 +60,18 @@ public class Doctor extends User{
      */
 
     public List<Medical> getSchedule(Date byDate) {
-        PersistenceManager Man = PersistenceManager.getInstance();
-        //TODO: test cache
-        Date today = new Date();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String today_str = df.format(today);
-        String byDate_str = df.format(byDate);
-        if(byDate_str.compareTo(today_str)==0) {
-            System.out.println("Cache avviata"); //debug
-            return Man.getTodayMedicals(this, null);
+        PersistenceManager man = PersistenceManager.getInstance();
+
+        //check if results must be taken from cache
+        if(isToday(byDate)) {
+            return man.getTodayMedicals(this, null);
         }
 
         String query = "SELECT m\n" +
                 "FROM Medical m\n" +
                 "WHERE m.doctor.idCode = :idCode AND m.date = :byDate AND m.approved=true\n" +
                 "ORDER BY m.date";
-        TypedQuery<Medical> preparedQuery = Man.readMedicals(query);
+        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
         preparedQuery.setParameter("idCode", this.getIdCode());
         preparedQuery.setParameter("byDate", byDate);
         List<Medical> result = preparedQuery.getResultList();
@@ -89,7 +83,8 @@ public class Doctor extends User{
      */
 
     public List<Medical> getSchedule() {
-        return getSchedule(new Date());
+        PersistenceManager man = PersistenceManager.getInstance();
+        return man.getTodayMedicals(this, null);
     }
 
     /**

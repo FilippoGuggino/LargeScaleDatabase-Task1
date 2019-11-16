@@ -112,6 +112,33 @@ public class PersistenceManager implements AutoCloseable{
         em.getTransaction().commit();
     }
 
+    private void initCache() {
+        System.out.println("Initializing the cache...");
+        Date current = new Date();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String current_str = df.format(current);
+        PersistenceManager man = PersistenceManager.getInstance();
+        String query = "SELECT m\n" +
+                "FROM Medical m\n" +
+                "WHERE m.date = :currentDate\n" +
+                "AND m.approved = true\n";
+        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
+        preparedQuery.setParameter("currentDate",current);
+        List<Medical> initList = preparedQuery.getResultList();
+        WriteBatch batch = cache_keyValue.createWriteBatch();
+        for(int i = 0; i < initList.size(); ++i){
+            Medical med = initList.get(i);
+            Doctor doc = med.getDoctor();
+            Patient pat = med.getPatient();
+            int medId = med.getIdCode();
+            batch.put(bytes("medical"+":"+medId+":"+"doctor"),bytes(doc.getIdCode()+","+doc.getFirstName()+","+doc.getLastName()));
+            batch.put(bytes("medical"+":"+medId+":"+"patient"),bytes(pat.getIdCode()+","+pat.getFirstName()+","+pat.getLastName()));
+        }
+        cache_keyValue.write(batch);
+        cache_keyValue.put(bytes("GLOBAL_CACHE_DATE"),bytes(current_str));
+        System.out.println("cache initialized");
+    }
+
     private DB openCache() {
         try {
             Options options = new Options();
@@ -127,35 +154,13 @@ public class PersistenceManager implements AutoCloseable{
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String current_str = df.format(current);
         if(date == null) {
-            //TODO: init the cache
-            PersistenceManager man = PersistenceManager.getInstance();
-            String query = "SELECT m\n" +
-                    "FROM Medical m\n" +
-                    "WHERE m.date = :currentDate\n" +
-                    "AND m.approved = true\n" +
-                    "ORDER BY m.date DESC";
-            TypedQuery<Medical> preparedQuery = man.readMedicals(query);
-            preparedQuery.setParameter("currentDate",current);
-            List<Medical> initList = preparedQuery.getResultList();
-            WriteBatch batch = cache_keyValue.createWriteBatch();
-            for(int i = 0; i < initList.size(); ++i){
-                Doctor doc = initList.get(i).getDoctor();
-                Patient pat = initList.get(i).getPatient();
-                int medId = initList.get(i).getIdCode();
-                batch.put(bytes("medical"+":"+medId+":"+"doctor"),bytes(doc.getIdCode()+","+doc.getFirstName()+","+doc.getLastName()));
-                batch.put(bytes("medical"+":"+medId+":"+"patient"),bytes(pat.getIdCode()+","+pat.getFirstName()+","+pat.getLastName()));
-            }
-            cache_keyValue.write(batch);
-            cache_keyValue.put(bytes("GLOBAL_CACHE_DATE"),bytes(current_str));
-            //closeCache();
+            initCache();
             return cache_keyValue;
         }
         if(date.equals(current_str)) {
-           // closeCache();
             return cache_keyValue;
         }
 
-        //TODO: update the cache
         //deletes everything and initialize the cache
         WriteBatch deleteBatch =cache_keyValue.createWriteBatch();
         DBIterator iterator = cache_keyValue.iterator();
@@ -172,27 +177,7 @@ public class PersistenceManager implements AutoCloseable{
         cache_keyValue.delete(bytes("GLOBAL_CACHE_DATE"));
 
         //initialize the cache
-        PersistenceManager man = PersistenceManager.getInstance();
-        String query = "SELECT m\n" +
-                "FROM Medical m\n" +
-                "WHERE m.date = :currentDate\n" +
-                "AND m.approved = true\n" +
-                "ORDER BY m.date DESC";
-        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
-        preparedQuery.setParameter("currentDate",current);
-        List<Medical> initList = preparedQuery.getResultList();
-        WriteBatch batch = cache_keyValue.createWriteBatch();
-        for(int i = 0; i < initList.size(); ++i){
-            Doctor doc = initList.get(i).getDoctor();
-            Patient pat = initList.get(i).getPatient();
-            int medId = initList.get(i).getIdCode();
-            batch.put(bytes("medical"+":"+medId+":"+"doctor"),bytes(doc.getIdCode()+","+doc.getFirstName()+","+doc.getLastName()));
-            batch.put(bytes("medical"+":"+medId+":"+"patient"),bytes(pat.getIdCode()+","+pat.getFirstName()+","+pat.getLastName()));
-        }
-        cache_keyValue.write(batch);
-        //updates GLOBAL_CACHE_DATE
-        cache_keyValue.put(bytes("GLOBAL_CACHE_DATE"),bytes(current_str));
-      //  closeCache();
+        initCache();
         return cache_keyValue;
     }
 
@@ -204,11 +189,17 @@ public class PersistenceManager implements AutoCloseable{
         }
     }
 
-
+    /**
+     * Get the list of medicals planned for the current date retrieving them from the cache.
+     * If any of the parameters is set to null then it's not used to filter the result set.
+     * @param byDoctor the doctor involved in the medicals
+     * @param byPatient the patient involved in the medicals
+     * @return the filtered list of medicals
+     */
     public List<Medical> getTodayMedicals(Doctor byDoctor, Patient byPatient) {
         DB cache = openCache();
         String keyStart = "medical:";
-        List<Medical> result = new ArrayList<Medical>();
+        List<Medical> result = new ArrayList<>();
         Patient current_pat = null;
         Doctor current_doc = null;
         int counter = 0;
@@ -256,6 +247,7 @@ public class PersistenceManager implements AutoCloseable{
                     counter = 0;
                     if(!isAccepted) {
                         isAccepted = true;
+                        iterator.next();
                         continue;
                     }
                     current_med = new Medical(current_doc, current_pat, new Date());
@@ -263,7 +255,7 @@ public class PersistenceManager implements AutoCloseable{
                     counter = 0;
                 }
 
-
+                iterator.next();
             }
         } catch(DBException | IOException e) {
             System.out.println("Exception occurred while reading the cache...");
@@ -292,7 +284,7 @@ public class PersistenceManager implements AutoCloseable{
     }
 
     /**
-     * Removes from the levelDB cache the specified Medical.
+     * Remove from the levelDB cache the specified Medical.
      * The delete operation is done inside of a batch.
      * @param med the Medical to be deleted from the cache.
      */
@@ -314,8 +306,7 @@ public class PersistenceManager implements AutoCloseable{
     }
 
     /**
-     * Add the specified Medical to  the levelDB cache.
-     * The put operation is done inside of a batch.
+     * Add the specified Medical to the levelDB cache.
      * @param med the Medical to be added to the cache.
      */
 

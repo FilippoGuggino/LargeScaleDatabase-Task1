@@ -3,7 +3,6 @@ package com.task1.clinic;
 import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -55,14 +54,9 @@ public class Employee extends User{
             return false;
         }
         man.create(m);
-        Date today = new Date();
         Date mDate = m.getDate();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String today_str = df.format(today);
-        String mDate_str = df.format(mDate);
-        if(mDate_str.compareTo(today_str)==0) {
+        if(isToday(mDate)) {
             //if medical is scheduled today
-            //TODO: test cache
             man.addToCache(m);
         }
         return true;
@@ -88,18 +82,14 @@ public class Employee extends User{
             return false;
         }
         man.delete(m);
-        Date today = new Date();
         Date mDate = m.getDate();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String today_str = df.format(today);
-        String mDate_str = df.format(mDate);
-        if(mDate_str.compareTo(today_str)==0) {
+        if(isToday(mDate)) {
             //if medical was scheduled today
-            //TODO: test cache
             man.removeFromCache(m);
         }
         return true;
     }
+
 
     /**
      * Handle a Create request for a medical depending on the value of <code>approved</code>,
@@ -114,14 +104,9 @@ public class Employee extends User{
         if(approved) {
             med.setApproved(true);
             man.update(med);
-            Date today = new Date();
             Date mDate = med.getDate();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String today_str = df.format(today);
-            String mDate_str = df.format(mDate);
-            if(mDate_str.compareTo(today_str)==0) {
+            if(isToday(mDate)) {
                 //if medical is scheduled today
-                //TODO: test cache
                 man.addToCache(med);
             }
             return true;
@@ -143,13 +128,8 @@ public class Employee extends User{
         Medical tmp = del.getMedical();
         if(approved){
             man.delete(tmp);
-            Date today = new Date();
             Date dDate = del.getMedical().getDate();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String today_str = df.format(today);
-            String dDate_str = df.format(dDate);
-            //TODO: test cache
-            if(dDate_str.compareTo(today_str) == 0) {
+            if(isToday(dDate)) {
                 //if medical was scheduled today
                 man.removeFromCache(del.getMedical());
             }
@@ -175,21 +155,14 @@ public class Employee extends User{
         if(approved) {
             tmp.setDate(req.getNewDate());
             man.update(tmp);
-            Date today = new Date();
             Date reqDate = req.getMedical().getDate();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String today_str = df.format(today);
-            String reqDate_str = df.format(reqDate);
-            //TODO: test cache
-            if(reqDate_str.compareTo(today_str) == 0) {
+            if(isToday(reqDate)) {
                 //if medical was scheduled today and it's been moved
                 man.removeFromCache(req.getMedical());
 
             }
-            //TODO: test cache
             Date req_newDate = req.getNewDate();
-            String req_newDate_str = df.format(req_newDate);
-            if(req_newDate_str.compareTo(today_str) == 0) {
+            if(isToday(req_newDate)) {
                 //if medical is moved to today
                 man.addToCache(req.getMedical());
             }
@@ -212,13 +185,16 @@ public class Employee extends User{
         PersistenceManager man = PersistenceManager.getInstance();
 
 
-        //TODO: test cache
         Date today = new Date();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String today_str = df.format(today);
-        String byDate_str = df.format(byDate);
-        if(byDate_str.compareTo(today_str)==0) {
-            return man.getTodayMedicals(doctor, patient);
+
+        //check if results must be taken from cache
+        if(byDate != null) {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String today_str = df.format(today);
+            String byDate_str = df.format(byDate);
+            if(byDate_str.compareTo(today_str)==0) {
+                return man.getTodayMedicals(doctor, patient);
+            }
         }
 
 
@@ -259,8 +235,8 @@ public class Employee extends User{
      */
 
     public List<Medical> getSchedule(){
-        Date date = java.sql.Date.valueOf(LocalDate.now());
-        return getSchedule(null, null,date);
+        PersistenceManager man = PersistenceManager.getInstance();
+        return man.getTodayMedicals(null, null);
     }
 
     /**

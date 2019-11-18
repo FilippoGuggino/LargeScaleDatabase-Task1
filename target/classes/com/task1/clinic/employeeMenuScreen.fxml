@@ -20,22 +20,22 @@
         </Label>
           <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToScheduleScreen" prefHeight="46.0" prefWidth="325.0" text="See schedules">
               <font>
-                  <Font name="System Bold" size="22.0" />
+                  <Font name="System Bold" size="18.0" />
               </font>
           </Button>
           <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToNewMedRequestsScreen" prefHeight="45.0" prefWidth="325.0" text="See new medical requests">
               <font>
-                  <Font name="Aharoni Bold" size="22.0" />
+                  <Font name="Aharoni Bold" size="18.0" />
               </font>
           </Button>
           <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToDeleteRequestsScreen" prefHeight="45.0" prefWidth="328.0" text="See delete requests">
               <font>
-                  <Font name="Aharoni Bold" size="22.0" />
+                  <Font name="Aharoni Bold" size="18.0" />
               </font>
           </Button>
       <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#switchToMoveRequestsScreen" prefHeight="45.0" prefWidth="327.0" text="See move requests">
          <font>
-            <Font name="Aharoni Bold" size="22.0" />
+            <Font name="Aharoni Bold" size="18.0" />
          </font>
          <VBox.margin>
             <Insets bottom="50.0" />

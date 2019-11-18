@@ -172,6 +172,7 @@ public class EmployeeScheduleScreenController implements Initializable {
             Medical m=new Medical(d,p,date);
             if(e.addMedical(m)){
                 errorLabel.setVisible(false);
+                AlertBox.display("The medical has been added");
             }
             else{
                 errorLabel.setVisible(true);
@@ -188,6 +189,7 @@ public class EmployeeScheduleScreenController implements Initializable {
         Employee e=(Employee)App.user;
         Medical medicalToDelete=medicalRows.get(selectedIndex);
         e.dropMedical(medicalToDelete);
+        AlertBox.display("The medical has been deleted");
         //TODO update the table
     }
 }

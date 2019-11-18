@@ -10,21 +10,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="623.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.EmployeeScheduleScreenController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="630.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.task1.clinic.EmployeeScheduleScreenController">
     <children>
-        <Label prefHeight="27.0" prefWidth="103.0" text="SCHEDULES" textAlignment="CENTER">
+        <Label prefHeight="27.0" prefWidth="92.0" text="SCHEDULE" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
       </Label>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label text="Filters:" textAlignment="CENTER">
+            <Label text="Select one or some of the following fields to filter the medicals:" textAlignment="CENTER">
                <font>
                   <Font size="13.0" />
                </font>
                <HBox.margin>
-                  <Insets left="40.0" />
+                  <Insets left="20.0" />
                </HBox.margin>
             </Label>
          </children>
@@ -56,6 +56,9 @@
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Aharoni Bold" size="12.0" />
+               </font>
             </Button>
          </children>
       </HBox>
@@ -84,33 +87,42 @@
                     </HBox.margin>
                 </TextField>
                 <DatePicker fx:id="selectedDate" editable="false" prefHeight="25.0" prefWidth="146.0" promptText="Date (yyyy-mm-dd)" />
-                <Button mnemonicParsing="false" onAction="#addMedical" prefHeight="25.0" prefWidth="60.0" text="ADD">
+                <Button mnemonicParsing="false" onAction="#addMedical" prefHeight="25.0" prefWidth="60.0" text="ADD" textFill="#17ff06">
                     <HBox.margin>
                         <Insets left="10.0" />
                     </HBox.margin>
+               <font>
+                  <Font name="Aharoni Bold" size="12.0" />
+               </font>
                 </Button>
             </children>
         </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="deleteButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#dropMedical" prefHeight="25.0" prefWidth="60.0" text="DELETE">
+            <Button fx:id="deleteButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#dropMedical" prefHeight="25.0" prefWidth="60.0" text="DELETE" textFill="RED">
                <HBox.margin>
                   <Insets left="512.0" />
-               </HBox.margin></Button>
+               </HBox.margin>
+               <font>
+                  <Font name="Aharoni Bold" size="12.0" />
+               </font></Button>
          </children>
       </HBox>
         <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="299.0" textFill="#ff0303" visible="false" />
         <HBox alignment="CENTER" prefHeight="21.0" prefWidth="497.0">
             <children>
                 <Button onAction="#switchToInitial" prefHeight="24.0" prefWidth="60.0" text="logout">
-                    <font>
-                        <Font size="11.0" />
-                    </font>
+               <font>
+                  <Font name="Aharoni Bold" size="13.0" />
+               </font>
                 </Button>
             <Button mnemonicParsing="false" onAction="#switchToEmployeeMenuScreen" prefHeight="25.0" prefWidth="53.0" text="Back">
                <HBox.margin>
-                  <Insets left="350.0" />
+                  <Insets left="400.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Aharoni Bold" size="13.0" />
+               </font>
             </Button>
             </children>
         </HBox>

@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Popup;
 
 public class PatientScheduleScreenController implements Initializable {
 
@@ -103,11 +104,16 @@ public class PatientScheduleScreenController implements Initializable {
             if (p.createMedicalRequest(d, date) == null) {
                 errorLabel.setVisible(true);
                 errorLabel.setText("Medical already exists");
-            } else {
+            }
+            else {
                 errorLabel.setVisible(false);
+                AlertBox.display("The request has been sent");
+
             }
             firstnameInput.setText("");
             lastnameInput.setText("");
+
+
         }
     }
     @FXML
@@ -118,6 +124,9 @@ public class PatientScheduleScreenController implements Initializable {
         if(p.deleteRequest(medicalToDelete)==null){
             errorLabel.setText("The request has already been sent!");
             errorLabel.setVisible(true);
+        }
+        else{
+            AlertBox.display("The request has been sent");
         }
     }
     @FXML
@@ -135,5 +144,8 @@ public class PatientScheduleScreenController implements Initializable {
             errorLabel.setText("The request has already been sent!");
             errorLabel.setVisible(true);
         }
+        else
+            AlertBox.display("The request has been sent");
+
     }
 }

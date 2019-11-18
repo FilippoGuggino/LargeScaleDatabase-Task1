@@ -188,6 +188,10 @@ public class EmployeeScheduleScreenController implements Initializable {
     public void dropMedical(){
         Employee e=(Employee)App.user;
         Medical medicalToDelete=medicalRows.get(selectedIndex);
+
+        //if medical is taken from cache it must be attached to database
+        medicalToDelete = medicalToDelete.connect();
+
         e.dropMedical(medicalToDelete);
         AlertBox.display("The medical has been deleted");
         //TODO update the table

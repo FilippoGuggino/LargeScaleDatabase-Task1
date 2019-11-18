@@ -1,6 +1,9 @@
 package com.task1.clinic;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -107,5 +110,21 @@ public abstract class User {
      */
 
     public abstract List<Medical> getSchedule();
+
+    /**
+     * Transform a user object into a string with format "idCode,firstName,lastName"
+     * @return a string in format "idCode,firstName,lastName"
+     */
+    public String toString() {
+        return Integer.toString(getIdCode()) + "," + getFirstName() + "," + getLastName();
+    }
+
+    protected boolean isToday(Date date) {
+        Date today = new Date();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String today_str = df.format(today);
+        String date_str = df.format(date);
+        return date_str.equals(today_str);
+    }
 
 }

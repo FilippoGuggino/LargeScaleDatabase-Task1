@@ -205,4 +205,15 @@ public class Medical {
         this.delRequest.setMedical(null);
         this.delRequest = null;
     }
+
+    /**
+     * Attach a medical to the database by returning a new attached instance.
+     * @return the attached instance of Medical
+     */
+    public Medical connect() {
+        PersistenceManager man = PersistenceManager.getInstance();
+        Medical med = man.getEm().getReference(Medical.class, this.idCode);
+        return med;
+    }
+
 }

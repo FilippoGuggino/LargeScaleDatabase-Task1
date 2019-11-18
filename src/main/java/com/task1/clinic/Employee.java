@@ -1,7 +1,8 @@
 package com.task1.clinic;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +54,11 @@ public class Employee extends User{
             return false;
         }
         man.create(m);
+        Date mDate = m.getDate();
+        if(isToday(mDate)) {
+            //if medical is scheduled today
+            man.addToCache(m);
+        }
         return true;
     }
 
@@ -76,8 +82,14 @@ public class Employee extends User{
             return false;
         }
         man.delete(m);
+        Date mDate = m.getDate();
+        if(isToday(mDate)) {
+            //if medical was scheduled today
+            man.removeFromCache(m);
+        }
         return true;
     }
+
 
     /**
      * Handle a Create request for a medical depending on the value of <code>approved</code>,
@@ -92,6 +104,11 @@ public class Employee extends User{
         if(approved) {
             med.setApproved(true);
             man.update(med);
+            Date mDate = med.getDate();
+            if(isToday(mDate)) {
+                //if medical is scheduled today
+                man.addToCache(med);
+            }
             return true;
         }
         man.delete(med);
@@ -111,6 +128,11 @@ public class Employee extends User{
         Medical tmp = del.getMedical();
         if(approved){
             man.delete(tmp);
+            Date dDate = del.getMedical().getDate();
+            if(isToday(dDate)) {
+                //if medical was scheduled today
+                man.removeFromCache(del.getMedical());
+            }
         }
         else{
             man.delete(del);
@@ -133,6 +155,17 @@ public class Employee extends User{
         if(approved) {
             tmp.setDate(req.getNewDate());
             man.update(tmp);
+            Date reqDate = req.getMedical().getDate();
+            if(isToday(reqDate)) {
+                //if medical was scheduled today and it's been moved
+                man.removeFromCache(req.getMedical());
+
+            }
+            Date req_newDate = req.getNewDate();
+            if(isToday(req_newDate)) {
+                //if medical is moved to today
+                man.addToCache(req.getMedical());
+            }
         }
         man.delete(tmp.getMoveRequest());
         tmp.removeMoveRequest();
@@ -150,6 +183,22 @@ public class Employee extends User{
 
     public List<Medical> getSchedule(Patient patient, Doctor doctor, Date byDate){
         PersistenceManager man = PersistenceManager.getInstance();
+
+
+        Date today = new Date();
+
+        //check if results must be taken from cache
+        if(byDate != null) {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String today_str = df.format(today);
+            String byDate_str = df.format(byDate);
+            if(byDate_str.compareTo(today_str)==0) {
+                return man.getTodayMedicals(doctor, patient);
+            }
+        }
+
+
+
         boolean needAnd = false;
         String query = "SELECT m FROM Medical m WHERE";
         if(patient != null){
@@ -186,8 +235,8 @@ public class Employee extends User{
      */
 
     public List<Medical> getSchedule(){
-        Date date = java.sql.Date.valueOf(LocalDate.now());
-        return getSchedule(null, null,date);
+        PersistenceManager man = PersistenceManager.getInstance();
+        return man.getTodayMedicals(null, null);
     }
 
     /**

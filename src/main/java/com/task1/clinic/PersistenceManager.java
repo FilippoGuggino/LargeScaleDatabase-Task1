@@ -251,6 +251,7 @@ public class PersistenceManager implements AutoCloseable{
                         continue;
                     }
                     current_med = new Medical(current_doc, current_pat, new Date());
+                    current_med.setIdCode(Integer.parseInt(keySplit[1]));
                     result.add(current_med);
                     counter = 0;
                 }

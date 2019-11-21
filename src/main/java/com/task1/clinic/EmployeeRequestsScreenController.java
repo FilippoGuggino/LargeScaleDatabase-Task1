@@ -147,13 +147,13 @@ public class EmployeeRequestsScreenController implements Initializable {
     @FXML
     private void rejectRequest() throws IOException{
         handleRequest(false);
-        AlertBox.display("The medical has been rejected");
+        AlertBox.display("The request has been rejected");
 
     }
     @FXML
     private void approveRequest() throws IOException{
         handleRequest(true);
-        AlertBox.display("The medical has been approved");
+        AlertBox.display("The request has been approved");
 
     }
 

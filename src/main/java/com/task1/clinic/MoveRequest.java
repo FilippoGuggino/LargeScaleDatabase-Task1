@@ -12,12 +12,10 @@ import java.util.Objects;
 @Table(name = "move_request")
 public class MoveRequest implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @MapsId
-    @OneToOne( cascade = CascadeType.MERGE)
-    @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
+    @OneToOne(fetch = FetchType.LAZY)
     private Medical medical;
 
     @Column(name = "newDate")
@@ -32,6 +30,8 @@ public class MoveRequest implements Serializable {
 
     public MoveRequest(Medical medical, Date newDate) {
         this.newDate = newDate;
+        this.setMedical(medical);
+        this.id = medical.getIdCode();
         medical.setMoveRequest(this);
     }
 

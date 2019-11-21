@@ -135,8 +135,9 @@ public class Employee extends User{
             }
         }
         else{
-            man.delete(del);
-            tmp.removeDelRequest();
+            //orphanremoval will delete the request from the database as well
+            tmp.setDelRequest(null);
+            man.update(tmp);
         }
         return true;
     }
@@ -167,8 +168,9 @@ public class Employee extends User{
                 man.addToCache(req.getMedical());
             }
         }
-        man.delete(tmp.getMoveRequest());
-        tmp.removeMoveRequest();
+        //orphanremoval will delete the request from the database as well
+        tmp.setMoveRequest(null);
+        man.update(tmp);
         return true;
     }
 
@@ -295,7 +297,8 @@ public class Employee extends User{
         PersistenceManager man = PersistenceManager.getInstance();
         String query = "SELECT dr\nFROM MoveRequest dr";
         Query preparedQuery = man.read(query);
-        return  (List<MoveRequest>) preparedQuery.getResultList();
+        List<MoveRequest> ret =  (List<MoveRequest>) preparedQuery.getResultList();
+        return ret;
     }
 
 

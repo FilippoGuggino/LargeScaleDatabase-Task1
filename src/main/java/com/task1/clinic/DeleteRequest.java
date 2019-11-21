@@ -11,12 +11,10 @@ import java.util.Objects;
 @Table(name = "delete_request")
 public class DeleteRequest implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @MapsId
-    @OneToOne
-    @JoinColumn(name = "medicalFK", referencedColumnName = "idCode")
+    @OneToOne(fetch = FetchType.LAZY)
     private Medical medical;
 
     /**
@@ -25,6 +23,8 @@ public class DeleteRequest implements Serializable {
      */
 
     public DeleteRequest(Medical medical) {
+        this.setMedical(medical);
+        this.id = medical.getIdCode();
         medical.setDelRequest(this);
     }
 

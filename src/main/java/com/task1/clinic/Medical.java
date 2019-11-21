@@ -32,11 +32,11 @@ public class Medical {
     @Column(name = "approved")
     private boolean approved;
 
-    @OneToOne(mappedBy = "medical", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToOne(mappedBy = "medical", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false ,orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DeleteRequest delRequest;
 
-    @OneToOne(mappedBy = "medical", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToOne(mappedBy = "medical", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private MoveRequest moveRequest;
 
@@ -62,7 +62,7 @@ public class Medical {
     }
 
     /**
-     * function that gets the idCode of the medical
+     * Get the idCode of the medical
      * @return integer idCode
      */
 
@@ -88,13 +88,29 @@ public class Medical {
         return doctor;
     }
 
+    /**
+     * Get the move request for the medical.
+     * @return the move request if it's present, otherwise returns <code>null</code>.
+     */
+
     public MoveRequest getMoveRequest() {
         return moveRequest;
     }
 
+    /**
+     * Set the delete request for the medical.
+     * @param moveRequest the delete request to be set
+     */
+
     public void setMoveRequest(MoveRequest moveRequest) {
+        if(moveRequest == null) {
+            if(this.moveRequest != null)
+                this.moveRequest.setMedical(null);
+        }
+        else {
+            moveRequest.setMedical(this);
+        }
         this.moveRequest = moveRequest;
-        moveRequest.setMedical(this);
     }
 
     /**
@@ -112,8 +128,14 @@ public class Medical {
      */
 
     public void setDelRequest(DeleteRequest delRequest) {
+        if(delRequest == null) {
+            if(this.delRequest != null)
+                this.delRequest.setMedical(null);
+        }
+        else {
+            delRequest.setMedical(this);
+        }
         this.delRequest = delRequest;
-        delRequest.setMedical(this);
     }
 
     /**
@@ -190,21 +212,6 @@ public class Medical {
         return new MedicalBean(getDoctor(),getPatient(),getDate());
     }
 
-    /**
-     * Remove the move request associated with this medical.
-     */
-    public void removeMoveRequest(){
-        this.moveRequest.setMedical(null);
-        this.moveRequest = null;
-    }
-
-    /**
-     * Remove the delete request associated with this medical.
-     */
-    public void removeDelRequest(){
-        this.delRequest.setMedical(null);
-        this.delRequest = null;
-    }
 
     /**
      * Attach a medical to the database by returning a new attached instance.

@@ -1110,7 +1110,7 @@ INSERT INTO `medical`(idCode, approved, medicalDate, doctorFK, patientFK) VALUES
 ('956',0,'2020-09-29','157','357'); 
 
 
-INSERT INTO `move_request` VALUES (1,'2020-01-25'),
+INSERT INTO `move_request`(medical_idCode, newDate) VALUES ('1','2020-01-25'),
 ('2','2020-02-26'),
 ('3','2020-02-17'),
 ('4','2020-09-15'),
@@ -1212,7 +1212,7 @@ INSERT INTO `move_request` VALUES (1,'2020-01-25'),
 ('100','2020-10-03'); 
 
 
-INSERT INTO `delete_request` VALUES (1),
+INSERT INTO `delete_request` VALUES ('1'),
 ('2'),
 ('3'),
 ('4'),

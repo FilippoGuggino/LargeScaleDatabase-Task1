@@ -17,11 +17,11 @@ public class Medical {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctorFK", referencedColumnName = "idCode")
     private Doctor doctor;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patientFK", referencedColumnName = "idCode")
     private Patient patient;
 
@@ -32,11 +32,11 @@ public class Medical {
     @Column(name = "approved")
     private boolean approved;
 
-    @OneToOne(mappedBy = "medical", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false ,orphanRemoval = true)
+    @OneToOne(mappedBy = "medical", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DeleteRequest delRequest;
 
-    @OneToOne(mappedBy = "medical", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
+    @OneToOne(mappedBy = "medical", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private MoveRequest moveRequest;
 

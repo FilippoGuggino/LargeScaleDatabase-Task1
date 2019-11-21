@@ -31,8 +31,6 @@ public class MoveRequest implements Serializable {
     public MoveRequest(Medical medical, Date newDate) {
         this.newDate = newDate;
         this.setMedical(medical);
-        this.id = medical.getIdCode();
-        medical.setMoveRequest(this);
     }
 
     /**

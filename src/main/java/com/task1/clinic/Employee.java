@@ -53,6 +53,8 @@ public class Employee extends User{
         if(!res.isEmpty()) {
             return false;
         }
+        m.getDoctor().addMedical(m);
+        m.getPatient().addMedical(m);
         man.create(m);
         Date mDate = m.getDate();
         if(isToday(mDate)) {

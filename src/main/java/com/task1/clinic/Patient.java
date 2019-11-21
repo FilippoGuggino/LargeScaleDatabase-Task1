@@ -10,7 +10,7 @@ import java.util.*;
 @Table(name = "patient", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
 public class Patient extends User{
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Medical> medicals;
 
     /**
@@ -85,7 +85,7 @@ public class Patient extends User{
 
     public Medical createMedicalRequest(Doctor doctor, Date date) {
         PersistenceManager man = PersistenceManager.getInstance();
-        Medical newMed = new Medical(doctor, this, date);
+        Medical newMed = new Medical();
         String checkQuery = "SELECT m FROM Medical m\n" +
                             "WHERE m.doctor.idCode = :docId AND m.patient.idCode = :patId\n" +
                             "AND m.date = :date";
@@ -98,6 +98,9 @@ public class Patient extends User{
             //medical already existed -> return null
             return null;
         }
+        newMed.setDate(date);
+        doctor.addMedical(newMed);
+        this.addMedical(newMed);
         man.create(newMed);
         return newMed;
     }
@@ -110,7 +113,6 @@ public class Patient extends User{
 
     public DeleteRequest deleteRequest(Medical med) {
         PersistenceManager man = PersistenceManager.getInstance();
-        DeleteRequest del = new DeleteRequest(med);
         String checkQuery = "SELECT dr\n" +
                 "FROM DeleteRequest dr\n" +
                 "WHERE dr.medical.idCode = :idCode";
@@ -121,7 +123,10 @@ public class Patient extends User{
             //deleteRequest already existed -> return null
             return null;
         }
-        man.create(del);
+        med = med.connect();
+        DeleteRequest del = new DeleteRequest();
+        med.setDelRequest(del);
+        man.update(med);
         return del;
     }
 
@@ -134,7 +139,6 @@ public class Patient extends User{
 
     public MoveRequest moveRequest(Medical med, Date newDate) {
         PersistenceManager man = PersistenceManager.getInstance();
-        MoveRequest mov = new MoveRequest(med, newDate);
         String checkQuery = "SELECT mr\n" +
                 "FROM MoveRequest mr\n" +
                 "WHERE mr.medical.idCode = :idCode";
@@ -145,8 +149,22 @@ public class Patient extends User{
             //moveRequest already existed -> return null
             return null;
         }
+        MoveRequest mov = new MoveRequest();
+        med = med.connect();
+        mov.setNewDate(newDate);
+        med.setMoveRequest(mov);
         man.create(mov);
         return mov;
+    }
+
+    public void addMedical(Medical med) {
+        this.medicals.add(med);
+        med.setPatient(this);
+    }
+
+    public void removeMedical(Medical med) {
+        this.medicals.remove(med);
+        med.setPatient(null);
     }
 
     /**

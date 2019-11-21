@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "doctor", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
 public class Doctor extends User{
 
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Medical> medicals;
     /**
      * constructor which takes and initializes all attributes of the class using
@@ -85,6 +85,16 @@ public class Doctor extends User{
     public List<Medical> getSchedule() {
         PersistenceManager man = PersistenceManager.getInstance();
         return man.getTodayMedicals(this, null);
+    }
+
+    public void addMedical(Medical med) {
+        this.medicals.add(med);
+        med.setDoctor(this);
+    }
+
+    public void removeMedical(Medical med) {
+        this.medicals.remove(med);
+        med.setDoctor(null);
     }
 
     /**

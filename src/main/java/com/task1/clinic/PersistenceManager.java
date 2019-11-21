@@ -112,6 +112,19 @@ public class PersistenceManager implements AutoCloseable{
         em.getTransaction().commit();
     }
 
+    /**
+     * Attach back the object with JPA cache and database
+     * with the current status of the parameter <code>obj</code>.
+     * @param obj the object to be merged. It must be an instance of an Entity class.
+     */
+    public void merge(Object obj) {
+        em.getTransaction().begin();
+        Object managed = em.merge(obj);
+        obj = managed;
+        em.getTransaction().commit();
+    }
+
+
     private void initCache() {
         System.out.println("Initializing the cache...");
         Date current = new Date();

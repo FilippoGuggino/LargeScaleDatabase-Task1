@@ -24,8 +24,6 @@ public class DeleteRequest implements Serializable {
 
     public DeleteRequest(Medical medical) {
         this.setMedical(medical);
-        this.id = medical.getIdCode();
-        medical.setDelRequest(this);
     }
 
     /**
@@ -88,5 +86,10 @@ public class DeleteRequest implements Serializable {
      * @return an object MedicalBean
      */
 
-    public MedicalBean toBean(){ return new MedicalBean(medical.getDoctor(),medical.getPatient(),medical.getDate());}
+    public MedicalBean toBean(){
+        if(this.medical == null) {
+            System.out.println("Error: this request has not a medical!");
+        }
+        return new MedicalBean(medical.getDoctor(),medical.getPatient(),medical.getDate());
+    }
 }

@@ -120,6 +120,7 @@ public class PatientScheduleScreenController implements Initializable {
     private void addDeleteRequest()throws IOException{
         errorLabel.setVisible(false);
         Medical medicalToDelete=medicalRows.get(selectedIndex);
+        medicalToDelete = medicalToDelete.connect();
         Patient p=(Patient)App.user;
         if(p.deleteRequest(medicalToDelete)==null){
             errorLabel.setText("The request has already been sent!");
@@ -138,6 +139,7 @@ public class PatientScheduleScreenController implements Initializable {
         }
         errorLabel.setVisible(false);
         Medical medicalToUpdate=medicalRows.get(selectedIndex);
+        medicalToUpdate = medicalToUpdate.connect();
         Patient p=(Patient)App.user;
         Date date = java.sql.Date.valueOf(newDate.getValue());
         if(p.moveRequest(medicalToUpdate,date)==null){

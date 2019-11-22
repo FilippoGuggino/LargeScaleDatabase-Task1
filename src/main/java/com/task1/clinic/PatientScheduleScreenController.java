@@ -52,8 +52,14 @@ public class PatientScheduleScreenController implements Initializable {
         );
         medicalDateCol.setStyle("-fx-alignment:CENTER");
 
+        TableColumn approvedCol = new TableColumn("Approved");
+        approvedCol.setCellValueFactory(
+                new PropertyValueFactory<MedicalBean,String>("approved")
+        );
+        approvedCol.setStyle("-fx-alignment:CENTER");
+
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableView.getColumns().addAll(docCol,medicalDateCol);
+        tableView.getColumns().addAll(docCol,medicalDateCol,approvedCol);
         try{
             updateTable();
         }

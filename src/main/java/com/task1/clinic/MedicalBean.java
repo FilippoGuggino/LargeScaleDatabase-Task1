@@ -13,7 +13,13 @@ public class MedicalBean {
     private SimpleStringProperty patient;
     private SimpleStringProperty medicalDate;
     private SimpleStringProperty newMedicalDate;
+    private SimpleStringProperty approved;
 
+    public MedicalBean(Doctor doctor, Patient patient, Date date, Boolean approved){
+        this(doctor,patient,date);
+        String approvedString=(approved)?"yes":"no";
+        this.approved=new SimpleStringProperty(approvedString);
+    }
     public MedicalBean(Doctor doctor, Patient patient, Date date, Date newDate){
         this(doctor,patient,date);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -27,15 +33,10 @@ public class MedicalBean {
         String date_str = df.format(date);
         this.medicalDate=new SimpleStringProperty(date_str);
     }
-    public String getDoctor(){
-        return doctor.get();
-    }
-    public String getPatient(){
-        return patient.get();
-    }
-    public String getMedicalDate(){
-        return medicalDate.get();
-    }
+    public String getDoctor(){  return doctor.get(); }
+    public String getPatient(){  return patient.get(); }
+    public String getMedicalDate(){  return medicalDate.get(); }
     public String getNewMedicalDate(){ return newMedicalDate.get(); }
+    public String getApproved(){ return approved.get(); }
 
 }

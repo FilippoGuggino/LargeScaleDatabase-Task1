@@ -209,7 +209,7 @@ public class Medical {
      */
 
     public MedicalBean toBean(){
-        return new MedicalBean(getDoctor(),getPatient(),getDate());
+        return new MedicalBean(getDoctor(),getPatient(),getDate(),isApproved());
     }
 
 

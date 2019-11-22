@@ -69,7 +69,6 @@ public class Patient extends User{
                        "FROM Medical m\n" +
                        "JOIN FETCH m.doctor JOIN FETCH m.patient\n" +
                        "WHERE m.patient.idCode = :idCode\n" +
-                       "AND m.approved = true\n" +
                        "ORDER BY m.date DESC";
         TypedQuery<Medical> preparedQuery = man.prepareMedicalQuery(query);
         preparedQuery.setParameter("idCode", this.getIdCode());

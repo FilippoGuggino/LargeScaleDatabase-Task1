@@ -69,13 +69,13 @@ public class Doctor extends User{
 
         String query = "SELECT m\n" +
                 "FROM Medical m\n" +
+                "JOIN FETCH m.doctor JOIN FETCH m.patient\n" +
                 "WHERE m.doctor.idCode = :idCode AND m.date = :byDate AND m.approved=true\n" +
                 "ORDER BY m.date";
-        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
+        TypedQuery<Medical> preparedQuery = man.prepareMedicalQuery(query);
         preparedQuery.setParameter("idCode", this.getIdCode());
         preparedQuery.setParameter("byDate", byDate);
-        List<Medical> result = preparedQuery.getResultList();
-        return result;
+        return man.executeTypedQuery(preparedQuery);
     }
     /**
      * Get all the medicals of the current date where the doctor is involved.
@@ -107,10 +107,10 @@ public class Doctor extends User{
     public static Doctor logIn(String firstName, String lastName) {
         PersistenceManager man = PersistenceManager.getInstance();
         String logQuery = "SELECT d FROM Doctor d WHERE d.firstName = :fn AND d.lastName = :ln";
-        Query queryRes = man.read(logQuery);
+        Query queryRes = man.prepareQuery(logQuery);
         queryRes.setParameter("fn", firstName);
         queryRes.setParameter("ln", lastName);
-        List result = queryRes.getResultList();
+        List result = man.executeQuery(queryRes);
         if(result.isEmpty())
             return null;
         return (Doctor) result.get(0);

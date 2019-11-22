@@ -23,6 +23,7 @@ import static org.iq80.leveldb.impl.Iq80DBFactory.*;
 public class PersistenceManager implements AutoCloseable{
     private EntityManagerFactory em_factory;
 
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     private DB cache_keyValue;
@@ -34,7 +35,7 @@ public class PersistenceManager implements AutoCloseable{
      */
     private PersistenceManager() {
         this.em_factory = Persistence.createEntityManagerFactory("clinic");
-        this.em = em_factory.createEntityManager();
+        this.em = null;
     }
 
     /**
@@ -54,6 +55,7 @@ public class PersistenceManager implements AutoCloseable{
      * @param obj the object to be made persistent. It must be an instance of an Entity class.
      */
     public void create(Object obj) {
+        em = em_factory.createEntityManager();
         em.getTransaction().begin();
         em.persist(obj);
         em.getTransaction().commit();
@@ -64,6 +66,7 @@ public class PersistenceManager implements AutoCloseable{
         method of EntityManager class.
         */
         em.detach(obj);
+        em.close();
     }
 
     /**
@@ -71,7 +74,8 @@ public class PersistenceManager implements AutoCloseable{
      * @param query the string that contains the JPQL query to be evaluated.
      * @return a Query object to be used to perform the interrogation on the database.
      */
-    public Query read(String query) {
+    public Query prepareQuery(String query) {
+        em = em_factory.createEntityManager();
         Query q = em.createQuery(query);
         return q;
     }
@@ -81,9 +85,30 @@ public class PersistenceManager implements AutoCloseable{
      * @param query the string that contains the JPQL query to be evaluated.
      * @return a TypedQuery object to be used to perform the interrogation on the database.
      */
-    public TypedQuery<Medical> readMedicals(String query) {
+    public TypedQuery<Medical> prepareMedicalQuery(String query) {
+        em = em_factory.createEntityManager();
         TypedQuery<Medical> q = em.createQuery(query, Medical.class);
         return q;
+    }
+
+    public <T> List<T> executeTypedQuery(TypedQuery<T> query) {
+        if(em == null || !em.isOpen()) {
+            System.err.println("Error: Entity Manager has been closed!");
+            return null;
+        }
+        List<T> res = query.getResultList();
+        em.close();
+        return res;
+    }
+
+    public  List executeQuery(Query query) {
+        if(em == null || !em.isOpen()) {
+            System.err.println("Error: Entity Manager has been closed!");
+            return null;
+        }
+        List res = query.getResultList();
+        em.close();
+        return res;
     }
 
     /**
@@ -93,10 +118,12 @@ public class PersistenceManager implements AutoCloseable{
      * @param obj the object to be synchronized with the database. It must be an instance of an Entity class.
      */
     public void update(Object obj) {
+        em = em_factory.createEntityManager();
         em.getTransaction().begin();
         em.merge(obj);
         em.getTransaction().commit();
         em.detach(obj);
+        em.close();
     }
 
     /**
@@ -106,10 +133,12 @@ public class PersistenceManager implements AutoCloseable{
      * @param obj the object to be deleted from the database. It must be an instance of an Entity class.
      */
     public void delete(Object obj) {
+        em = em_factory.createEntityManager();
         em.getTransaction().begin();
         Object managed = em.merge(obj);
         em.remove(managed);
         em.getTransaction().commit();
+        em.close();
     }
 
     /**
@@ -118,10 +147,12 @@ public class PersistenceManager implements AutoCloseable{
      * @param obj the object to be merged. It must be an instance of an Entity class.
      */
     public void merge(Object obj) {
+        em = em_factory.createEntityManager();
         em.getTransaction().begin();
         Object managed = em.merge(obj);
         obj = managed;
         em.getTransaction().commit();
+        em.close();
     }
 
 
@@ -130,14 +161,14 @@ public class PersistenceManager implements AutoCloseable{
         Date current = new Date();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String current_str = df.format(current);
-        PersistenceManager man = PersistenceManager.getInstance();
         String query = "SELECT m\n" +
                 "FROM Medical m\n" +
+                "JOIN FETCH m.doctor JOIN FETCH m.patient\n" +
                 "WHERE m.date = :currentDate\n" +
                 "AND m.approved = true\n";
-        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
+        TypedQuery<Medical> preparedQuery = prepareMedicalQuery(query);
         preparedQuery.setParameter("currentDate",current);
-        List<Medical> initList = preparedQuery.getResultList();
+        List<Medical> initList = executeTypedQuery(preparedQuery);
         WriteBatch batch = cache_keyValue.createWriteBatch();
         for(int i = 0; i < initList.size(); ++i){
             Medical med = initList.get(i);
@@ -284,16 +315,17 @@ public class PersistenceManager implements AutoCloseable{
      * Close an application-managed manager.
      */
     public void close() {
-        em.close();
         em_factory.close();
     }
 
 
     /**
-     * Get the entity manager reference.
+     * Get the entity manager reference, it must be closed after the usage.
      * @return the entity manager
      */
     public EntityManager getEm() {
+        if(em == null || !em.isOpen())
+            em = em_factory.createEntityManager();
         return em;
     }
 

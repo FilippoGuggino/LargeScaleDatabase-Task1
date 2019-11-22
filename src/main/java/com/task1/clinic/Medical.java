@@ -219,7 +219,9 @@ public class Medical {
      */
     public Medical connect() {
         PersistenceManager man = PersistenceManager.getInstance();
-        Medical med = man.getEm().getReference(Medical.class, this.idCode);
+        EntityManager em = man.getEm();
+        Medical med = em.getReference(Medical.class, this.idCode);
+        em.close();
         return med;
     }
 

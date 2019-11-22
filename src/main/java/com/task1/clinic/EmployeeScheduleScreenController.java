@@ -11,11 +11,17 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 public class EmployeeScheduleScreenController implements Initializable {
+
+    Date lastDate = null;
+    Doctor lastDoc = null;
+    Patient lastPat = null;
 
     @FXML
     private TableView tableView;
@@ -143,18 +149,24 @@ public class EmployeeScheduleScreenController implements Initializable {
         else
             date = java.sql.Date.valueOf(selectedDateFilter.getValue());
         updateTable(p,d,date);
+        this.lastDate = date;
+        this.lastPat = p;
+        this.lastDoc = d;
     }
     @FXML
     private void addMedical() throws IOException {
+        Date date;
+        Patient p;
+        Doctor d;
 
         if(selectedDate.getValue()==null|| patFirstnameInput.getText().equals("")||patLastnameInput.getText().equals("") ||docFirstnameInput.getText().equals("")||docLastnameInput.getText().equals("")){
             errorLabel.setText("All fields must be filled!");
             errorLabel.setVisible(true);
+            return;
         }
         else{
-            Date date;
-            Patient p=Patient.logIn(patFirstnameInput.getText(),patLastnameInput.getText());
-            Doctor d=Doctor.logIn(docFirstnameInput.getText(),docLastnameInput.getText());
+            p = Patient.logIn(patFirstnameInput.getText(),patLastnameInput.getText());
+            d = Doctor.logIn(docFirstnameInput.getText(),docLastnameInput.getText());
             //check if the user selects a non existing patient
             if(p==null){
                 errorLabel.setText("Selected patient doesn't exist.");
@@ -168,6 +180,12 @@ public class EmployeeScheduleScreenController implements Initializable {
                 return;
             }
             date = java.sql.Date.valueOf(selectedDate.getValue());
+            Date today = new Date();
+            if(date.getTime() < today.getTime()) {
+                errorLabel.setText("You must select a date in the future");
+                errorLabel.setVisible(true);
+                return;
+            }
             Employee e=(Employee)App.user;
             Medical m=new Medical(d,p,date);
             if(e.addMedical(m)){
@@ -183,9 +201,10 @@ public class EmployeeScheduleScreenController implements Initializable {
             docFirstnameInput.setText("");
             docLastnameInput.setText("");
         }
+        updateTable(lastPat, lastDoc, lastDate);
     }
     @FXML
-    public void dropMedical(){
+    public void dropMedical() throws  IOException{
         Employee e=(Employee)App.user;
         Medical medicalToDelete=medicalRows.get(selectedIndex);
 
@@ -194,6 +213,6 @@ public class EmployeeScheduleScreenController implements Initializable {
 
         e.dropMedical(medicalToDelete);
         AlertBox.display("The medical has been deleted");
-        //TODO update the table
+        updateTable(lastPat, lastDoc, lastDate);
     }
 }

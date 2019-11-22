@@ -67,12 +67,13 @@ public class Patient extends User{
         PersistenceManager man = PersistenceManager.getInstance();
         String query = "SELECT m\n" +
                        "FROM Medical m\n" +
+                       "JOIN FETCH m.doctor JOIN FETCH m.patient\n" +
                        "WHERE m.patient.idCode = :idCode\n" +
                        "AND m.approved = true\n" +
                        "ORDER BY m.date DESC";
-        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
+        TypedQuery<Medical> preparedQuery = man.prepareMedicalQuery(query);
         preparedQuery.setParameter("idCode", this.getIdCode());
-        List<Medical> result = preparedQuery.getResultList();
+        List<Medical> result = man.executeTypedQuery(preparedQuery);
         return result;
     }
 
@@ -89,11 +90,11 @@ public class Patient extends User{
         String checkQuery = "SELECT m FROM Medical m\n" +
                             "WHERE m.doctor.idCode = :docId AND m.patient.idCode = :patId\n" +
                             "AND m.date = :date";
-        TypedQuery<Medical> prepQuery = man.readMedicals(checkQuery);
+        TypedQuery<Medical> prepQuery = man.prepareMedicalQuery(checkQuery);
         prepQuery.setParameter("docId", doctor.idCode);
         prepQuery.setParameter("patId", this.idCode);
         prepQuery.setParameter("date", date);
-        List<Medical> res = prepQuery.getResultList();
+        List<Medical> res = man.executeTypedQuery(prepQuery);
         if(!res.isEmpty()) {
             //medical already existed -> return null
             return null;
@@ -116,9 +117,9 @@ public class Patient extends User{
         String checkQuery = "SELECT dr\n" +
                 "FROM DeleteRequest dr\n" +
                 "WHERE dr.medical.idCode = :idCode";
-        Query prepQuery = man.read(checkQuery);
+        Query prepQuery = man.prepareQuery(checkQuery);
         prepQuery.setParameter("idCode", med.getIdCode());
-        List<DeleteRequest> res = (List<DeleteRequest>)prepQuery.getResultList();
+        List<DeleteRequest> res = (List<DeleteRequest>)man.executeQuery(prepQuery);
         if(!res.isEmpty()) {
             //deleteRequest already existed -> return null
             return null;
@@ -142,9 +143,9 @@ public class Patient extends User{
         String checkQuery = "SELECT mr\n" +
                 "FROM MoveRequest mr\n" +
                 "WHERE mr.medical.idCode = :idCode";
-        Query prepQuery = man.read(checkQuery);
+        Query prepQuery = man.prepareQuery(checkQuery);
         prepQuery.setParameter("idCode", med.getIdCode());
-        List<MoveRequest> res = (List<MoveRequest>)prepQuery.getResultList();
+        List<MoveRequest> res = (List<MoveRequest>)man.executeQuery(prepQuery);
         if(!res.isEmpty()) {
             //moveRequest already existed -> return null
             return null;
@@ -177,10 +178,10 @@ public class Patient extends User{
     public static Patient logIn(String firstName, String lastName) {
         PersistenceManager man = PersistenceManager.getInstance();
         String logQuery = "SELECT p FROM Patient p WHERE p.firstName = :fn AND p.lastName = :ln";
-        Query queryRes = man.read(logQuery);
+        Query queryRes = man.prepareQuery(logQuery);
         queryRes.setParameter("fn", firstName);
         queryRes.setParameter("ln", lastName);
-        List result = queryRes.getResultList();
+        List result = man.executeQuery(queryRes);
         if(result.isEmpty())
             return null;
         return (Patient) result.get(0);

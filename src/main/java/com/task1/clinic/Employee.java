@@ -45,11 +45,11 @@ public class Employee extends User{
         String checkQuery = "SELECT m FROM Medical m\n" +
                 "WHERE m.doctor.idCode = :docId AND m.patient.idCode = :patId\n" +
                 "AND m.date = :date";
-        TypedQuery<Medical> prepQuery = man.readMedicals(checkQuery);
+        TypedQuery<Medical> prepQuery = man.prepareMedicalQuery(checkQuery);
         prepQuery.setParameter("docId", m.getDoctor().getIdCode());
         prepQuery.setParameter("patId", m.getPatient().getIdCode());
         prepQuery.setParameter("date", m.getDate());
-        List<Medical> res = prepQuery.getResultList();
+        List<Medical> res = man.executeTypedQuery(prepQuery);
         if(!res.isEmpty()) {
             return false;
         }
@@ -75,11 +75,11 @@ public class Employee extends User{
         String checkQuery = "SELECT m FROM Medical m\n" +
                 "WHERE m.doctor.idCode = :docId AND m.patient.idCode = :patId\n" +
                 "AND m.date = :date";
-        TypedQuery<Medical> prepQuery = man.readMedicals(checkQuery);
+        TypedQuery<Medical> prepQuery = man.prepareMedicalQuery(checkQuery);
         prepQuery.setParameter("docId", m.getDoctor().getIdCode());
         prepQuery.setParameter("patId", m.getPatient().getIdCode());
         prepQuery.setParameter("date", m.getDate());
-        List<Medical> res = prepQuery.getResultList();
+        List<Medical> res = man.executeTypedQuery(prepQuery);
         if(res.isEmpty()) {
             return false;
         }
@@ -204,7 +204,7 @@ public class Employee extends User{
 
 
         boolean needAnd = false;
-        String query = "SELECT m FROM Medical m WHERE";
+        String query = "SELECT m FROM Medical m JOIN FETCH m.doctor JOIN FETCH m.patient WHERE";
         if(patient != null){
             query += " m.patient = :idPatient";
             needAnd = true;
@@ -223,14 +223,14 @@ public class Employee extends User{
         query += " and";
         query += " m.approved = true";
 
-        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
+        TypedQuery<Medical> preparedQuery = man.prepareMedicalQuery(query);
         if(patient!=null)
             preparedQuery.setParameter("idPatient", patient);
         if(doctor!=null)
             preparedQuery.setParameter("idDoctor", doctor);
         if(byDate!=null)
             preparedQuery.setParameter("date", byDate);
-        return  preparedQuery.getResultList();
+        return  man.executeTypedQuery(preparedQuery);
     }
 
     /**
@@ -253,10 +253,10 @@ public class Employee extends User{
     public static Employee logIn(String firstName, String lastName) {
         PersistenceManager man = PersistenceManager.getInstance();
         String logQuery = "SELECT e FROM Employee e WHERE e.firstName = :fn AND e.lastName = :ln";
-        Query queryRes = man.read(logQuery);
+        Query queryRes = man.prepareQuery(logQuery);
         queryRes.setParameter("fn", firstName);
         queryRes.setParameter("ln", lastName);
-        List result = queryRes.getResultList();
+        List result = man.executeQuery(queryRes);
         if(result.isEmpty())
             return null;
         return (Employee) result.get(0);
@@ -271,10 +271,11 @@ public class Employee extends User{
         PersistenceManager man = PersistenceManager.getInstance();
         String query = "SELECT m\n"
                 + "FROM Medical m\n"
+                + "JOIN FETCH m.doctor JOIN FETCH m.patient\n"
                 + "WHERE m.approved = false\n"
                 + "ORDER BY m.patient";
-        TypedQuery<Medical> preparedQuery = man.readMedicals(query);
-        return  preparedQuery.getResultList();
+        TypedQuery<Medical> preparedQuery = man.prepareMedicalQuery(query);
+        return  man.executeTypedQuery(preparedQuery);
     }
 
     /**
@@ -284,10 +285,10 @@ public class Employee extends User{
 
     public List<DeleteRequest> getDeleteRequests() {
         PersistenceManager man = PersistenceManager.getInstance();
-        String query = "SELECT dr\nFROM DeleteRequest dr";
-        Query preparedQuery = man.read(query);
-//        System.out.println(preparedQuery.getResultList().size());
-        return  (List<DeleteRequest>) preparedQuery.getResultList();
+        String query = "SELECT dr FROM DeleteRequest dr \n" +
+                       "JOIN FETCH dr.medical m JOIN FETCH m.doctor JOIN FETCH m.patient";
+        Query preparedQuery = man.prepareQuery(query);
+        return  (List<DeleteRequest>) man.executeQuery(preparedQuery);
     }
 
     /**
@@ -297,9 +298,10 @@ public class Employee extends User{
 
     public List<MoveRequest> getMoveRequests() {
         PersistenceManager man = PersistenceManager.getInstance();
-        String query = "SELECT dr\nFROM MoveRequest dr";
-        Query preparedQuery = man.read(query);
-        List<MoveRequest> ret =  (List<MoveRequest>) preparedQuery.getResultList();
+        String query = "SELECT dr FROM MoveRequest dr\n" +
+                       "JOIN FETCH dr.medical m JOIN FETCH m.doctor JOIN FETCH m.patient";
+        Query preparedQuery = man.prepareQuery(query);
+        List<MoveRequest> ret =  (List<MoveRequest>) man.executeQuery(preparedQuery);
         return ret;
     }
 

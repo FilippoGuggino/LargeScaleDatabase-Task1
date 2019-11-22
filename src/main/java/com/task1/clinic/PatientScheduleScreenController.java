@@ -101,6 +101,12 @@ public class PatientScheduleScreenController implements Initializable {
             errorLabel.setVisible(false);
             Patient p = (Patient) App.user;
             Date date = java.sql.Date.valueOf(selectedDate.getValue());
+            Date today = new Date();
+            if(date.getTime() < today.getTime()) {
+                errorLabel.setText("You must select a date in the future");
+                errorLabel.setVisible(true);
+                return;
+            }
             if (p.createMedicalRequest(d, date) == null) {
                 errorLabel.setVisible(true);
                 errorLabel.setText("Medical already exists");
@@ -142,6 +148,12 @@ public class PatientScheduleScreenController implements Initializable {
         medicalToUpdate = medicalToUpdate.connect();
         Patient p=(Patient)App.user;
         Date date = java.sql.Date.valueOf(newDate.getValue());
+        Date today = new Date();
+        if(date.getTime() < today.getTime()) {
+            errorLabel.setText("You must select a date in the future");
+            errorLabel.setVisible(true);
+            return;
+        }
         if(p.moveRequest(medicalToUpdate,date)==null){
             errorLabel.setText("The request has already been sent!");
             errorLabel.setVisible(true);

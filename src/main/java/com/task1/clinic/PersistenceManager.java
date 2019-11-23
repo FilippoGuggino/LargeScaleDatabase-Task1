@@ -156,6 +156,9 @@ public class PersistenceManager implements AutoCloseable{
     }
 
 
+    /**
+     * Initialize the cache with all medicals for current date.
+     */
     private void initCache() {
         System.out.println("Initializing the cache...");
         Date current = new Date();
@@ -183,6 +186,13 @@ public class PersistenceManager implements AutoCloseable{
         System.out.println("cache initialized");
     }
 
+    /**
+     * Open the cache for reads and writes.
+     * Check if cache is updated, and if not update it.
+     * must be called at the beginning of each method
+     * that uses the cache.
+     * @return the database reference
+     */
     private DB openCache() {
         try {
             Options options = new Options();
@@ -225,6 +235,10 @@ public class PersistenceManager implements AutoCloseable{
         return cache_keyValue;
     }
 
+    /**
+     * Close the cache after a read/write operation.
+     * Must be called at the end of each method that uses the cache.
+     */
     private void closeCache() {
         try {
             this.cache_keyValue.close();
@@ -248,8 +262,8 @@ public class PersistenceManager implements AutoCloseable{
         Doctor current_doc = null;
         int counter = 0;
         boolean isAccepted = true;
-        Medical current_med = null;
-        try (DBIterator iterator = cache.iterator();) {
+        Medical current_med;
+        try (DBIterator iterator = cache.iterator()) {
             iterator.seek(bytes(keyStart));
             while (iterator.hasNext()) {
                 String key = asString(iterator.peekNext().getKey()); // key arrangement : medical:$medical_id:attr_name
@@ -356,9 +370,9 @@ public class PersistenceManager implements AutoCloseable{
      * @param med the Medical to be added to the cache.
      */
 
-    public boolean addToCache(Medical med){
+    public void addToCache(Medical med){
         if (med == null){
-            return false;
+            return;
         }
         DB cache = openCache();
         String keyDoc = "medical"+":"+med.getIdCode()+":"+"doctor";
@@ -373,7 +387,6 @@ public class PersistenceManager implements AutoCloseable{
         cache.write(addBatch);
 
         closeCache();
-        return true;
     }
 
 

@@ -53,8 +53,6 @@ public class Medical {
         this.patient = patient;
         this.date = date;
         this.approved = false;
-        doctor.getMedicals().add(this);
-        patient.getMedicals().add(this);
     }
 
     public Medical() {
@@ -214,13 +212,17 @@ public class Medical {
 
 
     /**
-     * Attach a medical to the database by returning a new attached instance.
+     * Attach a medical to the database by returning a new attached instance eagerly fetched.
      * @return the attached instance of Medical
      */
     public Medical connect() {
         PersistenceManager man = PersistenceManager.getInstance();
         EntityManager em = man.getEm();
-        Medical med = em.getReference(Medical.class, this.idCode);
+        /*
+        The find method is necessary instead of getReference because it
+        always returns the entity with attributes eagerly fetched.
+         */
+        Medical med = em.find(Medical.class, this.idCode);
         em.close();
         return med;
     }

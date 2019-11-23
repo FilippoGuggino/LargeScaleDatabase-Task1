@@ -85,7 +85,7 @@ public class Patient extends User{
 
     public Medical createMedicalRequest(Doctor doctor, Date date) {
         PersistenceManager man = PersistenceManager.getInstance();
-        Medical newMed = new Medical();
+        Medical newMed = new Medical(doctor, this, date);
         String checkQuery = "SELECT m FROM Medical m\n" +
                             "WHERE m.doctor.idCode = :docId AND m.patient.idCode = :patId\n" +
                             "AND m.date = :date";
@@ -98,9 +98,14 @@ public class Patient extends User{
             //medical already existed -> return null
             return null;
         }
-        newMed.setDate(date);
+        /*
+        We don't call this function:
         doctor.addMedical(newMed);
         this.addMedical(newMed);
+        because doctor.medicals  and this.medicals are lazily fetched and since we will never use
+        this attribute we don't force its fetch and we won't update it, as it
+        would cause an error.
+         */
         man.create(newMed);
         return newMed;
     }
@@ -153,7 +158,7 @@ public class Patient extends User{
         med = med.connect();
         mov.setNewDate(newDate);
         med.setMoveRequest(mov);
-        man.create(mov);
+        man.update(med);
         return mov;
     }
 

@@ -24,7 +24,7 @@ public class Doctor extends User{
 
     public Doctor(String firstName, String lastName) {
         super(firstName, lastName);
-        medicals = new HashSet<Medical>();
+        medicals = new HashSet<>();
     }
     /**
      * default constructor which takes and initializes all attributes of the class using
@@ -35,7 +35,7 @@ public class Doctor extends User{
      }
 
     /**
-     * Get all the medicals with this doctor
+     * Get all the medicals with this doctor.
      * @return The set of medicals.
      */
 

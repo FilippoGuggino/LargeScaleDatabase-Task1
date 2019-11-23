@@ -120,11 +120,12 @@ public class PatientScheduleScreenController implements Initializable {
             else {
                 errorLabel.setVisible(false);
                 AlertBox.display("The request has been sent");
+                updateTable();
 
             }
             firstnameInput.setText("");
             lastnameInput.setText("");
-
+            
 
         }
     }

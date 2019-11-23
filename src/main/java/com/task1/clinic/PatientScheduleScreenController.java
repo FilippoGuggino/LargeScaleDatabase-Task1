@@ -134,6 +134,11 @@ public class PatientScheduleScreenController implements Initializable {
         errorLabel.setVisible(false);
         Medical medicalToDelete=medicalRows.get(selectedIndex);
         medicalToDelete = medicalToDelete.connect();
+        if(medicalToDelete.isApproved()==false){
+            errorLabel.setText("The request has to be approved first!");
+            errorLabel.setVisible(true);
+            return;
+        }
         Patient p=(Patient)App.user;
         if(p.deleteRequest(medicalToDelete)==null){
             errorLabel.setText("The request has already been sent!");
@@ -153,6 +158,11 @@ public class PatientScheduleScreenController implements Initializable {
         errorLabel.setVisible(false);
         Medical medicalToUpdate=medicalRows.get(selectedIndex);
         medicalToUpdate = medicalToUpdate.connect();
+        if(medicalToUpdate.isApproved()==false){
+            errorLabel.setText("The request has to be approved first!");
+            errorLabel.setVisible(true);
+            return;
+        }
         Patient p=(Patient)App.user;
         Date date = java.sql.Date.valueOf(newDate.getValue());
         Date today = new Date();

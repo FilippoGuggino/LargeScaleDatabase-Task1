@@ -213,6 +213,8 @@ public class Medical {
 
     /**
      * Attach a medical to the database by returning a new attached instance eagerly fetched.
+     * It's necessary especially because today medicals extracted from cache are not attached
+     * to the relational database in any way.
      * @return the attached instance of Medical
      */
     public Medical connect() {

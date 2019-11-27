@@ -112,6 +112,24 @@ public abstract class User {
     public abstract List<Medical> getSchedule();
 
     /**
+     * Set the attribute of the user identified by index at value.
+     * If there's no match nothing is done.
+     * @param attribute The identifier of the attribute ("idCode"->idCode, "firstName"->firstName, "lastName"->lastName)
+     * @param value The new value of the attribute
+     */
+    public void setByString(String attribute, String value) {
+        if(attribute.equals("idCode")) {
+            idCode = Integer.parseInt(value);
+        }
+        else if(attribute.equals("firstName")) {
+            firstName = value;
+        }
+        else if(attribute.equals("lastName")) {
+            lastName = value;
+        }
+    }
+
+    /**
      * Transform a user object into a string with format "idCode,firstName,lastName"
      * @return a string in format "idCode,firstName,lastName"
      */

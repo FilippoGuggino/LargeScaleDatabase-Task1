@@ -10,7 +10,7 @@ import java.util.*;
 @Table(name = "patient", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
 public class Patient extends User{
 
-    @OneToMany(mappedBy = "patient",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "patient",cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
     private Set<Medical> medicals;
 
     /**

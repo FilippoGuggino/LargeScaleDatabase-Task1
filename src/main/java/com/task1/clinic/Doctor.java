@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "doctor", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
 public class Doctor extends User{
 
-    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
     private Set<Medical> medicals;
     /**
      * constructor which takes and initializes all attributes of the class using
@@ -70,7 +70,8 @@ public class Doctor extends User{
         String query = "SELECT m\n" +
                 "FROM Medical m\n" +
                 "JOIN FETCH m.doctor JOIN FETCH m.patient\n" +
-                "WHERE m.doctor.idCode = :idCode AND m.date = :byDate AND m.approved=true\n" +
+                "WHERE m.doctor.idCode = :idCode " +
+                "AND m.date = :byDate AND m.approved=true\n" +
                 "ORDER BY m.date";
         TypedQuery<Medical> preparedQuery = man.prepareMedicalQuery(query);
         preparedQuery.setParameter("idCode", this.getIdCode());

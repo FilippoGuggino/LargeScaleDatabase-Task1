@@ -53,8 +53,12 @@ public class Employee extends User{
         if(!res.isEmpty()) {
             return false;
         }
+        /*
+        We don't update medicals field in patient and doctor because it's lazily fetched
+        as it's never used, so it only would cause an error in hibernate proxy:
         m.getDoctor().addMedical(m);
         m.getPatient().addMedical(m);
+         */
         man.create(m);
         Date mDate = m.getDate();
         if(isToday(mDate)) {

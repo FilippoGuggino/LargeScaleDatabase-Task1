@@ -30,6 +30,9 @@ public class PersistenceManager implements AutoCloseable{
 
     private static PersistenceManager singletonInstance = null;
 
+    //list of attributes of patients and doctors in cache format
+    private static final String[] keyFinals= {"idCode", "firstName", "lastName"};
+
     /**
      * Unique constructor for this class.
      */
@@ -141,20 +144,6 @@ public class PersistenceManager implements AutoCloseable{
         em.close();
     }
 
-    /**
-     * Attach back the object with JPA cache and database
-     * with the current status of the parameter <code>obj</code>.
-     * @param obj the object to be merged. It must be an instance of an Entity class.
-     */
-    public void merge(Object obj) {
-        em = em_factory.createEntityManager();
-        em.getTransaction().begin();
-        Object managed = em.merge(obj);
-        obj = managed;
-        em.getTransaction().commit();
-        em.close();
-    }
-
 
     /**
      * Initialize the cache with all medicals for current date.
@@ -173,13 +162,20 @@ public class PersistenceManager implements AutoCloseable{
         preparedQuery.setParameter("currentDate",current);
         List<Medical> initList = executeTypedQuery(preparedQuery);
         WriteBatch batch = cache_keyValue.createWriteBatch();
+        String[] docValues;
+        String[] patValues;
         for(int i = 0; i < initList.size(); ++i){
             Medical med = initList.get(i);
             Doctor doc = med.getDoctor();
             Patient pat = med.getPatient();
-            int medId = med.getIdCode();
-            batch.put(bytes("medical"+":"+medId+":"+"doctor"),bytes(doc.getIdCode()+","+doc.getFirstName()+","+doc.getLastName()));
-            batch.put(bytes("medical"+":"+medId+":"+"patient"),bytes(pat.getIdCode()+","+pat.getFirstName()+","+pat.getLastName()));
+            String keyDoc = "medical"+":"+med.getIdCode()+":"+"doctor:";
+            String keyPat = "medical"+":"+med.getIdCode()+":"+"patient:";
+            docValues = new String[]{String.valueOf(doc.getIdCode()), doc.getFirstName(), doc.getLastName()};
+            patValues = new String[]{String.valueOf(pat.getIdCode()), pat.getFirstName(), pat.getLastName()};
+            for(int j = 0; j<3; ++j) {
+                batch.put(bytes(keyDoc + keyFinals[j]), bytes(docValues[j]));
+                batch.put(bytes(keyPat + keyFinals[j]), bytes(patValues[j]));
+            }
         }
         cache_keyValue.write(batch);
         cache_keyValue.put(bytes("GLOBAL_CACHE_DATE"),bytes(current_str));
@@ -247,6 +243,8 @@ public class PersistenceManager implements AutoCloseable{
         }
     }
 
+
+
     /**
      * Get the list of medicals planned for the current date retrieving them from the cache.
      * If any of the parameters is set to null then it's not used to filter the result set.
@@ -260,7 +258,9 @@ public class PersistenceManager implements AutoCloseable{
         List<Medical> result = new ArrayList<>();
         Patient current_pat = null;
         Doctor current_doc = null;
-        int counter = 0;
+        int attr_counter = 0;
+        int doc_counter = 0;
+        int pat_counter = 0;
         boolean isAccepted = true;
         Medical current_med;
         try (DBIterator iterator = cache.iterator()) {
@@ -270,48 +270,58 @@ public class PersistenceManager implements AutoCloseable{
                 String[] keySplit = key.split(":"); // split the key
                 String value = asString(iterator.peekNext().getValue());
                 if(keySplit[2].equals("doctor")) {
-                    if(byDoctor == null) {
-                        String[] params = value.split(",");
-                        current_doc = new Doctor(params[1], params[2]);
-                        current_doc.setIdCode(Integer.parseInt(params[0]));
-                    }
-                    else if ( value.equals(byDoctor.toString())) {
-                        current_doc = byDoctor;
-                    }
-                    else {
-                        current_doc = null;
-                        isAccepted = false;
-                    }
-                    counter++;
+                    if(isAccepted) { //if medical has to be discarded we don't waste time
+                        if (byDoctor == null) {
+                            if (current_doc == null)
+                                current_doc = new Doctor();
+                            current_doc.setByString(keySplit[3], value);
+                        }
+                        else {
+                            if (current_doc == null)
+                                current_doc = byDoctor;
 
+                            //if the doctor is not the same as the one in byDoctor variable
+                            if (keySplit[3].equals("idCode") && Integer.parseInt(value) != current_doc.getIdCode()) {
+                                current_doc = null;
+                                isAccepted = false;
+                            }
+                        }
+                    }
+                    doc_counter++;
                 }
                 else if(keySplit[2].equals("patient")) {
-                    if(byPatient == null) {
-                        String[] params = value.split(",");
-                        current_pat = new Patient(params[1], params[2]);
-                        current_pat.setIdCode(Integer.parseInt(params[0]));
+                    if(isAccepted) { //if medical has to be discarded we don't waste time
+                        if (byPatient == null) {
+                            if (current_pat == null)
+                                current_pat = new Patient();
+                            current_pat.setByString(keySplit[3], value);
+                        }
+                        else {
+                            if (current_pat == null)
+                                current_pat = byPatient;
+
+                            //if the patient is not the same as the one in byPatient variable
+                            if (keySplit[3].equals("idCode") && Integer.parseInt(value) != current_pat.getIdCode()) {
+                                current_pat = null;
+                                isAccepted = false;
+                            }
+                        }
                     }
-                    else if ( value.equals(byPatient.toString())) {
-                        current_pat = byPatient;
-                    }
-                    else {
-                        current_doc = null;
-                        isAccepted = false;
-                    }
-                    counter++;
+                    pat_counter++;
                 }
 
-                if(counter == 2) {
-                    counter = 0;
+                if(pat_counter == 3 && doc_counter == 3) {
+                    pat_counter = doc_counter = 0;
+                    current_med = new Medical(current_doc, current_pat, new Date());
+                    current_doc = null;
+                    current_pat = null;
                     if(!isAccepted) {
                         isAccepted = true;
                         iterator.next();
                         continue;
                     }
-                    current_med = new Medical(current_doc, current_pat, new Date());
                     current_med.setIdCode(Integer.parseInt(keySplit[1]));
                     result.add(current_med);
-                    counter = 0;
                 }
 
                 iterator.next();
@@ -349,20 +359,20 @@ public class PersistenceManager implements AutoCloseable{
      * @param med the Medical to be deleted from the cache.
      */
 
-    public boolean removeFromCache(Medical med){
+    public void removeFromCache(Medical med){
         if (med == null){
-            return false;
+            return;
         }
         DB cache = openCache();
-        String keyDoc = "medical"+":"+med.getIdCode()+":"+"doctor";
-        String keyPat = "medical"+":"+med.getIdCode()+":"+"patient";
+        String keyDoc = "medical"+":"+med.getIdCode()+":"+"doctor:";
+        String keyPat = "medical"+":"+med.getIdCode()+":"+"patient:";
         WriteBatch deleteBatch = cache.createWriteBatch();
-        deleteBatch.delete(bytes(keyDoc));
-        deleteBatch.delete(bytes(keyPat));
+        for(int i = 0; i<3; ++i) {
+            deleteBatch.delete(bytes(keyDoc + keyFinals[i]));
+            deleteBatch.delete(bytes(keyPat + keyFinals[i]));
+        }
         cache.write(deleteBatch);
-
         closeCache();
-        return true;
     }
 
     /**
@@ -375,17 +385,18 @@ public class PersistenceManager implements AutoCloseable{
             return;
         }
         DB cache = openCache();
-        String keyDoc = "medical"+":"+med.getIdCode()+":"+"doctor";
+        String keyDoc = "medical"+":"+med.getIdCode()+":"+"doctor:";
         Doctor doc = med.getDoctor();
-        String valueDoc =doc.getIdCode()+","+doc.getFirstName()+","+doc.getLastName();
-        String keyPat = "medical"+":"+med.getIdCode()+":"+"patient";
+        String keyPat = "medical"+":"+med.getIdCode()+":"+"patient:";
         Patient pat = med.getPatient();
-        String valuePat = pat.getIdCode()+","+pat.getFirstName()+","+pat.getLastName();
+        String[] docValues = {String.valueOf(doc.getIdCode()), doc.getFirstName(), doc.getLastName()};
+        String[] patValues = {String.valueOf(pat.getIdCode()), pat.getFirstName(), pat.getLastName()};
         WriteBatch addBatch = cache.createWriteBatch();
-        addBatch.put(bytes(keyDoc),bytes(valueDoc));
-        addBatch.put(bytes(keyPat),bytes(valuePat));
+        for(int i = 0; i<3; ++i) {
+            addBatch.put(bytes(keyDoc + keyFinals[i]), bytes(docValues[i]));
+            addBatch.put(bytes(keyPat + keyFinals[i]), bytes(patValues[i]));
+        }
         cache.write(addBatch);
-
         closeCache();
     }
 

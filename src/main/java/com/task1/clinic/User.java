@@ -114,7 +114,7 @@ public abstract class User {
     /**
      * Set the attribute of the user identified by index at value.
      * If there's no match nothing is done.
-     * @param attribute The identifier of the attribute ("idCode"->idCode, "firstName"->firstName, "lastName"->lastName)
+     * @param attribute The identifier of the attribute ("idCode"=idCode, "firstName"=firstName, "lastName"=lastName)
      * @param value The new value of the attribute
      */
     public void setByString(String attribute, String value) {

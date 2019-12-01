@@ -17,7 +17,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="60.0" />
+            <Insets bottom="30.0" />
          </VBox.margin></Label>
       <Label text="Insert your credentials:">
          <font>
@@ -56,5 +56,6 @@
             <Font name="Aharoni Bold" size="13.0" />
          </font>
       </Button>
+      <Label onMouseClicked="#switchToSignup" prefHeight="17.0" prefWidth="140.0" style="-fx-underline: true; -fx-cursor: hand;" text="First time Access? Sign up" />
     </children>
 </VBox>

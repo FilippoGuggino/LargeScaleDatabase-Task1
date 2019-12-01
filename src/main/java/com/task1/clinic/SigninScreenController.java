@@ -12,6 +12,10 @@ public class SigninScreenController {
         App.setRoot("initialScreen");
     }
     @FXML
+    private void switchToSignup() throws IOException {
+        App.setRoot("signupScreen");
+    }
+    @FXML
     private void signin() throws IOException {
         TextField firstNameInput=(TextField) App.scene.lookup("#firstnameInput");
         TextField lastNameInput=(TextField) App.scene.lookup("#lastnameInput");
